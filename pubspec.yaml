@@ -1,0 +1,43 @@
+name: firefly
+description: Listen to your songs
+
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^0.1.3
+  flutter_icons: ^1.1.0
+  provider: ^4.1.3
+
+  # Firebase
+  # firebase_core: ^0.4.4+3
+  # firebase_auth: ^0.16.0
+  # cloud_firestore: ^0.13.5
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+
+  uses-material-design: true
+
+  fonts:
+  - family: SourceSansPro
+    fonts:
+    - asset: fonts/SourceSansPro-Regular.ttf
+      weight: 400
+    - asset: fonts/SourceSansPro-SemiBold.ttf
+      weight: 600
+    - asset: fonts/SourceSansPro-Bold.ttf
+      weight: 700
+
+  # assets:
+  #   - assets/
