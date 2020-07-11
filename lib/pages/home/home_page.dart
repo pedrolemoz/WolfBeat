@@ -18,7 +18,7 @@ class HomePage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Início',
+                  'Firefly 🔥',
                   style: Theme.of(context).textTheme.headline6,
                 ),
                 GestureDetector(
