@@ -5,41 +5,42 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-import '../../model/user_data/user_model.dart';
 
-Future<void> changeProfilePhotoFromGallery(context) async {
+import '../user/user_controller.dart';
+
+Future<void> changeProfilePhotoFromGallery(BuildContext context) async {
   // final imagePicker = ImagePicker();
 
   // TODO: Usar .getImage()
 
-  File image = await ImagePicker.pickImage(source: ImageSource.gallery);
+  final image = await ImagePicker.pickImage(source: ImageSource.gallery);
 
   _uploadNewPhotoAndUpdate(context, newPhoto: image);
 }
 
-Future<void> changeProfilePhotoFromCamera(context) async {
+Future<void> changeProfilePhotoFromCamera(BuildContext context) async {
   // final imagePicker = ImagePicker();
 
-  File image = await ImagePicker.pickImage(source: ImageSource.camera);
+  final image = await ImagePicker.pickImage(source: ImageSource.camera);
 
   _uploadNewPhotoAndUpdate(context, newPhoto: image);
 }
 
 Future<void> _uploadNewPhotoAndUpdate(BuildContext context,
     {File newPhoto}) async {
-  FirebaseStorage storage = FirebaseStorage.instance;
-  UserModel userModel = Provider.of<UserModel>(context, listen: false);
+  var storage = FirebaseStorage.instance;
+  var userController = Provider.of<UserController>(context, listen: false);
 
-  StorageReference root = storage.ref();
-  StorageReference file = root
-      .child('images_users')
-      .child(userModel.userID)
-      .child(userModel.userID + '.jpg');
+  final root = storage.ref();
+  final file = root
+      .child('users_profile_pictures')
+      .child(userController.userID)
+      .child('${userController.userID}.jpg');
 
-  StorageUploadTask task = file.putFile(newPhoto);
+  var task = file.putFile(newPhoto);
 
   task.events.listen(
-    (StorageTaskEvent storageEvent) {
+    (storageEvent) {
       if (storageEvent.type == StorageTaskEventType.progress) {
         print('Fazendo o upload');
       } else if (storageEvent.type == StorageTaskEventType.success) {
@@ -49,18 +50,18 @@ Future<void> _uploadNewPhotoAndUpdate(BuildContext context,
   );
 
   task.onComplete.then(
-    (StorageTaskSnapshot snapshot) async {
+    (snapshot) async {
       var newImageURI = await snapshot.ref.getDownloadURL();
 
       // Updating the image locally
-      userModel.updateImageURI(newImageURI);
+      userController.updateImageURI(newImageURI);
 
       // Updating in Firestore
-      Firestore database = Firestore.instance;
-      Map<String, dynamic> newImageData = {'imageURI': newImageURI};
+      var database = Firestore.instance;
+      final newImageData = {'imageURI': newImageURI};
       database
           .collection('users')
-          .document(userModel.userID)
+          .document(userController.userID)
           .updateData(newImageData);
     },
   );

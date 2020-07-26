@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../../components/playlist_tile.dart';
+
 import '../../../components/favorite_songs_tile.dart';
+import '../../../components/playlist_tile.dart';
 
 class PlaylistsTab extends StatelessWidget {
   @override

@@ -55,23 +55,12 @@ class RoundedButton extends StatelessWidget {
           padding: const EdgeInsets.all(18.0),
           child: Center(
             child: icon != null
-                ? Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                        child: icon,
+                ? Text(
+                  label,
+                  style: Theme.of(context).textTheme.subtitle1.copyWith(
+                        color: textColor ?? null,
                       ),
-                      Expanded(
-                        child: Text(
-                          label,
-                          style: Theme.of(context).textTheme.subtitle1.copyWith(
-                                color: textColor != null ? textColor : null,
-                              ),
-                        ),
-                      ),
-                    ],
-                  )
+                )
                 : Text(
                     label,
                     style: Theme.of(context).textTheme.subtitle1.copyWith(

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:provider/provider.dart';
+
 import '../../components/rounded_button.dart';
-import '../../model/user_data/user_model.dart';
-import 'change_profile_photo.dart';
+import '../../controllers/settings/change_profile_photo.dart';
+import '../../controllers/user/user_controller.dart';
 
 class ProfileSettingsPage extends StatelessWidget {
   static const String id = 'profile_settings_page';
@@ -18,8 +19,8 @@ class ProfileSettingsPage extends StatelessWidget {
           style: Theme.of(context).textTheme.headline6,
         ),
       ),
-      body: Consumer<UserModel>(
-        builder: (context, userModel, child) {
+      body: Consumer<UserController>(
+        builder: (context, userController, child) {
           return Container(
             padding: const EdgeInsets.symmetric(horizontal: 15.0),
             height: MediaQuery.of(context).size.height,
@@ -31,8 +32,7 @@ class ProfileSettingsPage extends StatelessWidget {
                     height: 150.0,
                     width: 150.0,
                     child: CircleAvatar(
-                      backgroundImage: NetworkImage(userModel.imageURI),
-                    ),
+                        backgroundImage: NetworkImage(userController.imageURI)),
                   ),
                 ),
                 Padding(
@@ -40,11 +40,11 @@ class ProfileSettingsPage extends StatelessWidget {
                   child: Column(
                     children: [
                       Text(
-                        userModel.userName,
+                        userController.userName,
                         style: Theme.of(context).textTheme.subtitle1,
                       ),
                       Text(
-                        userModel.userEmail,
+                        userController.userEmail,
                         style: Theme.of(context).textTheme.subtitle2,
                       ),
                     ],
@@ -56,7 +56,7 @@ class ProfileSettingsPage extends StatelessWidget {
                     label: 'Alterar a foto de perfil',
                     enabledColor: Theme.of(context).backgroundColor,
                     splashColor: Theme.of(context).scaffoldBackgroundColor,
-                    isEnabled: userModel.type == 'Email',
+                    isEnabled: userController.type == 'Email',
                     onTap: () {
                       showBottomSheet(
                         context: context,
@@ -138,7 +138,7 @@ class ProfileSettingsPage extends StatelessWidget {
                   splashColor: Theme.of(context).primaryColor.withOpacity(0.8),
                   isEnabled: true,
                   onTap: () {
-                    userModel.signOutUser(context);
+                    userController.signOutUser(context);
                   },
                 ),
               ],

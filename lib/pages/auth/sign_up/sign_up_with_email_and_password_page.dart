@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../../model/sign_up/email_and_password_sign_up.dart';
-import '../../../model/sign_up/sign_up_model.dart';
-import '../../../model/user.dart';
+
 import '../../../components/rounded_button.dart';
 import '../../../components/rounded_text_field.dart';
+import '../../../controllers/auth/sign_up/email_and_password_sign_up.dart';
+import '../../../controllers/auth/sign_up/sign_up_controller.dart';
+import '../../../models/user.dart';
 
 class SignUpWithEmailAndPasswordPage extends StatelessWidget {
   static String id = 'sign_up_with_email_and_password_page';
@@ -16,8 +17,8 @@ class SignUpWithEmailAndPasswordPage extends StatelessWidget {
     final _passwordTextField = TextEditingController();
     final _passwordConfirmationTextField = TextEditingController();
 
-    return Consumer<SignUpModel>(
-      builder: (context, signUpModel, child) {
+    return Consumer<SignUpController>(
+      builder: (context, signUpController, child) {
         return Scaffold(
           body: SingleChildScrollView(
             child: Container(
@@ -48,8 +49,8 @@ class SignUpWithEmailAndPasswordPage extends StatelessWidget {
                         padding: EdgeInsets.symmetric(vertical: 18.0),
                         keyboardType: TextInputType.emailAddress,
                         onChanged: () {
-                          signUpModel.isNameValid(_nameTextField.text);
-                          signUpModel.canProceed();
+                          signUpController.isNameValid(_nameTextField.text);
+                          signUpController.canProceed();
                         },
                       ),
                       Padding(
@@ -60,8 +61,8 @@ class SignUpWithEmailAndPasswordPage extends StatelessWidget {
                           padding: EdgeInsets.symmetric(vertical: 18.0),
                           keyboardType: TextInputType.emailAddress,
                           onChanged: () {
-                            signUpModel.isEmailValid(_emailTextField.text);
-                            signUpModel.canProceed();
+                            signUpController.isEmailValid(_emailTextField.text);
+                            signUpController.canProceed();
                           },
                         ),
                       ),
@@ -70,8 +71,9 @@ class SignUpWithEmailAndPasswordPage extends StatelessWidget {
                         hintText: 'Escolha uma senha forte',
                         padding: EdgeInsets.symmetric(vertical: 18.0),
                         onChanged: () {
-                          signUpModel.isPasswordValid(_passwordTextField.text);
-                          signUpModel.canProceed();
+                          signUpController
+                              .isPasswordValid(_passwordTextField.text);
+                          signUpController.canProceed();
                         },
                         keyboardType: TextInputType.visiblePassword,
                         obscureText: true,
@@ -83,11 +85,11 @@ class SignUpWithEmailAndPasswordPage extends StatelessWidget {
                           hintText: 'Digite a senha novamente',
                           padding: EdgeInsets.symmetric(vertical: 18.0),
                           onChanged: () {
-                            signUpModel.passwordsMatch(
+                            signUpController.passwordsMatch(
                               _passwordTextField.text,
                               _passwordConfirmationTextField.text,
                             );
-                            signUpModel.canProceed();
+                            signUpController.canProceed();
                           },
                           keyboardType: TextInputType.visiblePassword,
                           obscureText: true,
@@ -95,7 +97,7 @@ class SignUpWithEmailAndPasswordPage extends StatelessWidget {
                       ),
                       RoundedButton(
                         label: 'Cadastrar-se no Firefly',
-                        isEnabled: signUpModel.isEnabled,
+                        isEnabled: signUpController.isEnabled,
                         onTap: () {
                           signUpUserWithEmailAndPassword(
                             context,
@@ -113,6 +115,7 @@ class SignUpWithEmailAndPasswordPage extends StatelessWidget {
                     ],
                   ),
                   Text(
+                    // ignore: lines_longer_than_80_chars
                     'Ao cadastrar-se com email e senha, você aceita os termos de uso da plataforma.',
                     textAlign: TextAlign.center,
                     style: Theme.of(context)

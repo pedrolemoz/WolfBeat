@@ -1,8 +1,9 @@
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter/material.dart';
-import 'sign_in_with_email_and_password_page.dart';
+
 import '../../../components/rounded_button.dart';
-// import 'sign_in_google_page.dart';
+import '../auth_with_google_page.dart';
+import 'sign_in_with_email_and_password_page.dart';
 
 class SignInPage extends StatelessWidget {
   static String id = 'sign_in_page';
@@ -36,7 +37,7 @@ class SignInPage extends StatelessWidget {
                   RoundedButton(
                     label: 'Fazer login com o Google',
                     onTap: () {
-                      // Navigator.pushNamed(context, SignInGooglePage.id);
+                      Navigator.pushNamed(context, AuthWithGooglePage.id);
                     },
                     enabledColor: Color(0xFFF0F0F5),
                     icon:
@@ -70,6 +71,7 @@ class SignInPage extends StatelessWidget {
                 ],
               ),
               Text(
+                // ignore: lines_longer_than_80_chars
                 'Ao entrar com Google, Facebook ou com email e senha, você aceita os termos de uso das respectivas plataformas.',
                 textAlign: TextAlign.center,
                 style: Theme.of(context)

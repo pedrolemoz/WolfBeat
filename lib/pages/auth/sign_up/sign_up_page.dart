@@ -1,8 +1,9 @@
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter/material.dart';
-import 'sign_up_with_email_and_password_page.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 import '../../../components/rounded_button.dart';
-// import 'sign_in_google_page.dart';
+import '../auth_with_google_page.dart';
+import 'sign_up_with_email_and_password_page.dart';
 
 class SignUpPage extends StatelessWidget {
   static String id = 'sign_up_page';
@@ -36,7 +37,7 @@ class SignUpPage extends StatelessWidget {
                   RoundedButton(
                     label: 'Cadastrar-se com o Google',
                     onTap: () {
-                      // Navigator.pushNamed(context, SignInGooglePage.id);
+                      Navigator.pushNamed(context, AuthWithGooglePage.id);
                     },
                     enabledColor: Color(0xFFF0F0F5),
                     icon:
@@ -61,7 +62,9 @@ class SignUpPage extends StatelessWidget {
                     label: 'Cadastrar-se com o email e senha',
                     onTap: () {
                       Navigator.pushNamed(
-                          context, SignUpWithEmailAndPasswordPage.id);
+                        context,
+                        SignUpWithEmailAndPasswordPage.id,
+                      );
                     },
                     borderColor: Colors.white,
                     splashColor: Colors.black,
@@ -70,6 +73,7 @@ class SignUpPage extends StatelessWidget {
                 ],
               ),
               Text(
+                // ignore: lines_longer_than_80_chars
                 'Ao cadastrar-se com Google, Facebook ou com email e senha, você aceita os termos de uso das respectivas plataformas.',
                 textAlign: TextAlign.center,
                 style: Theme.of(context)

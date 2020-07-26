@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../../model/sign_in/email_and_password_sign_in.dart';
-import '../../../model/sign_in/sign_in_model.dart';
-import '../../../model/user.dart';
+
 import '../../../components/rounded_button.dart';
 import '../../../components/rounded_text_field.dart';
+import '../../../controllers/auth/sign_in/email_and_password_sign_in.dart';
+import '../../../controllers/auth/sign_in/sign_in_controller.dart';
+import '../../../models/user.dart';
 
 class SignInWithEmailAndPasswordPage extends StatelessWidget {
   static String id = 'sign_in_with_email_and_password_page';
@@ -14,8 +15,8 @@ class SignInWithEmailAndPasswordPage extends StatelessWidget {
     final _emailTextField = TextEditingController();
     final _passwordTextField = TextEditingController();
 
-    return Consumer<SignInModel>(
-      builder: (context, signInModel, child) {
+    return Consumer<SignInController>(
+      builder: (context, signInController, child) {
         return Scaffold(
           body: SingleChildScrollView(
             child: Container(
@@ -46,8 +47,8 @@ class SignInWithEmailAndPasswordPage extends StatelessWidget {
                         padding: EdgeInsets.symmetric(vertical: 18.0),
                         keyboardType: TextInputType.emailAddress,
                         onChanged: () {
-                          signInModel.isEmailValid(_emailTextField.text);
-                          signInModel.canProceed();
+                          signInController.isEmailValid(_emailTextField.text);
+                          signInController.canProceed();
                         },
                       ),
                       Padding(
@@ -57,9 +58,9 @@ class SignInWithEmailAndPasswordPage extends StatelessWidget {
                           hintText: 'Insira sua senha',
                           padding: EdgeInsets.symmetric(vertical: 18.0),
                           onChanged: () {
-                            signInModel
+                            signInController
                                 .isPasswordValid(_passwordTextField.text);
-                            signInModel.canProceed();
+                            signInController.canProceed();
                           },
                           keyboardType: TextInputType.visiblePassword,
                           obscureText: true,
@@ -67,7 +68,7 @@ class SignInWithEmailAndPasswordPage extends StatelessWidget {
                       ),
                       RoundedButton(
                         label: 'Entrar no Firefly',
-                        isEnabled: signInModel.isEnabled,
+                        isEnabled: signInController.isEnabled,
                         onTap: () {
                           loginUserWithEmailAndPassword(
                             context,
@@ -82,6 +83,7 @@ class SignInWithEmailAndPasswordPage extends StatelessWidget {
                     ],
                   ),
                   Text(
+                    // ignore: lines_longer_than_80_chars
                     'Ao entrar com email e senha, você aceita os termos de uso da plataforma.',
                     textAlign: TextAlign.center,
                     style: Theme.of(context)

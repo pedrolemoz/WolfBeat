@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:provider/provider.dart';
+
 import '../../components/music_tile.dart';
+import '../../controllers/songs/songs_controller.dart';
 
 class FavoriteSongsPage extends StatefulWidget {
   static const String id = 'favorite_songs_page';
@@ -43,16 +46,17 @@ class _FavoriteSongsPageState extends State<FavoriteSongsPage> {
           size: 30.0,
         ),
       ),
-      body: ListView.builder(
-        itemCount: 15,
-        padding: EdgeInsets.symmetric(vertical: 13.0),
-        physics: BouncingScrollPhysics(),
-        itemBuilder: (context, index) {
-          return MusicTile(
-            index: index,
-            image: Image.network(
-              'https://images-na.ssl-images-amazon.com/images/I/815aiIN6wmL.jpg',
-            ),
+      body: Consumer<SongsController>(
+        builder: (context, songsController, child) {
+          return ListView.builder(
+            itemCount: songsController.songs.length,
+            padding: EdgeInsets.symmetric(vertical: 13.0),
+            physics: BouncingScrollPhysics(),
+            itemBuilder: (context, index) {
+              return MusicTile(
+                song: songsController.songs[index],
+              );
+            },
           );
         },
       ),

@@ -10,8 +10,8 @@ class SplashSreen extends StatelessWidget {
   static const String id = 'splash_screen_page';
 
   Future<void> checkUserAuth(BuildContext context) async {
-    FirebaseAuth auth = FirebaseAuth.instance;
-    FirebaseUser user = await auth.currentUser();
+    var auth = FirebaseAuth.instance;
+    var user = await auth.currentUser();
 
     Navigator.pushNamedAndRemoveUntil(
       context,

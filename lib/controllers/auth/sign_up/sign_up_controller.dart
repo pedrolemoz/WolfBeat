@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 
-class SignUpModel extends ChangeNotifier {
+class SignUpController extends ChangeNotifier {
   bool _validName = false;
   bool _validEmail = false;
   bool _validPassword = false;
@@ -15,7 +15,7 @@ class SignUpModel extends ChangeNotifier {
 
   void isPasswordValid(String password) => _validPassword = password.length > 6;
 
-  void passwordsMatch(String password, passwordConfirmation) =>
+  void passwordsMatch(String password, String passwordConfirmation) =>
       _passwordsMatch = password == passwordConfirmation;
 
   void canProceed() {

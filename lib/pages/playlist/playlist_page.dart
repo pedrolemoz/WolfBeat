@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:provider/provider.dart';
+
 import '../../components/music_tile.dart';
+import '../../controllers/songs/songs_controller.dart';
 
 class PlaylistPage extends StatefulWidget {
   static const String id = 'playlist_page';
@@ -45,15 +48,15 @@ class _PlaylistPageState extends State<PlaylistPage> {
         ),
       ),
       body: ListView.builder(
-        itemCount: 15,
+        itemCount: Provider.of<SongsController>(context).songs.length,
         padding: EdgeInsets.symmetric(vertical: 13.0),
         physics: BouncingScrollPhysics(),
         itemBuilder: (context, index) {
           return MusicTile(
-            index: index,
-            image: Image.network(
-              'https://images-na.ssl-images-amazon.com/images/I/815aiIN6wmL.jpg',
-            ),
+            song: Provider.of<SongsController>(context).songs[index],
+            // image: Image.network(
+            //   'https://images-na.ssl-images-amazon.com/images/I/815aiIN6wmL.jpg',
+            // ),
           );
         },
       ),

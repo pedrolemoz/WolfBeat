@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:provider/provider.dart';
+
+import '../controllers/player/player_controller.dart';
+import '../models/song.dart';
 import '../pages/player/player_page.dart';
 
 class MusicTile extends StatelessWidget {
-  MusicTile({@required this.index, this.image});
+  MusicTile({@required this.song});
 
-  final int index;
-  final Image image;
+  final Song song;
 
   @override
   Widget build(BuildContext context) {
@@ -14,6 +17,9 @@ class MusicTile extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: 2.0),
       child: GestureDetector(
         onTap: () {
+          Provider.of<PlayerController>(context, listen: false).stop();
+          Provider.of<PlayerController>(context, listen: false)
+              .updateCurrentSong(song);
           Navigator.pushNamed(context, PlayerPage.id);
         },
         onLongPress: () {
@@ -83,9 +89,11 @@ class MusicTile extends StatelessWidget {
           );
         },
         child: ListTile(
-          leading: image != null
+          leading: song.artworkURL != null
               ? ClipRRect(
-                  borderRadius: BorderRadius.circular(10.0), child: image)
+                  borderRadius: BorderRadius.circular(10.0),
+                  child: Image.network(song.artworkURL),
+                )
               : Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8.0),
@@ -103,13 +111,13 @@ class MusicTile extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                'Música ${index + 1}',
+                song.title,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: Theme.of(context).textTheme.subtitle1,
               ),
               Text(
-                'Artista desconhecido',
+                song.artist,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: Theme.of(context).textTheme.subtitle2,

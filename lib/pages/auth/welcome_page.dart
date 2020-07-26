@@ -1,6 +1,6 @@
-import '../../components/rounded_button.dart';
 import 'package:flutter/material.dart';
 
+import '../../components/rounded_button.dart';
 import 'sign_in/sign_in_page.dart';
 import 'sign_up/sign_up_page.dart';
 

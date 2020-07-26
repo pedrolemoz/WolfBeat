@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+
 import '../../pages/home/home_page.dart';
 import '../../pages/library/library_page.dart';
 import '../../pages/search/search_page.dart';
@@ -45,7 +46,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
         ),
         showUnselectedLabels: true,
         type: BottomNavigationBarType.fixed,
-        onTap: (int index) {
+        onTap: (index) {
           setState(() {
             _currentIndex = index;
           });

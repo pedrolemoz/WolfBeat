@@ -18,11 +18,12 @@ class _SearchPageState extends State<SearchPage> {
           textController: _textController,
           hintText: 'Buscar músicas, artistas ou álbuns',
           icon: Icon(FlutterIcons.search_mdi),
-          onChanged: (){},
+          onChanged: () {},
           onIconTap: () {},
         ),
       ),
       body: GridView.builder(
+        // ignore: lines_longer_than_80_chars
         // Usar uma lista contendo os estilos, e buscar usando o where do Firebase
         itemCount: 15,
         shrinkWrap: true,

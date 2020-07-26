@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 
-class SignInModel extends ChangeNotifier {
+class SignInController extends ChangeNotifier {
   bool _validEmail = false;
   bool _validPassword = false;
   bool isEnabled = false;

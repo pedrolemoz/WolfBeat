@@ -1,28 +1,30 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
 import '../../pages/auth/welcome_page.dart';
 
-class UserModel extends ChangeNotifier {
-  UserModel() {
+class UserController extends ChangeNotifier {
+  UserController() {
     recoverUserData();
   }
 
-  String userID;
-  String userName;
-  String userEmail;
-  String imageURI;
-  String type;
+  String userID = '';
+  String userName = '';
+  String userEmail =
+      'https://www.musicdot.com.br/assets/api/share/musicdot.jpg';
+  String imageURI = '';
+  String type = '';
 
   Future<void> recoverUserData() async {
-    final auth = FirebaseAuth.instance;
-    final Firestore database = Firestore.instance;
-    final user = await auth.currentUser();
+    var auth = FirebaseAuth.instance;
+    var database = Firestore.instance;
+    var user = await auth.currentUser();
 
-    DocumentSnapshot snapshot =
-        await database.collection('users').document(user.uid).get();
+    var snapshot = await database.collection('users').document(user.uid).get();
 
-    Map<String, dynamic> data = snapshot.data;
+    var data = snapshot.data;
 
     if (data.isNotEmpty) {
       userID = user.uid;
@@ -36,10 +38,14 @@ class UserModel extends ChangeNotifier {
   }
 
   Future<void> signOutUser(BuildContext context) async {
-    final auth = FirebaseAuth.instance;
-    await auth.signOut();
+    var auth = FirebaseAuth.instance;
+    var googleSignIn = GoogleSignIn();
 
-    // TODO: Adicionar o sign out do Google
+    await auth.signOut().then((value) {
+      googleSignIn.signOut().then((_) {
+        print('Logged out');
+      });
+    });
 
     Navigator.pushNamedAndRemoveUntil(
       context,

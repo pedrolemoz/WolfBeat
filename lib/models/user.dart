@@ -1,46 +1,49 @@
-import 'package:flutter/foundation.dart';
-
 class User {
   User({
-    @required this.password,
-    @required this.email,
+    this.password,
+    this.email,
     this.name,
     this.imageURI,
+    this.uuid,
   });
 
   String name;
   String password;
   String email;
   String imageURI;
+  String uuid;
 
   Map<String, dynamic> toMap() {
-    Map<String, dynamic> map = {
+    final map = <String, dynamic>{
       'name': name,
       'email': email,
       'type': 'Email',
-      'imageURI': imageURI
+      'imageURI': imageURI,
+      'uuid': uuid,
     };
 
     return map;
   }
 
   Map<String, dynamic> toMapGoogle() {
-    Map<String, dynamic> mapGoogle = {
+    final mapGoogle = {
       'name': name,
       'email': email,
       'type': 'Google',
-      'imageURI': imageURI
+      'imageURI': imageURI,
+      'uuid': uuid,
     };
 
     return mapGoogle;
   }
 
   Map<String, dynamic> toMapFacebook() {
-    Map<String, dynamic> mapFacebook = {
+    final mapFacebook = {
       'name': name,
       'email': email,
       'type': 'Facebook',
-      'imageURI': imageURI
+      'imageURI': imageURI,
+      'uuid': uuid,
     };
 
     return mapFacebook;

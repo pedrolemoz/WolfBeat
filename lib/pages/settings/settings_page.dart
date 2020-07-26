@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:provider/provider.dart';
 
-import '../../model/user_data/user_model.dart';
+import '../../controllers/user/user_controller.dart';
 import 'profile_settings_page.dart';
 
 class SettingsPage extends StatelessWidget {
@@ -18,8 +18,8 @@ class SettingsPage extends StatelessWidget {
           style: Theme.of(context).textTheme.headline6,
         ),
       ),
-      body: Consumer<UserModel>(
-        builder: (context, userModel, child) {
+      body: Consumer<UserController>(
+        builder: (context, userController, child) {
           return Padding(
             padding: EdgeInsets.symmetric(horizontal: 15.0),
             child: ListView(
@@ -36,10 +36,10 @@ class SettingsPage extends StatelessWidget {
                     Navigator.pushNamed(context, ProfileSettingsPage.id);
                   },
                   leading: CircleAvatar(
-                    backgroundImage: NetworkImage(userModel.imageURI),
+                    backgroundImage: NetworkImage(userController.imageURI),
                   ),
                   title: Text(
-                    userModel.userName,
+                    userController.userName,
                     style: Theme.of(context)
                         .textTheme
                         .headline6
@@ -47,7 +47,7 @@ class SettingsPage extends StatelessWidget {
                   ),
                   trailing: GestureDetector(
                     onTap: () {
-                      userModel.signOutUser(context);
+                      userController.signOutUser(context);
                     },
                     child: Icon(
                       FlutterIcons.log_out_fea,
