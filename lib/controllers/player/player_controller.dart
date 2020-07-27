@@ -8,7 +8,7 @@ class PlayerController extends ChangeNotifier {
   bool isPlaying = false;
   int currentTime;
 
-  var audioPlayer = AudioPlayer();
+  AudioPlayer audioPlayer = AudioPlayer();
 
   void updateCurrentSong(Song newSong) {
     currentSong = newSong;
@@ -16,7 +16,7 @@ class PlayerController extends ChangeNotifier {
   }
 
   Future<void> play() async {
-    int result = await audioPlayer.play(currentSong.songURL);
+    var result = await audioPlayer.play(currentSong.songURL);
     if (result == 1) {
       print('Reproduzindo');
       isPlaying = true;
@@ -26,7 +26,7 @@ class PlayerController extends ChangeNotifier {
 
   Future<void> pause() async {
     print(currentSong.songURL);
-    int result = await audioPlayer.pause();
+    var result = await audioPlayer.pause();
     if (result == 1) {
       print('Pausado');
       isPlaying = false;
@@ -36,7 +36,7 @@ class PlayerController extends ChangeNotifier {
 
   Future<void> stop() async {
     print(currentSong.songURL);
-    int result = await audioPlayer.stop();
+    var result = await audioPlayer.stop();
     if (result == 1) {
       print('Parado');
       isPlaying = false;

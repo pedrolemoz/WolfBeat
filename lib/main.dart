@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import 'controllers/auth/sign_in/sign_in_controller.dart';
 import 'controllers/auth/sign_up/sign_up_controller.dart';
 import 'controllers/player/player_controller.dart';
+import 'controllers/search/search_controller.dart';
 import 'controllers/songs/songs_controller.dart';
 import 'controllers/user/user_controller.dart';
-
 import 'pages/auth/auth_with_google_page.dart';
 import 'pages/auth/sign_in/sign_in_page.dart';
 import 'pages/auth/sign_in/sign_in_with_email_and_password_page.dart';
@@ -43,6 +44,9 @@ class Firefly extends StatelessWidget {
         ),
         ChangeNotifierProvider<PlayerController>(
           create: (context) => PlayerController(),
+        ),
+        ChangeNotifierProvider<SearchController>(
+          create: (context) => SearchController(),
         ),
       ],
       child: MaterialApp(

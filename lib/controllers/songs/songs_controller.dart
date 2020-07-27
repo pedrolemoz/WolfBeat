@@ -18,8 +18,8 @@ class SongsController extends ChangeNotifier {
   Future<void> fetchSongs() async {
     var database = Firestore.instance;
 
-    database.collection('songs').getDocuments().then((querySnapshot) {
-      querySnapshot.documents.forEach((songFromFirestore) {
+    database.collection('songs').getDocuments().then((snapshot) {
+      snapshot.documents.forEach((songFromFirestore) {
         final song = Song(
           title: songFromFirestore.data['title'],
           songURL: songFromFirestore.data['songURL'],
