@@ -12,9 +12,8 @@ class UserController extends ChangeNotifier {
 
   String userID = '';
   String userName = '';
-  String userEmail =
-      'https://www.musicdot.com.br/assets/api/share/musicdot.jpg';
-  String imageURI = '';
+  String userEmail = '';
+  String imageURI = 'https://www.musicdot.com.br/assets/api/share/musicdot.jpg';
   String type = '';
 
   Future<void> recoverUserData() async {
