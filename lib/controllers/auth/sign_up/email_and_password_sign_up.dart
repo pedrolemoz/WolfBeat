@@ -5,6 +5,10 @@ import 'package:flutter/material.dart';
 import '../../../models/user.dart';
 import '../../../pages/bottom_navigation/bottom_navigation_bar.dart';
 
+/// [signUpUserWithEmailAndPassword] is a method that connects with the Firebase
+/// server, register a email, and redirects the user to the page [BottomNavigation].
+/// It's a auth with a navigator inside.
+/// Used in [SignUpWithEmailAndPasswordPage].
 Future<void> signUpUserWithEmailAndPassword(
     BuildContext context, User user) async {
   assert(context != null);

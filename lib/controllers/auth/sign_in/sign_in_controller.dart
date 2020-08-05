@@ -1,5 +1,8 @@
 import 'package:flutter/foundation.dart';
 
+/// [SignInController] is a widget which validates the login of an email by the user.
+/// It's a set of methods.
+/// Used in [SignInWithEmailAndPasswordPage].
 class SignInController extends ChangeNotifier {
   bool _validEmail = false;
   bool _validPassword = false;

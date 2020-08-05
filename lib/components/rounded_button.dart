@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+/// [RoundedButton] is a widget that create a customized button.
+/// It's a Ink with a BoxDecoration and a InkWell inside.
+/// Used in [SignInPage], [SignInWithEmailAndPasswordPage], [SignUpPage],
+/// [SignUpWithEmailAndPasswordPage], [WelcomePage], [ProfileSettingsPage].
 class RoundedButton extends StatelessWidget {
   final String label;
   final Function onTap;
@@ -56,11 +60,11 @@ class RoundedButton extends StatelessWidget {
           child: Center(
             child: icon != null
                 ? Text(
-                  label,
-                  style: Theme.of(context).textTheme.subtitle1.copyWith(
-                        color: textColor ?? null,
-                      ),
-                )
+                    label,
+                    style: Theme.of(context).textTheme.subtitle1.copyWith(
+                          color: textColor ?? null,
+                        ),
+                  )
                 : Text(
                     label,
                     style: Theme.of(context).textTheme.subtitle1.copyWith(

@@ -3,6 +3,9 @@ import 'package:flutter/foundation.dart';
 
 import '../../models/song.dart';
 
+/// [PlayerController] is a widget which have the methods for the music player.
+/// It's a set of methods.
+/// Used in [MusicTile], [PlayerPage].
 class PlayerController extends ChangeNotifier {
   Song currentSong;
   bool isPlaying = false;

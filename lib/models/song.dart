@@ -1,5 +1,8 @@
 import 'package:flutter/foundation.dart';
 
+/// [Song] is a class that represents the song object.
+/// It's the atributes of a song.
+/// Used in [MusicTile], [PlayerController], [SearchController], [SongsController].
 class Song {
   Song({
     @required this.title,

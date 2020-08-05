@@ -3,6 +3,9 @@ import 'package:flutter/foundation.dart';
 
 import '../../models/song.dart';
 
+/// [SongsController] is a widget that receives the song information from Firebase.
+/// It's a set of methods.
+/// Used in [PlaylistPage], [FavoriteSongsPage].
 class SongsController extends ChangeNotifier {
   SongsController() {
     fetchSongs();

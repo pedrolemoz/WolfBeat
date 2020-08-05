@@ -3,6 +3,9 @@ import 'package:flutter/foundation.dart';
 
 import '../../models/song.dart';
 
+/// [SearchController] is a widget which have the methods to search for musics.
+/// It's a set of methods.
+/// Used in [SearchPage].
 class SearchController extends ChangeNotifier {
   Iterable<Song> searchResult = [];
 

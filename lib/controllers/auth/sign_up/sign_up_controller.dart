@@ -1,5 +1,8 @@
 import 'package:flutter/foundation.dart';
 
+/// [FavoriteSongsCard] is a widget which validates the creation of an email by the user.
+/// It's a set of methods.
+/// Used in [SignUpWithEmailAndPasswordPage].
 class SignUpController extends ChangeNotifier {
   bool _validName = false;
   bool _validEmail = false;

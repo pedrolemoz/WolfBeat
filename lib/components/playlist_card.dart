@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+/// [PlaylistCard] is a widget that redirects the user to ***.
+/// It's a Container with a music cover inside.
+/// Used in [HomePage].
 class PlaylistCard extends StatelessWidget {
   PlaylistCard({@required this.index});
 

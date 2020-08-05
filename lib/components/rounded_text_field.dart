@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+/// [RoundedTextField] is a widget that create a customized TextField.
+/// It's a Textfield.
+/// Used in [SignInWithEmailAndPasswordPage], [SignUpWithEmailAndPasswordPage], [SearchPage].
 class RoundedTextField extends StatelessWidget {
   const RoundedTextField({
     @required this.textController,
