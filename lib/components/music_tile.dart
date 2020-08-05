@@ -6,6 +6,10 @@ import '../controllers/player/player_controller.dart';
 import '../models/song.dart';
 import '../pages/player/player_page.dart';
 
+/// [MusicTile] is a widget that redirects the user to the player in the selected song.
+/// It's a GestureDetector with a provider for the [PlayerController], a onLongPress for
+/// show a BottonSheet, and have the format of a ListTile with a music cover.
+/// Used in [FavoriteSongsPage].
 class MusicTile extends StatelessWidget {
   MusicTile({@required this.song});
 

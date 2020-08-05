@@ -6,6 +6,10 @@ import '../../../models/user.dart';
 import '../../../pages/bottom_navigation/bottom_navigation_bar.dart';
 import '../../user/user_controller.dart';
 
+/// [loginUserWithEmailAndPassword] is a Method that connects with the Firebase
+/// server, login the user, and redirects the user to the page [BottomNavigation].
+/// It's a auth with a Navigator inside.
+/// Used in [SignInWithEmailAndPasswordPage].
 Future<void> loginUserWithEmailAndPassword(
     BuildContext context, User user) async {
   assert(context != null);

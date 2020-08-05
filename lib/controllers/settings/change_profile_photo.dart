@@ -8,6 +8,10 @@ import 'package:provider/provider.dart';
 
 import '../user/user_controller.dart';
 
+/// [changeProfilePhotoFromGallery] is a widget which have the methods for
+/// switch the profile photo.
+/// It's a set of methods.
+/// Used in [ProfileSettingsPage].
 Future<void> changeProfilePhotoFromGallery(BuildContext context) async {
   // final imagePicker = ImagePicker();
 

@@ -6,6 +6,10 @@ import 'package:google_sign_in/google_sign_in.dart';
 import '../../models/user.dart';
 import '../../pages/bottom_navigation/bottom_navigation_bar.dart';
 
+/// [authWithGoogle] is a method that connects with the Firebase server,
+/// register a google email, and redirects the user to the page [BottomNavigation].
+/// It's a if, with db and a navigator inside.
+/// Used in [AuthWithGooglePage].
 Future<void> authWithGoogle(BuildContext context) async {
   var auth = FirebaseAuth.instance;
   var googleSignIn = GoogleSignIn();

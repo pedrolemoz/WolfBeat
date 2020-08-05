@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import '../pages/favorite_songs/favorite_songs_page.dart';
 
+/// [FavoriteSongsCard] is a widget that redirects the user to [FavoriteSongsPage].
+/// It's a Container with a music cover inside.
+/// Used in [HomePage].
 class FavoriteSongsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

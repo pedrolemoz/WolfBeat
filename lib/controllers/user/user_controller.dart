@@ -5,6 +5,9 @@ import 'package:flutter/material.dart';
 
 import '../../pages/auth/welcome_page.dart';
 
+/// [UserController] is a widget that receives the user information from Firebase.
+/// It's a set of methods.
+/// Used in [ProfileSettingsPage], [SettingsPage], [loginUserWithEmailAndPassword].
 class UserController extends ChangeNotifier {
   UserController() {
     recoverUserData();

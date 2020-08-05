@@ -3,6 +3,9 @@ import 'package:flutter_icons/flutter_icons.dart';
 
 import '../pages/favorite_songs/favorite_songs_page.dart';
 
+/// [FavoriteSonsTile] is a widget that redirects the user to [FavoriteSongsPage].
+/// It's a Container with a disc icon inside.
+/// Used in [PlaylistsTab].
 class FavoriteSongsTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

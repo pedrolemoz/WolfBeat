@@ -1,3 +1,6 @@
+/// [User] is a class that represents the user object.
+/// It's the atributes of a user.
+/// Used in [loginUserWithEmailAndPassword], [signUpUserWithEmailAndPassword], [authWithGoogle].
 class User {
   User({
     this.password,
