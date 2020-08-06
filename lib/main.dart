@@ -1,26 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'controllers/auth/sign_in/sign_in_controller.dart';
-import 'controllers/auth/sign_up/sign_up_controller.dart';
-import 'controllers/player/player_controller.dart';
-import 'controllers/search/search_controller.dart';
-import 'controllers/songs/songs_controller.dart';
-import 'controllers/user/user_controller.dart';
-import 'pages/auth/auth_with_google_page.dart';
-import 'pages/auth/sign_in/sign_in_page.dart';
-import 'pages/auth/sign_in/sign_in_with_email_and_password_page.dart';
-import 'pages/auth/sign_up/sign_up_page.dart';
-import 'pages/auth/sign_up/sign_up_with_email_and_password_page.dart';
-import 'pages/auth/welcome_page.dart';
-import 'pages/bottom_navigation/bottom_navigation_bar.dart';
-import 'pages/favorite_songs/favorite_songs_page.dart';
-import 'pages/home/home_page.dart';
-import 'pages/library/library_page.dart';
-import 'pages/player/player_page.dart';
-import 'pages/settings/profile_settings_page.dart';
-import 'pages/settings/settings_page.dart';
-import 'pages/splash/splash_screen.dart';
+import 'app/modules/auth/pages/auth_with_google/auth_with_google_page.dart';
+import 'app/modules/auth/pages/sign_in/sign_in_page.dart';
+import 'app/modules/auth/pages/sign_in/sign_in_with_email_and_password_page.dart';
+import 'app/modules/auth/pages/sign_up/sign_up_page.dart';
+import 'app/modules/auth/pages/sign_up/sign_up_with_email_and_password_page.dart';
+import 'app/modules/auth/view_model/sign_in/sign_in_view_model.dart';
+import 'app/modules/auth/view_model/sign_up/sign_up_view_model.dart';
+import 'app/modules/auth/view_model/user/user_view_model.dart';
+import 'app/modules/bottom_navigation/pages/bottom_navigation_bar.dart';
+import 'app/modules/favorite_songs/pages/favorite_songs_page.dart';
+import 'app/modules/home/pages/home_page.dart';
+import 'app/modules/library/pages/library_page.dart';
+import 'app/modules/player/pages/player_page.dart';
+import 'app/modules/player/view_model/player/player_view_model.dart';
+import 'app/modules/player/view_model/song/songs_view_model.dart';
+import 'app/modules/search/view_model/search_view_model.dart';
+import 'app/modules/settings/pages/profile_settings_page.dart';
+import 'app/modules/settings/pages/settings_page.dart';
+import 'app/modules/splash/pages/splash_screen.dart';
+import 'app/modules/welcome/pages/welcome_page.dart';
 import 'utils/themes.dart';
 
 void main() => runApp(Firefly());
@@ -30,23 +30,23 @@ class Firefly extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<SignInController>(
-          create: (context) => SignInController(),
+        ChangeNotifierProvider<SignInViewModel>(
+          create: (context) => SignInViewModel(),
         ),
-        ChangeNotifierProvider<SignUpController>(
-          create: (context) => SignUpController(),
+        ChangeNotifierProvider<SignUpViewModel>(
+          create: (context) => SignUpViewModel(),
         ),
-        ChangeNotifierProvider<UserController>(
-          create: (context) => UserController(),
+        ChangeNotifierProvider<UserViewModel>(
+          create: (context) => UserViewModel(),
         ),
-        ChangeNotifierProvider<SongsController>(
-          create: (context) => SongsController(),
+        ChangeNotifierProvider<SongsViewModel>(
+          create: (context) => SongsViewModel(),
         ),
-        ChangeNotifierProvider<PlayerController>(
-          create: (context) => PlayerController(),
+        ChangeNotifierProvider<PlayerViewModel>(
+          create: (context) => PlayerViewModel(),
         ),
-        ChangeNotifierProvider<SearchController>(
-          create: (context) => SearchController(),
+        ChangeNotifierProvider<SearchViewModel>(
+          create: (context) => SearchViewModel(),
         ),
       ],
       child: MaterialApp(
@@ -56,7 +56,7 @@ class Firefly extends StatelessWidget {
         initialRoute: SplashSreen.id,
         routes: {
           SplashSreen.id: (context) => SplashSreen(),
-          BottomNavigation.id: (context) => BottomNavigation(),
+          BottomNavigator.id: (context) => BottomNavigator(),
           LibraryPage.id: (context) => LibraryPage(),
           PlayerPage.id: (context) => PlayerPage(),
           FavoriteSongsPage.id: (context) => FavoriteSongsPage(),
