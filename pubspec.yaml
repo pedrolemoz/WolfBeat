@@ -18,20 +18,20 @@ dependencies:
   font_awesome_flutter: ^8.8.1
   audioplayers: ^0.15.1
   
-  #firebase
+  # firebase
   firebase_core: ^0.4.5
   cloud_firestore: ^0.13.7
   firebase_auth: ^0.16.1
   firebase_storage: ^3.1.6
 
-  string_to_hex: ^0.1.1+2
   hexcolor: ^1.0.4
 
-  #google sign in
+  # google sign in
   google_sign_in: ^4.5.1
   
-  #image picker
+  # image picker
   image_picker: ^0.6.7+4
+
 dev_dependencies:
   effective_dart: ^1.2.4
   flutter_test:
