@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:get_it/get_it.dart';
 
 import '../../ui_components/music_tile.dart';
 import '../../ui_components/rounded_text_field.dart';
@@ -13,11 +14,12 @@ class SearchPage extends StatefulWidget {
 
 class _SearchPageState extends State<SearchPage> {
   final _searchTextController = TextEditingController();
+  final searchViewModel = GetIt.I.get<SearchViewModel>();
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<SearchViewModel>(
-      builder: (context, searchViewModel, child) {
+    return Observer(
+      builder: (_) {
         return Scaffold(
           appBar: AppBar(
             title: RoundedTextField(

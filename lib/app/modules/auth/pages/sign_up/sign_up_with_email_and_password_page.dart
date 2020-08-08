@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:get_it/get_it.dart';
 
 import '../../../../../core/models/user/user.dart';
 import '../../../ui_components/rounded_button.dart';
@@ -9,6 +10,7 @@ import '../../view_model/sign_up/sign_up_view_model.dart';
 
 class SignUpWithEmailAndPasswordPage extends StatelessWidget {
   static String id = 'sign_up_with_email_and_password_page';
+  final signUpViewModel = GetIt.I.get<SignUpViewModel>();
 
   @override
   Widget build(BuildContext context) {
@@ -17,8 +19,8 @@ class SignUpWithEmailAndPasswordPage extends StatelessWidget {
     final _passwordTextField = TextEditingController();
     final _passwordConfirmationTextField = TextEditingController();
 
-    return Consumer<SignUpViewModel>(
-      builder: (context, signUpViewModel, child) {
+    return Observer(
+      builder: (_) {
         return Scaffold(
           body: SingleChildScrollView(
             child: Container(

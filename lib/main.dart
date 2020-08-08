@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:get_it/get_it.dart';
 
 import 'app/modules/auth/pages/auth_with_google/auth_with_google_page.dart';
 import 'app/modules/auth/pages/sign_in/sign_in_page.dart';
@@ -23,57 +23,60 @@ import 'core/view_model/song/songs_view_model.dart';
 import 'core/view_model/user/user_view_model.dart';
 import 'utils/themes.dart';
 
-void main() => runApp(Firefly());
+void main() {
+  registerSingletons();
+  runApp(Firefly());
+}
+
+/// This function register new singletons to
+/// manage the state of the app
+void registerSingletons() {
+  var getIt = GetIt.I;
+
+  getIt.registerSingleton<UserViewModel>(UserViewModel());
+  getIt.registerSingleton<SignInViewModel>(SignInViewModel());
+  getIt.registerSingleton<SignUpViewModel>(SignUpViewModel());
+  getIt.registerSingleton<SongsViewModel>(SongsViewModel());
+  getIt.registerSingleton<PlayerViewModel>(PlayerViewModel());
+  getIt.registerSingleton<SearchViewModel>(SearchViewModel());
+}
+
+/// This function fetch the required data in order
+/// to start the app
+void initialSetup() {
+  var getIt = GetIt.I;
+  getIt.get<UserViewModel>().recoverUserData();
+  getIt.get<SongsViewModel>().fetchSongs();
+}
 
 /// App root
 class Firefly extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider<SignInViewModel>(
-          create: (context) => SignInViewModel(),
-        ),
-        ChangeNotifierProvider<SignUpViewModel>(
-          create: (context) => SignUpViewModel(),
-        ),
-        ChangeNotifierProvider<UserViewModel>(
-          create: (context) => UserViewModel(),
-        ),
-        ChangeNotifierProvider<SongsViewModel>(
-          create: (context) => SongsViewModel(),
-        ),
-        ChangeNotifierProvider<PlayerViewModel>(
-          create: (context) => PlayerViewModel(),
-        ),
-        ChangeNotifierProvider<SearchViewModel>(
-          create: (context) => SearchViewModel(),
-        ),
-      ],
-      child: MaterialApp(
-        title: 'Firefly',
-        debugShowCheckedModeBanner: false,
-        theme: appTheme,
-        initialRoute: SplashSreen.id,
-        routes: {
-          SplashSreen.id: (context) => SplashSreen(),
-          BottomNavigator.id: (context) => BottomNavigator(),
-          LibraryPage.id: (context) => LibraryPage(),
-          PlayerPage.id: (context) => PlayerPage(),
-          FavoriteSongsPage.id: (context) => FavoriteSongsPage(),
-          HomePage.id: (context) => HomePage(),
-          SettingsPage.id: (context) => SettingsPage(),
-          ProfileSettingsPage.id: (context) => ProfileSettingsPage(),
-          WelcomePage.id: (context) => WelcomePage(),
-          SignInPage.id: (context) => SignInPage(),
-          SignInWithEmailAndPasswordPage.id: (context) =>
-              SignInWithEmailAndPasswordPage(),
-          AuthWithGooglePage.id: (context) => AuthWithGooglePage(),
-          SignUpPage.id: (context) => SignUpPage(),
-          SignUpWithEmailAndPasswordPage.id: (context) =>
-              SignUpWithEmailAndPasswordPage(),
-        },
-      ),
+    initialSetup();
+    return MaterialApp(
+      title: 'Firefly',
+      debugShowCheckedModeBanner: false,
+      theme: appTheme,
+      initialRoute: SplashSreen.id,
+      routes: {
+        SplashSreen.id: (context) => SplashSreen(),
+        BottomNavigator.id: (context) => BottomNavigator(),
+        LibraryPage.id: (context) => LibraryPage(),
+        PlayerPage.id: (context) => PlayerPage(),
+        FavoriteSongsPage.id: (context) => FavoriteSongsPage(),
+        HomePage.id: (context) => HomePage(),
+        SettingsPage.id: (context) => SettingsPage(),
+        ProfileSettingsPage.id: (context) => ProfileSettingsPage(),
+        WelcomePage.id: (context) => WelcomePage(),
+        SignInPage.id: (context) => SignInPage(),
+        SignInWithEmailAndPasswordPage.id: (context) =>
+            SignInWithEmailAndPasswordPage(),
+        AuthWithGooglePage.id: (context) => AuthWithGooglePage(),
+        SignUpPage.id: (context) => SignUpPage(),
+        SignUpWithEmailAndPasswordPage.id: (context) =>
+            SignUpWithEmailAndPasswordPage(),
+      },
     );
   }
 }

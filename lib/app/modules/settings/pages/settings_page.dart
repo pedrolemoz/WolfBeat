@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:get_it/get_it.dart';
 
 import '../../../../core/view_model/user/user_view_model.dart';
 import 'profile_settings_page.dart';
 
 class SettingsPage extends StatelessWidget {
   static const String id = 'settings_page';
+  final userViewModel = GetIt.I.get<UserViewModel>();
 
   @override
   Widget build(BuildContext context) {
@@ -18,8 +20,8 @@ class SettingsPage extends StatelessWidget {
           style: Theme.of(context).textTheme.headline6,
         ),
       ),
-      body: Consumer<UserViewModel>(
-        builder: (context, userViewModel, child) {
+      body: Observer(
+        builder: (_) {
           return Padding(
             padding: EdgeInsets.symmetric(horizontal: 15.0),
             child: ListView(

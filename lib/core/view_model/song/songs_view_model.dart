@@ -1,40 +1,48 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/foundation.dart';
+import 'package:mobx/mobx.dart';
 
 import '../../models/song/song.dart';
 
+part 'songs_view_model.g.dart';
+
 /// [SongsViewModel] receives the song information from Firebase.
 /// Used in [PlaylistPage], [FavoriteSongsPage].
-class SongsViewModel extends ChangeNotifier {
-  SongsViewModel() {
-    fetchSongs();
-  }
+class SongsViewModel = _SongsViewModelBase with _$SongsViewModel;
 
+/// This is a [Store] for [SongsViewModel]
+abstract class _SongsViewModelBase with Store {
+  @observable
   List<Song> songs = [];
 
+  @action
   void addSong(Song song) {
     songs.add(song);
-    notifyListeners();
   }
 
+  @action
   Future<void> fetchSongs() async {
     var database = Firestore.instance;
 
-    database.collection('songs').getDocuments().then((snapshot) {
-      snapshot.documents.forEach((songFromFirestore) {
-        final song = Song(
-          title: songFromFirestore.data['title'],
-          songURL: songFromFirestore.data['songURL'],
-          album: songFromFirestore.data['album'],
-          artist: songFromFirestore.data['artist'],
-          artworkURL: songFromFirestore.data['artworkURL'],
-          duration: songFromFirestore.data['duration'],
-          genre: songFromFirestore.data['genre'],
-          backgroundColor: songFromFirestore.data['backgroundColor'],
-        );
+    database.collection('songs').getDocuments().then(
+      (snapshot) {
+        // ignore: avoid_function_literals_in_foreach_calls
+        snapshot.documents.forEach(
+          (songFromFirestore) {
+            final song = Song(
+              title: songFromFirestore.data['title'],
+              songURL: songFromFirestore.data['songURL'],
+              album: songFromFirestore.data['album'],
+              artist: songFromFirestore.data['artist'],
+              artworkURL: songFromFirestore.data['artworkURL'],
+              duration: songFromFirestore.data['duration'],
+              genre: songFromFirestore.data['genre'],
+              backgroundColor: songFromFirestore.data['backgroundColor'],
+            );
 
-        addSong(song);
-      });
-    });
+            addSong(song);
+          },
+        );
+      },
+    );
   }
 }
