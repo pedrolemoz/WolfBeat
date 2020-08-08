@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
 import '../../../../../../core/models/user/user.dart';
+import '../../../../../../core/view_model/user/user_view_model.dart';
 import '../../../../bottom_navigation/pages/bottom_navigation_bar.dart';
 
 /// [signUpUserWithEmailAndPassword] is a method that connects with the Firebase
@@ -23,13 +25,14 @@ Future<void> signUpUserWithEmailAndPassword(
         .collection('users')
         .document(firebaseUser.user.uid)
         .setData(user.toMap());
+    GetIt.I.get<UserViewModel>().recoverUserData();
     Navigator.pushNamedAndRemoveUntil(
       context,
       BottomNavigator.id,
       (route) => false,
     );
   }).catchError((onError) {
-    print(onError);
-    print('Unable to register. Try again later!');
+    debugPrint(onError);
+    debugPrint('Unable to register. Try again later!');
   });
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
-import 'package:provider/provider.dart';
+import 'package:get_it/get_it.dart';
 
 import '../../../core/models/song/song.dart';
 import '../../../core/view_model/player/player_view_model.dart';
@@ -13,6 +13,7 @@ class MusicTile extends StatelessWidget {
   MusicTile({@required this.song});
 
   final Song song;
+  final playerViewModel = GetIt.I.get<PlayerViewModel>();
 
   @override
   Widget build(BuildContext context) {
@@ -20,9 +21,8 @@ class MusicTile extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: 2.0),
       child: GestureDetector(
         onTap: () {
-          Provider.of<PlayerViewModel>(context, listen: false).stop();
-          Provider.of<PlayerViewModel>(context, listen: false)
-              .updateCurrentSong(song);
+          playerViewModel.stop();
+          playerViewModel.updateCurrentSong(song);
           Navigator.pushNamed(context, PlayerPage.id);
         },
         onLongPress: () {

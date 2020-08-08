@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:get_it/get_it.dart';
 
 import '../../../../core/view_model/song/songs_view_model.dart';
 import '../../ui_components/music_tile.dart';
@@ -12,6 +13,8 @@ class FavoriteSongsPage extends StatefulWidget {
 }
 
 class _FavoriteSongsPageState extends State<FavoriteSongsPage> {
+  final songsViewModel = GetIt.I.get<SongsViewModel>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,20 +49,18 @@ class _FavoriteSongsPageState extends State<FavoriteSongsPage> {
           size: 30.0,
         ),
       ),
-      body: Consumer<SongsViewModel>(
-        builder: (context, songsViewModel, child) {
-          return ListView.builder(
-            itemCount: songsViewModel.songs.length,
-            padding: EdgeInsets.symmetric(vertical: 13.0),
-            physics: BouncingScrollPhysics(),
-            itemBuilder: (context, index) {
-              return MusicTile(
-                song: songsViewModel.songs[index],
-              );
-            },
-          );
-        },
-      ),
+      body: Observer(builder: (_) {
+        return ListView.builder(
+          itemCount: songsViewModel.songs.length,
+          padding: EdgeInsets.symmetric(vertical: 13.0),
+          physics: BouncingScrollPhysics(),
+          itemBuilder: (context, index) {
+            return MusicTile(
+              song: songsViewModel.songs[index],
+            );
+          },
+        );
+      }),
     );
   }
 }

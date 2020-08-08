@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 import '../../../../../core/models/user/user.dart';
+import '../../../../../core/view_model/user/user_view_model.dart';
 import '../../../bottom_navigation/pages/bottom_navigation_bar.dart';
 
 /// [authWithGoogle] is a function that connects with the Firebase server,
@@ -34,6 +36,7 @@ Future<void> authWithGoogle(BuildContext context) async {
         .document(user.uid)
         .setData(userGoogle.toMapGoogle())
         .then((_) {
+      GetIt.I.get<UserViewModel>().recoverUserData();
       Navigator.pushNamedAndRemoveUntil(
         context,
         BottomNavigator.id,

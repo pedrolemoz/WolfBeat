@@ -1,13 +1,20 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/foundation.dart';
+import 'package:mobx/mobx.dart';
 
 import '../../../../core/models/song/song.dart';
 
+part 'search_view_model.g.dart';
+
 /// [SearchViewModel] has methods to perform searchs in database.
 /// Used in [SearchPage].
-class SearchViewModel extends ChangeNotifier {
+class SearchViewModel = _SearchViewModelBase with _$SearchViewModel;
+
+/// This is a [Store] for [SearchViewModel]
+abstract class _SearchViewModelBase with Store {
+  @observable
   Iterable<Song> searchResult = [];
 
+  @action
   Future<void> performSearch(String search) =>
       Firestore.instance.collection('songs').getDocuments().then((snapshot) {
         searchResult = snapshot.documents
@@ -27,14 +34,12 @@ class SearchViewModel extends ChangeNotifier {
                   genre: song.data['genre'],
                   songURL: song.data['songURL'],
                 ));
-
-        notifyListeners();
       });
 
+  @action
   void cleanResults() {
     if (searchResult.isNotEmpty) {
       searchResult = Iterable.empty();
-      notifyListeners();
     }
   }
 }

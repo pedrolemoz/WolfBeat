@@ -3,14 +3,13 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:provider/provider.dart';
 
 import '../../../../core/view_model/user/user_view_model.dart';
 
 /// [changeProfilePhotoFromGallery] is a method which have the methods for
 /// switch the profile photo.
-/// It's a set of methods.
 /// Used in [ProfileSettingsPage].
 Future<void> changeProfilePhotoFromGallery(BuildContext context) async {
   // final imagePicker = ImagePicker();
@@ -33,7 +32,7 @@ Future<void> changeProfilePhotoFromCamera(BuildContext context) async {
 Future<void> _uploadNewPhotoAndUpdate(BuildContext context,
     {File newPhoto}) async {
   var storage = FirebaseStorage.instance;
-  var userViewModel = Provider.of<UserViewModel>(context, listen: false);
+  var userViewModel = GetIt.I.get<UserViewModel>();
 
   final root = storage.ref();
   final file = root
@@ -46,9 +45,9 @@ Future<void> _uploadNewPhotoAndUpdate(BuildContext context,
   task.events.listen(
     (storageEvent) {
       if (storageEvent.type == StorageTaskEventType.progress) {
-        print('Fazendo o upload');
+        debugPrint('Fazendo o upload');
       } else if (storageEvent.type == StorageTaskEventType.success) {
-        print('Sucesso o upload');
+        debugPrint('Sucesso o upload');
       }
     },
   );

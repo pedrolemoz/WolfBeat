@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:get_it/get_it.dart';
 
 import '../../../../core/view_model/song/songs_view_model.dart';
 import '../../ui_components/music_tile.dart';
@@ -13,6 +14,8 @@ class PlaylistPage extends StatefulWidget {
 }
 
 class _PlaylistPageState extends State<PlaylistPage> {
+  final songsViewModel = GetIt.I.get<SongsViewModel>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,19 +50,21 @@ class _PlaylistPageState extends State<PlaylistPage> {
           size: 30.0,
         ),
       ),
-      body: ListView.builder(
-        itemCount: Provider.of<SongsViewModel>(context).songs.length,
-        padding: EdgeInsets.symmetric(vertical: 13.0),
-        physics: BouncingScrollPhysics(),
-        itemBuilder: (context, index) {
-          return MusicTile(
-            song: Provider.of<SongsViewModel>(context).songs[index],
-            // image: Image.network(
-            //   'https://images-na.ssl-images-amazon.com/images/I/815aiIN6wmL.jpg',
-            // ),
-          );
-        },
-      ),
+      body: Observer(builder: (_) {
+        return ListView.builder(
+          itemCount: songsViewModel.songs.length,
+          padding: EdgeInsets.symmetric(vertical: 13.0),
+          physics: BouncingScrollPhysics(),
+          itemBuilder: (context, index) {
+            return MusicTile(
+              song: songsViewModel.songs[index],
+              // image: Image.network(
+              //   'https://images-na.ssl-images-amazon.com/images/I/815aiIN6wmL.jpg',
+              // ),
+            );
+          },
+        );
+      }),
     );
   }
 }

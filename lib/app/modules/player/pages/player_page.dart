@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:get_it/get_it.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:provider/provider.dart';
 
 import '../../../../core/view_model/player/player_view_model.dart';
 import '../../../../utils/custom_track_shape.dart';
@@ -14,12 +15,14 @@ class PlayerPage extends StatefulWidget {
 }
 
 class PlayerPageState extends State<PlayerPage> {
+  final playerViewModel = GetIt.I.get<PlayerViewModel>();
+
   @override
   void initState() {
     super.initState();
 
-    if (!Provider.of<PlayerViewModel>(context, listen: false).isPlaying) {
-      Provider.of<PlayerViewModel>(context, listen: false).play();
+    if (!playerViewModel.isPlaying) {
+      playerViewModel.play();
     }
   }
 
@@ -28,8 +31,8 @@ class PlayerPageState extends State<PlayerPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<PlayerViewModel>(
-      builder: (context, playerViewModel, child) {
+    return Observer(
+      builder: (_) {
         return Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(

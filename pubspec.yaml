@@ -1,4 +1,4 @@
-name: firefly
+name: Firefly
 description: Listen to your songs
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -11,29 +11,43 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  
+  # State management
+  mobx: ^1.0.0
+  flutter_mobx: ^1.0.0
 
+  # Dependency injection
+  get_it: ^4.0.4
+
+  # User interface
   cupertino_icons: ^0.1.3
   flutter_icons: ^1.1.0
-  provider: ^4.1.3
   font_awesome_flutter: ^8.8.1
+  hexcolor: ^1.0.4
+
+  # Player
   audioplayers: ^0.15.1
   
-  # firebase
+  # Firebase
   firebase_core: ^0.4.5
   cloud_firestore: ^0.13.7
   firebase_auth: ^0.16.1
   firebase_storage: ^3.1.6
 
-  hexcolor: ^1.0.4
 
-  # google sign in
+  # Services
   google_sign_in: ^4.5.1
-  
-  # image picker
   image_picker: ^0.6.7+4
-
+  
 dev_dependencies:
+  # Linter
   effective_dart: ^1.2.4
+
+  # Codegen for MobX
+  build_runner: ^1.7.2
+  mobx_codegen: ^1.0.0
+
+  # Tests
   flutter_test:
     sdk: flutter
 

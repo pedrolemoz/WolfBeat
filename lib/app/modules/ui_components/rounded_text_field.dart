@@ -56,7 +56,7 @@ class RoundedTextField extends StatelessWidget {
                 iconSize: 30.0,
                 onPressed: () {
                   onIconTap();
-                  print(textController.text);
+                  debugPrint(textController.text);
                 },
               )
             : null,
@@ -75,7 +75,7 @@ class RoundedTextField extends StatelessWidget {
       ),
       onChanged: (input) {
         onChanged();
-        print(textController.text);
+        debugPrint(textController.text);
       },
     );
   }
