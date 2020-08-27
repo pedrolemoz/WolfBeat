@@ -24,13 +24,6 @@ mixin _$SongsViewModel on _SongsViewModelBase, Store {
     });
   }
 
-  final _$fetchSongsAsyncAction = AsyncAction('_SongsViewModelBase.fetchSongs');
-
-  @override
-  Future<void> fetchSongs() {
-    return _$fetchSongsAsyncAction.run(() => super.fetchSongs());
-  }
-
   final _$_SongsViewModelBaseActionController =
       ActionController(name: '_SongsViewModelBase');
 
@@ -40,6 +33,17 @@ mixin _$SongsViewModel on _SongsViewModelBase, Store {
         name: '_SongsViewModelBase.addSong');
     try {
       return super.addSong(song);
+    } finally {
+      _$_SongsViewModelBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void fetchSongs() {
+    final _$actionInfo = _$_SongsViewModelBaseActionController.startAction(
+        name: '_SongsViewModelBase.fetchSongs');
+    try {
+      return super.fetchSongs();
     } finally {
       _$_SongsViewModelBaseActionController.endAction(_$actionInfo);
     }

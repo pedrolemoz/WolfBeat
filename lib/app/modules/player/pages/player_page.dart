@@ -99,10 +99,15 @@ class PlayerPageState extends State<PlayerPage> {
                           ),
                         ],
                       ),
-                      Icon(
-                        FlutterIcons.favorite_border_mdi,
-                        size: 30.0,
-                        color: Colors.white,
+                      GestureDetector(
+                        onTap: () async {
+                          await playerViewModel.favoriteSongs();
+                        },
+                        child: Icon(
+                          FlutterIcons.favorite_border_mdi,
+                          size: 30.0,
+                          color: Colors.white,
+                        ),
                       ),
                     ],
                   ),

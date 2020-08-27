@@ -75,6 +75,14 @@ mixin _$PlayerViewModel on _PlayerViewModelBase, Store {
     return _$stopAsyncAction.run(() => super.stop());
   }
 
+  final _$favoriteSongsAsyncAction =
+      AsyncAction('_PlayerViewModelBase.favoriteSongs');
+
+  @override
+  Future<void> favoriteSongs() {
+    return _$favoriteSongsAsyncAction.run(() => super.favoriteSongs());
+  }
+
   final _$_PlayerViewModelBaseActionController =
       ActionController(name: '_PlayerViewModelBase');
 

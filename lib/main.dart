@@ -47,6 +47,7 @@ void initialSetup() {
   var getIt = GetIt.I;
   getIt.get<UserViewModel>().recoverUserData();
   getIt.get<SongsViewModel>().fetchSongs();
+  
 }
 
 /// App root

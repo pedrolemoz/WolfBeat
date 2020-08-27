@@ -20,6 +20,7 @@ class User {
     final map = <String, dynamic>{
       'name': name,
       'email': email,
+      'favoriteSongs': [],
       'type': 'Email',
       'imageURI': imageURI,
       'uuid': uuid,
@@ -32,6 +33,7 @@ class User {
     final mapGoogle = {
       'name': name,
       'email': email,
+      'favoriteSongs': [],
       'type': 'Google',
       'imageURI': imageURI,
       'uuid': uuid,
@@ -44,6 +46,7 @@ class User {
     final mapFacebook = {
       'name': name,
       'email': email,
+      'favoriteSongs': [],
       'type': 'Facebook',
       'imageURI': imageURI,
       'uuid': uuid,

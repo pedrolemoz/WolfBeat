@@ -1,4 +1,6 @@
 import 'package:audioplayers/audioplayers.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:mobx/mobx.dart';
 
@@ -53,6 +55,31 @@ abstract class _PlayerViewModelBase with Store {
     if (result == 1) {
       debugPrint('Parado');
       isPlaying = false;
+    }
+  }
+
+  @action
+  Future<void> favoriteSongs() async {
+    var database = Firestore.instance;
+    var auth = FirebaseAuth.instance;
+    var verif = true;
+    var user = await auth.currentUser();
+    var userData = await database.collection('users').document(user.uid).get();
+    var listUserData = userData.data['favoriteSongs'] as List;
+    for (DocumentReference i in listUserData) {
+      if (i.path == currentSong.reference) {
+        verif = false;
+        print("Mesma musica");
+      }
+      print(currentSong.reference);
+    }
+
+    if (verif) {
+      listUserData.add(database.document(currentSong.reference));
+      database
+          .collection('users')
+          .document(user.uid)
+          .updateData({'favoriteSongs': listUserData});
     }
   }
 }

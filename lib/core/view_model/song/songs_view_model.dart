@@ -18,9 +18,9 @@ abstract class _SongsViewModelBase with Store {
   void addSong(Song song) {
     songs.add(song);
   }
-
+  
   @action
-  Future<void> fetchSongs() async {
+  void fetchSongs() {
     var database = Firestore.instance;
 
     database.collection('songs').getDocuments().then(
@@ -40,6 +40,7 @@ abstract class _SongsViewModelBase with Store {
               reference: songFromFirestore.reference.path,
             );
             addSong(song);
+
             print(song.reference);
           },
         );
