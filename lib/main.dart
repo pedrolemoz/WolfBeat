@@ -25,7 +25,7 @@ import 'utils/themes.dart';
 
 void main() {
   registerSingletons();
-  runApp(Firefly());
+  runApp(WolfBeat());
 }
 
 /// This function register new singletons to
@@ -50,12 +50,12 @@ void initialSetup() {
 }
 
 /// App root
-class Firefly extends StatelessWidget {
+class WolfBeat extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     initialSetup();
     return MaterialApp(
-      title: 'Firefly',
+      title: 'WolfBeat',
       debugShowCheckedModeBanner: false,
       theme: appTheme,
       initialRoute: SplashSreen.id,

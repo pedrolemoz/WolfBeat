@@ -30,7 +30,7 @@ class WelcomePage extends StatelessWidget {
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 15.0),
-                    child: Text('Firefly',
+                    child: Text('WolfBeat',
                         style: Theme.of(context).textTheme.headline4),
                   ),
                   Text(

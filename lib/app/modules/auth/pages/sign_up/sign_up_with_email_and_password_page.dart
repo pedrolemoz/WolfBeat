@@ -98,7 +98,7 @@ class SignUpWithEmailAndPasswordPage extends StatelessWidget {
                         ),
                       ),
                       RoundedButton(
-                        label: 'Cadastrar-se no Firefly',
+                        label: 'Cadastrar-se no WolfBeat',
                         isEnabled: signUpViewModel.isEnabled,
                         onTap: () {
                           signUpUserWithEmailAndPassword(

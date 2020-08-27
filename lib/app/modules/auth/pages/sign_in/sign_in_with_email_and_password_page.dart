@@ -69,7 +69,7 @@ class SignInWithEmailAndPasswordPage extends StatelessWidget {
                         ),
                       ),
                       RoundedButton(
-                        label: 'Entrar no Firefly',
+                        label: 'Entrar no WolfBeat',
                         isEnabled: signInViewModel.isEnabled,
                         onTap: () {
                           loginUserWithEmailAndPassword(
