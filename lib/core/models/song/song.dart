@@ -12,6 +12,7 @@ class Song {
     @required this.genre,
     @required this.songURL,
     @required this.backgroundColor,
+    @required this.reference,
   });
 
   final String title;
@@ -29,4 +30,6 @@ class Song {
   final String songURL;
 
   final String backgroundColor;
+
+  final String reference;
 }

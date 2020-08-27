@@ -37,9 +37,10 @@ abstract class _SongsViewModelBase with Store {
               duration: songFromFirestore.data['duration'],
               genre: songFromFirestore.data['genre'],
               backgroundColor: songFromFirestore.data['backgroundColor'],
+              reference: songFromFirestore.reference.path,
             );
-
             addSong(song);
+            print(song.reference);
           },
         );
       },
