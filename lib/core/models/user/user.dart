@@ -1,3 +1,5 @@
+import '../../exceptions/null_attribute_exception.dart';
+
 /// [User] is a class that represents the user object.
 /// Used in [loginUserWithEmailAndPassword], [signUpUserWithEmailAndPassword]
 /// and in [authWithGoogle].
@@ -8,7 +10,11 @@ class User {
     this.name,
     this.imageURI,
     this.uuid,
-  });
+  })  : assert(password != null, throw NullAttributeException('password')),
+        assert(email != null, throw NullAttributeException('email')),
+        assert(name != null, throw NullAttributeException('name')),
+        assert(imageURI != null, throw NullAttributeException('imageURI')),
+        assert(uuid != null, throw NullAttributeException('uuid'));
 
   String name;
   String password;

@@ -9,9 +9,7 @@ class FavoriteSongsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Navigator.pushNamed(context, FavoriteSongsPage.id);
-      },
+      onTap: () => Navigator.pushNamed(context, FavoriteSongsPage.id),
       child: Container(
         height: 60.0,
         decoration: BoxDecoration(

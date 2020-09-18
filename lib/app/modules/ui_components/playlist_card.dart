@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 /// It's a Container with a music cover inside.
 /// Used in [HomePage].
 class PlaylistCard extends StatelessWidget {
-  PlaylistCard({@required this.index});
+  PlaylistCard({this.index});
 
   final int index;
 

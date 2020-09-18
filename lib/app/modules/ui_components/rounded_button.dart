@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../core/exceptions/null_attribute_exception.dart';
+
 /// [RoundedButton] is a widget that create a customized button.
 /// It's a Ink with a BoxDecoration and a InkWell inside.
 /// Used in [SignInPage], [SignInWithEmailAndPasswordPage], [SignUpPage],
@@ -25,7 +27,8 @@ class RoundedButton extends StatelessWidget {
     this.textColor,
     this.gradient,
     this.icon,
-  });
+  })  : assert(label != null, throw NullAttributeException('label')),
+        assert(onTap != null, throw NullAttributeException('onTap'));
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +71,7 @@ class RoundedButton extends StatelessWidget {
                 : Text(
                     label,
                     style: Theme.of(context).textTheme.subtitle1.copyWith(
-                          color: textColor != null ? textColor : null,
+                          color: textColor ?? null,
                         ),
                   ),
           ),

@@ -12,9 +12,7 @@ class FavoriteSongsTile extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 5.0),
       child: GestureDetector(
-        onTap: () {
-          Navigator.pushNamed(context, FavoriteSongsPage.id);
-        },
+        onTap: () => Navigator.pushNamed(context, FavoriteSongsPage.id),
         child: ListTile(
           leading: Container(
             decoration: BoxDecoration(

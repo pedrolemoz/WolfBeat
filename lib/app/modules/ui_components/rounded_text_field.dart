@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
+import '../../../core/exceptions/null_attribute_exception.dart';
+
 /// [RoundedTextField] is a widget that create a customized TextField.
 /// It's a Textfield.
 /// Used in [SignInWithEmailAndPasswordPage], [SignUpWithEmailAndPasswordPage]
 /// and in [SearchPage].
 class RoundedTextField extends StatelessWidget {
-  const RoundedTextField({
+  RoundedTextField({
     @required this.textController,
     @required this.hintText,
     @required this.onChanged,
@@ -14,7 +16,10 @@ class RoundedTextField extends StatelessWidget {
     this.keyboardType,
     this.padding = EdgeInsets.zero,
     this.obscureText = false,
-  });
+  })  : assert(textController != null,
+            throw NullAttributeException('textController')),
+        assert(hintText != null, throw NullAttributeException('hintText')),
+        assert(onChanged != null, throw NullAttributeException('label'));
 
   final TextEditingController textController;
   final String hintText;

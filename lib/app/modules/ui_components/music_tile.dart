@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:get_it/get_it.dart';
 
+import '../../../core/exceptions/null_attribute_exception.dart';
 import '../../../core/models/song/song.dart';
 import '../../../core/view_model/player/player_view_model.dart';
 import '../player/pages/player_page.dart';
@@ -10,7 +11,8 @@ import '../player/pages/player_page.dart';
 /// It's a GestureDetector with a provider for the [PlayerViewModel].
 /// Used in [FavoriteSongsPage].
 class MusicTile extends StatelessWidget {
-  MusicTile({@required this.song});
+  MusicTile({@required this.song})
+      : assert(song != null, throw NullAttributeException('song'));
 
   final Song song;
   final playerViewModel = GetIt.I.get<PlayerViewModel>();
@@ -114,13 +116,13 @@ class MusicTile extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                song.title,
+                song?.title ?? 'Música desconhecida',
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: Theme.of(context).textTheme.subtitle1,
               ),
               Text(
-                song.artist,
+                song?.artist ?? 'Artista Desconhecido',
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: Theme.of(context).textTheme.subtitle2,
