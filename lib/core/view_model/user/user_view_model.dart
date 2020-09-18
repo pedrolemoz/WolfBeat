@@ -15,6 +15,10 @@ class UserViewModel = _UserViewModelBase with _$UserViewModel;
 
 /// This is a [Store] for [UserViewModel]
 abstract class _UserViewModelBase with Store {
+  _UserViewModelBase() {
+    recoverUserData();
+  }
+
   @observable
   String userID = '';
 
