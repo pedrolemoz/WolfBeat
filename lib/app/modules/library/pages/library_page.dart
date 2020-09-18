@@ -34,20 +34,26 @@ class _LibraryPageState extends State<LibraryPage>
             preferredSize: Size.fromHeight(40.0),
             child: Align(
               alignment: Alignment.bottomLeft,
-              child: TabBar(
-                controller: _libraryTabController,
-                indicatorColor: Theme.of(context).primaryColor,
-                labelPadding: EdgeInsets.all(15.0),
-                labelColor: Color(0xFFF0F0F5),
-                unselectedLabelColor: Color(0xFFe0e0e0),
-                unselectedLabelStyle: Theme.of(context).textTheme.subtitle1,
-                labelStyle: Theme.of(context).textTheme.subtitle1,
-                isScrollable: true,
-                tabs: [
-                  Text('Playlists'),
-                  Text('Artistas'),
-                  Text('Álbuns'),
-                ],
+              child: Theme(
+                data: ThemeData(
+                  splashColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
+                ),
+                child: TabBar(
+                  controller: _libraryTabController,
+                  indicatorColor: Theme.of(context).primaryColor,
+                  labelPadding: EdgeInsets.all(15.0),
+                  labelColor: Color(0xFFF0F0F5),
+                  unselectedLabelColor: Color(0xFFe0e0e0),
+                  unselectedLabelStyle: Theme.of(context).textTheme.subtitle1,
+                  labelStyle: Theme.of(context).textTheme.subtitle1,
+                  isScrollable: true,
+                  tabs: [
+                    Text('Playlists'),
+                    Text('Artistas'),
+                    Text('Álbuns'),
+                  ],
+                ),
               ),
             ),
           ),
