@@ -16,7 +16,6 @@ import 'app/modules/player/pages/player_page.dart';
 import 'app/modules/search/view_model/search_view_model.dart';
 import 'app/modules/settings/pages/profile_settings_page.dart';
 import 'app/modules/settings/pages/settings_page.dart';
-import 'app/modules/splash/pages/splash_screen.dart';
 import 'app/modules/welcome/pages/welcome_page.dart';
 import 'core/view_model/player/player_view_model.dart';
 import 'core/view_model/song/songs_view_model.dart';
@@ -50,9 +49,9 @@ class WolfBeat extends StatelessWidget {
       title: 'WolfBeat',
       debugShowCheckedModeBanner: false,
       theme: appTheme,
-      initialRoute: SplashSreen.id,
+      initialRoute: WelcomePage.id,
       routes: {
-        SplashSreen.id: (context) => SplashSreen(),
+        WelcomePage.id: (context) => WelcomePage(),
         BottomNavigator.id: (context) => BottomNavigator(),
         LibraryPage.id: (context) => LibraryPage(),
         PlayerPage.id: (context) => PlayerPage(),
@@ -60,7 +59,6 @@ class WolfBeat extends StatelessWidget {
         HomePage.id: (context) => HomePage(),
         SettingsPage.id: (context) => SettingsPage(),
         ProfileSettingsPage.id: (context) => ProfileSettingsPage(),
-        WelcomePage.id: (context) => WelcomePage(),
         SignInPage.id: (context) => SignInPage(),
         SignInWithEmailAndPasswordPage.id: (context) =>
             SignInWithEmailAndPasswordPage(),
