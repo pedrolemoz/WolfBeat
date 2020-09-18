@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../models/song/song.dart';
@@ -11,6 +12,10 @@ class SongsViewModel = _SongsViewModelBase with _$SongsViewModel;
 
 /// This is a [Store] for [SongsViewModel]
 abstract class _SongsViewModelBase with Store {
+  _SongsViewModelBase() {
+    fetchSongs();
+  }
+
   @observable
   List<Song> songs = [];
 
@@ -18,7 +23,7 @@ abstract class _SongsViewModelBase with Store {
   void addSong(Song song) {
     songs.add(song);
   }
-  
+
   @action
   void fetchSongs() {
     var database = Firestore.instance;
