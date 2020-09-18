@@ -24,6 +24,7 @@ import 'core/view_model/user/user_view_model.dart';
 import 'utils/themes.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   registerSingletons();
   runApp(WolfBeat());
 }
@@ -41,20 +42,10 @@ void registerSingletons() {
   getIt.registerSingleton<SearchViewModel>(SearchViewModel());
 }
 
-/// This function fetch the required data in order
-/// to start the app
-void initialSetup() {
-  var getIt = GetIt.I;
-  getIt.get<UserViewModel>().recoverUserData();
-  getIt.get<SongsViewModel>().fetchSongs();
-  
-}
-
 /// App root
 class WolfBeat extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    initialSetup();
     return MaterialApp(
       title: 'WolfBeat',
       debugShowCheckedModeBanner: false,
