@@ -33,6 +33,7 @@ abstract class _SearchViewModelBase with Store {
                   duration: song.data['duration'],
                   genre: song.data['genre'],
                   songURL: song.data['songURL'],
+                  reference: song.reference.path,
                 ));
       });
 

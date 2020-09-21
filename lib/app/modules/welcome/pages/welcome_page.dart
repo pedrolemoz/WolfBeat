@@ -25,7 +25,7 @@ class _WelcomePageState extends State<WelcomePage> {
     var user = await auth.currentUser();
 
     if (user != null) {
-      Navigator.pushNamedAndRemoveUntil(
+      await Navigator.pushNamedAndRemoveUntil(
         context,
         BottomNavigator.id,
         (route) => false,

@@ -18,7 +18,7 @@ Future<void> changeProfilePhotoFromGallery(BuildContext context) async {
 
   final image = await ImagePicker.pickImage(source: ImageSource.gallery);
 
-  _uploadNewPhotoAndUpdate(context, newPhoto: image);
+  await _uploadNewPhotoAndUpdate(context, newPhoto: image);
 }
 
 Future<void> changeProfilePhotoFromCamera(BuildContext context) async {
@@ -26,7 +26,7 @@ Future<void> changeProfilePhotoFromCamera(BuildContext context) async {
 
   final image = await ImagePicker.pickImage(source: ImageSource.camera);
 
-  _uploadNewPhotoAndUpdate(context, newPhoto: image);
+  await _uploadNewPhotoAndUpdate(context, newPhoto: image);
 }
 
 Future<void> _uploadNewPhotoAndUpdate(BuildContext context,
@@ -52,7 +52,7 @@ Future<void> _uploadNewPhotoAndUpdate(BuildContext context,
     },
   );
 
-  task.onComplete.then(
+  await task.onComplete.then(
     (snapshot) async {
       var newImageURI = await snapshot.ref.getDownloadURL();
 
@@ -62,7 +62,7 @@ Future<void> _uploadNewPhotoAndUpdate(BuildContext context,
       // Updating in Firestore
       var database = Firestore.instance;
       final newImageData = {'imageURI': newImageURI};
-      database
+      await database
           .collection('users')
           .document(userViewModel.userID)
           .updateData(newImageData);

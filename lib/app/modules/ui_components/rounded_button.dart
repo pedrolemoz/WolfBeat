@@ -65,13 +65,13 @@ class RoundedButton extends StatelessWidget {
                 ? Text(
                     label,
                     style: Theme.of(context).textTheme.subtitle1.copyWith(
-                          color: textColor ?? null,
+                          color: textColor,
                         ),
                   )
                 : Text(
                     label,
                     style: Theme.of(context).textTheme.subtitle1.copyWith(
-                          color: textColor ?? null,
+                          color: textColor,
                         ),
                   ),
           ),

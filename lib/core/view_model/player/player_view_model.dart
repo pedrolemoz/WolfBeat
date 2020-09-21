@@ -69,14 +69,14 @@ abstract class _PlayerViewModelBase with Store {
     for (DocumentReference i in listUserData) {
       if (i.path == currentSong.reference) {
         verif = false;
-        print("Mesma musica");
+        print('Mesma musica');
       }
       print(currentSong.reference);
     }
 
     if (verif) {
       listUserData.add(database.document(currentSong.reference));
-      database
+      await database
           .collection('users')
           .document(user.uid)
           .updateData({'favoriteSongs': listUserData});

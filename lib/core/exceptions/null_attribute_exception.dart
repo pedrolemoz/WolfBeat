@@ -1,5 +1,3 @@
-import 'package:flutter/foundation.dart';
-
 /// This exception should be thrown when there's a missing required attribute in
 /// the class constructor.
 class NullAttributeException implements Exception {

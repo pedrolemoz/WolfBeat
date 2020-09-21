@@ -64,7 +64,7 @@ abstract class _UserViewModelBase with Store {
       });
     });
 
-    Navigator.pushNamedAndRemoveUntil(
+    await Navigator.pushNamedAndRemoveUntil(
       context,
       WelcomePage.id,
       (route) => false,
