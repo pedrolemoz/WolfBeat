@@ -16,7 +16,7 @@ Future<void> signUpUserWithEmailAndPassword(
   var database = Firestore.instance;
 
   var auth = FirebaseAuth.instance;
-  auth
+  await auth
       .createUserWithEmailAndPassword(
           email: user.email, password: user.password)
       .then((firebaseUser) {

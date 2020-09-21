@@ -23,15 +23,15 @@ Future<void> authWithGoogle(BuildContext context) async {
   var user = ((await auth.signInWithCredential(credential)).user);
 
   if (user != null) {
-    var userGoogle = User();
-
-    userGoogle.name = user.displayName;
-    userGoogle.email = user.email;
-    userGoogle.imageURI = user.photoUrl;
-    userGoogle.uuid = user.uid;
+    var userGoogle = User(
+      name: user.displayName,
+      email: user.email,
+      imageURI: user.photoUrl,
+      uuid: user.uid,
+    );
 
     var db = Firestore.instance;
-    db
+    await db
         .collection('users')
         .document(user.uid)
         .setData(userGoogle.toMapGoogle())
