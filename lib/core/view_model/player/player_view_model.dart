@@ -72,14 +72,30 @@ abstract class _PlayerViewModelBase with Store {
         print('Mesma musica');
       }
       print(currentSong.reference);
+      var song = await database.document(currentSong.reference).get().then(
+          (querySnapshot) => Song(
+              title: querySnapshot.data['title'],
+              artist: querySnapshot.data['artist'],
+              album: querySnapshot.data['album'],
+              artworkURL: querySnapshot.data['artworkURL'],
+              duration: querySnapshot.data['duration'],
+              genre: querySnapshot.data['genre'],
+              songURL: querySnapshot.data['songURL'],
+              backgroundColor: querySnapshot.data['backgroundColor'],
+              reference: querySnapshot.data['reference']));
+      //print(song.title.toString());
+      
     }
 
     if (verif) {
       listUserData.add(database.document(currentSong.reference));
       await database
-          .collection('users')
+          .collection('songs')
           .document(user.uid)
           .updateData({'favoriteSongs': listUserData});
+      
+
+      
     }
   }
 }

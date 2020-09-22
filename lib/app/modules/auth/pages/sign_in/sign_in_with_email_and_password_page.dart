@@ -1,3 +1,4 @@
+import 'package:WolfBeat/app/modules/auth/pages/recover_email_and_password/recover_email_and_password.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
@@ -11,12 +12,11 @@ import '../../view_model/sign_in/sign_in_view_model.dart';
 class SignInWithEmailAndPasswordPage extends StatelessWidget {
   static String id = 'sign_in_with_email_and_password_page';
   final signInViewModel = GetIt.I.get<SignInViewModel>();
+  final _emailTextField = TextEditingController();
+  final _passwordTextField = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    final _emailTextField = TextEditingController();
-    final _passwordTextField = TextEditingController();
-
     return Observer(
       builder: (_) {
         return Scaffold(
@@ -49,6 +49,7 @@ class SignInWithEmailAndPasswordPage extends StatelessWidget {
                         padding: EdgeInsets.symmetric(vertical: 18.0),
                         keyboardType: TextInputType.emailAddress,
                         onChanged: () {
+                          print(_emailTextField.text);
                           signInViewModel.isEmailValid(_emailTextField.text);
                           signInViewModel.canProceed();
                         },
@@ -83,6 +84,20 @@ class SignInWithEmailAndPasswordPage extends StatelessWidget {
                         enabledColor: Theme.of(context).primaryColor,
                       ),
                     ],
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(
+                          context, Recover_email_and_password.id);
+                    },
+                    child: Text(
+                      'Esqueceu a senha.',
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context)
+                          .textTheme
+                          .caption
+                          .copyWith(color: Colors.grey[500]),
+                    ),
                   ),
                   Text(
                     // ignore: lines_longer_than_80_chars

@@ -16,34 +16,42 @@ Future<void> authWithGoogle(BuildContext context) async {
   var googleSignIn = GoogleSignIn();
   var googleSignInAccount = await googleSignIn.signIn();
   var googleSignInAuthentication = await googleSignInAccount.authentication;
-
+  var isRegistered = false;
   var credential = GoogleAuthProvider.getCredential(
       idToken: googleSignInAuthentication.idToken,
       accessToken: googleSignInAuthentication.accessToken);
   var user = ((await auth.signInWithCredential(credential)).user);
-
-  if (user != null) {
-    var userGoogle = User(
-      name: user.displayName,
-      email: user.email,
-      imageURI: user.photoUrl,
-      uuid: user.uid,
-    );
-
-    var db = Firestore.instance;
-    await db
-        .collection('users')
-        .document(user.uid)
-        .setData(userGoogle.toMapGoogle())
-        .then((_) {
-      GetIt.I.get<UserViewModel>().recoverUserData();
-      Navigator.pushNamedAndRemoveUntil(
-        context,
-        BottomNavigator.id,
-        (route) => false,
-      );
-    });
-  } else {
-    throw ('Not found');
-  }
+  var db = Firestore.instance;
+  await db.collection('users').getDocuments().then(
+      (querySnapshot) => querySnapshot.documents.forEach((firebaseUser) async {
+            if (user.uid == firebaseUser.data['uuid']) {
+              isRegistered = true;
+              await GetIt.I.get<UserViewModel>().recoverUserData();
+              await Navigator.pushNamedAndRemoveUntil(
+                context,
+                BottomNavigator.id,
+                (route) => false,
+              );
+            }
+            if (!isRegistered) {
+              var userGoogle = User(
+                name: user.displayName,
+                email: user.email,
+                imageURI: user.photoUrl,
+                uuid: user.uid,
+              );
+              await db
+                  .collection('users')
+                  .document(user.uid)
+                  .updateData(userGoogle.toMapGoogle())
+                  .then((_) {
+                GetIt.I.get<UserViewModel>().recoverUserData();
+                Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  BottomNavigator.id,
+                  (route) => false,
+                );
+              });
+            }
+          }));
 }
