@@ -36,7 +36,7 @@ class _SearchPageState extends State<SearchPage> {
               },
             ),
           ),
-          body: searchViewModel.searchResult.length != 0
+          body: searchViewModel.searchResult.isNotEmpty
               ? ListView.builder(
                   itemCount: searchViewModel.searchResult.length,
                   padding: const EdgeInsets.only(top: 20.0),
