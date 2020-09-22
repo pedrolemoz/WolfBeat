@@ -94,24 +94,10 @@ class MusicTile extends StatelessWidget {
           );
         },
         child: ListTile(
-          leading: song.artworkURL != null
-              ? ClipRRect(
-                  borderRadius: BorderRadius.circular(10.0),
-                  child: Image.network(song.artworkURL),
-                )
-              : Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8.0),
-                    color: Theme.of(context).primaryColor,
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(13.0),
-                    child: Icon(
-                      FlutterIcons.music_note_mdi,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
+          leading: FadeInImage.assetNetwork(
+            placeholder: 'assets/fallback/artwork_fallback.png',
+            image: song?.artworkURL,
+          ),
           title: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[

@@ -27,9 +27,7 @@ class PlaylistTile extends StatelessWidget {
                 mainAxisSpacing: 2.0,
               ),
               itemBuilder: (context, _) {
-                return Image.network(
-                  'https://images-na.ssl-images-amazon.com/images/I/815aiIN6wmL.jpg',
-                );
+                return Image.asset('assets/fallback/artwork_fallback.png');
               },
             ),
           ),

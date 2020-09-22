@@ -34,7 +34,6 @@ dependencies:
   firebase_auth: ^0.16.1
   firebase_storage: ^3.1.6
 
-
   # Services
   google_sign_in: ^4.5.1
   image_picker: ^0.6.7+4
@@ -65,5 +64,5 @@ flutter:
     - asset: fonts/SourceSansPro-Bold.ttf
       weight: 700
 
-  # assets:
-  #   - assets/
+  assets:
+    - assets/fallback/
