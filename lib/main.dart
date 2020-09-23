@@ -1,4 +1,5 @@
 import 'package:WolfBeat/app/modules/auth/pages/recover_email_and_password/recover_email_and_password.dart';
+import 'package:WolfBeat/app/modules/auth/services/email_and_password/recover_email_and_password/recover_email_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
@@ -68,7 +69,9 @@ class WolfBeat extends StatelessWidget {
         SignUpWithEmailAndPasswordPage.id: (context) =>
             SignUpWithEmailAndPasswordPage(),
         Recover_email_and_password.id: (context) =>
-          Recover_email_and_password()
+          Recover_email_and_password(),
+        Recover_email_page.id: (context) =>
+          Recover_email_page(),
       },
     );
   }

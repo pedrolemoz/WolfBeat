@@ -11,14 +11,12 @@ import '../../view_model/sign_up/sign_up_view_model.dart';
 class SignUpWithEmailAndPasswordPage extends StatelessWidget {
   static String id = 'sign_up_with_email_and_password_page';
   final signUpViewModel = GetIt.I.get<SignUpViewModel>();
-
+  final _nameTextField = TextEditingController();
+  final _emailTextField = TextEditingController();
+  final _passwordTextField = TextEditingController();
+  final _passwordConfirmationTextField = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    final _nameTextField = TextEditingController();
-    final _emailTextField = TextEditingController();
-    final _passwordTextField = TextEditingController();
-    final _passwordConfirmationTextField = TextEditingController();
-
     return Observer(
       builder: (_) {
         return Scaffold(

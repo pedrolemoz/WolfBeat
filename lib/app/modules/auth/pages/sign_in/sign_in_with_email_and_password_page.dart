@@ -91,7 +91,7 @@ class SignInWithEmailAndPasswordPage extends StatelessWidget {
                           context, Recover_email_and_password.id);
                     },
                     child: Text(
-                      'Esqueceu a senha.',
+                      'Esqueceu a senha?',
                       textAlign: TextAlign.center,
                       style: Theme.of(context)
                           .textTheme
