@@ -34,6 +34,7 @@ class RoundedTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextField(
       controller: textController,
+      //onSubmitted: (value) => value.toLowerCase(),
       textInputAction: TextInputAction.search,
       textCapitalization: TextCapitalization.sentences,
       keyboardType: keyboardType,

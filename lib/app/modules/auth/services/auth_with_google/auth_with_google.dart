@@ -17,7 +17,7 @@ Future<void> authWithGoogle(BuildContext context) async {
   var googleSignIn = GoogleSignIn();
   var googleSignInAccount = await googleSignIn.signIn();
   var googleSignInAuthentication = await googleSignInAccount.authentication;
-
+  var isRegistered = false;
   var credential = GoogleAuthProvider.getCredential(
       idToken: googleSignInAuthentication.idToken,
       accessToken: googleSignInAuthentication.accessToken);

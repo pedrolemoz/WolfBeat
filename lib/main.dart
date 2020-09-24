@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
 import 'app/modules/auth/pages/auth_with_google/auth_with_google_page.dart';
+import 'app/modules/auth/pages/recover_email_and_password/recover_email_and_password.dart';
+import 'app/modules/auth/pages/recover_email_and_password/recover_email_page.dart';
 import 'app/modules/auth/pages/sign_in/sign_in_page.dart';
 import 'app/modules/auth/pages/sign_in/sign_in_with_email_and_password_page.dart';
 import 'app/modules/auth/pages/sign_up/sign_up_page.dart';
@@ -66,6 +68,8 @@ class WolfBeat extends StatelessWidget {
         SignUpPage.id: (context) => SignUpPage(),
         SignUpWithEmailAndPasswordPage.id: (context) =>
             SignUpWithEmailAndPasswordPage(),
+        RecoverEmailAndPassword.id: (context) => RecoverEmailAndPassword(),
+        RecoverEmailPage.id: (context) => RecoverEmailPage(),
       },
     );
   }
