@@ -1,14 +1,16 @@
 import 'dart:ui';
 
-import 'package:WolfBeat/app/modules/auth/services/email_and_password/recover_email_and_password/recover_with_email.dart';
-import 'package:WolfBeat/app/modules/ui_components/rounded_button.dart';
-import 'package:WolfBeat/app/modules/ui_components/rounded_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 
-class Recover_email_and_password extends StatelessWidget {
-  final _emailTextField = TextEditingController();
+import '../../../ui_components/rounded_button.dart';
+import '../../../ui_components/rounded_text_field.dart';
+import '../../services/email_and_password/recover_email_and_password/recover_with_email.dart';
+
+class RecoverEmailAndPassword extends StatelessWidget {
   static String id = 'recover_email_and_password';
+  final _emailTextField = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +30,7 @@ class Recover_email_and_password extends StatelessWidget {
               child: Icon(
                 FlutterIcons.lock_open_outline_mco,
                 size: 100,
-                color: Color(0xFFBA110B),
+                color: Theme.of(context).primaryColor,
               ),
             ),
             Padding(
@@ -50,9 +52,7 @@ class Recover_email_and_password extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
             ),
-            SizedBox(
-              height: 20,
-            ),
+            SizedBox(height: 20),
             RoundedTextField(
               textController: _emailTextField,
               hintText: 'Insira o email',
@@ -60,9 +60,7 @@ class Recover_email_and_password extends StatelessWidget {
               keyboardType: TextInputType.emailAddress,
               onChanged: () {},
             ),
-            SizedBox(
-              height: 20,
-            ),
+            SizedBox(height: 20),
             RoundedButton(
               label: 'Enviar',
               isEnabled: true,

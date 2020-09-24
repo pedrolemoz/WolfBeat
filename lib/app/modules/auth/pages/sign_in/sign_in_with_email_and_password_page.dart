@@ -87,8 +87,7 @@ class SignInWithEmailAndPasswordPage extends StatelessWidget {
                   ),
                   GestureDetector(
                     onTap: () {
-                      Navigator.pushNamed(
-                          context, Recover_email_and_password.id);
+                      Navigator.pushNamed(context, RecoverEmailAndPassword.id);
                     },
                     child: Text(
                       'Esqueceu a senha?',
