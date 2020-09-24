@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
+import '../../../../../core/helpers/firebase_helper.dart';
 import '../../../../../core/models/user/user.dart';
 import '../../../../../core/view_model/user/user_view_model.dart';
 import '../../../bottom_navigation/pages/bottom_navigation_bar.dart';
@@ -21,37 +22,29 @@ Future<void> authWithGoogle(BuildContext context) async {
       idToken: googleSignInAuthentication.idToken,
       accessToken: googleSignInAuthentication.accessToken);
   var user = ((await auth.signInWithCredential(credential)).user);
-  var db = Firestore.instance;
-  await db.collection('users').getDocuments().then(
-      (querySnapshot) => querySnapshot.documents.forEach((firebaseUser) async {
-            if (user.uid == firebaseUser.data['uuid']) {
-              isRegistered = true;
-              await GetIt.I.get<UserViewModel>().recoverUserData();
-              await Navigator.pushNamedAndRemoveUntil(
-                context,
-                BottomNavigator.id,
-                (route) => false,
-              );
-            }
-            if (!isRegistered) {
-              var userGoogle = User(
-                name: user.displayName,
-                email: user.email,
-                imageURI: user.photoUrl,
-                uuid: user.uid,
-              );
-              await db
-                  .collection('users')
-                  .document(user.uid)
-                  .updateData(userGoogle.toMapGoogle())
-                  .then((_) {
-                GetIt.I.get<UserViewModel>().recoverUserData();
-                Navigator.pushNamedAndRemoveUntil(
-                  context,
-                  BottomNavigator.id,
-                  (route) => false,
-                );
-              });
-            }
-          }));
+
+  if (user != null) {
+    var userGoogle = User(
+      name: user.displayName,
+      email: user.email,
+      imageURI: user.photoUrl,
+      uuid: user.uid,
+    );
+
+    var db = Firestore.instance;
+    await db
+        .collection(FirebaseHelper.usersCollection)
+        .document(user.uid)
+        .setData(userGoogle.toMapGoogle())
+        .then((_) {
+      GetIt.I.get<UserViewModel>().recoverUserData();
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        BottomNavigator.id,
+        (route) => false,
+      );
+    });
+  } else {
+    throw ('Not found');
+  }
 }

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../../../core/helpers/firebase_helper.dart';
 import '../../../../core/view_model/user/user_view_model.dart';
 
 /// [changeProfilePhotoFromGallery] is a method which have the methods for
@@ -36,7 +37,7 @@ Future<void> _uploadNewPhotoAndUpdate(BuildContext context,
 
   final root = storage.ref();
   final file = root
-      .child('users_profile_pictures')
+      .child(FirebaseHelper.usersProfilePicturesFolder)
       .child(userViewModel.userID)
       .child('${userViewModel.userID}.jpg');
 
@@ -47,7 +48,7 @@ Future<void> _uploadNewPhotoAndUpdate(BuildContext context,
       if (storageEvent.type == StorageTaskEventType.progress) {
         debugPrint('Fazendo o upload');
       } else if (storageEvent.type == StorageTaskEventType.success) {
-        debugPrint('Sucesso o upload');
+        debugPrint('Sucesso no upload');
       }
     },
   );
@@ -61,9 +62,9 @@ Future<void> _uploadNewPhotoAndUpdate(BuildContext context,
 
       // Updating in Firestore
       var database = Firestore.instance;
-      final newImageData = {'imageURI': newImageURI};
+      final newImageData = {FirebaseHelper.imageURIAttribute: newImageURI};
       await database
-          .collection('users')
+          .collection(FirebaseHelper.usersCollection)
           .document(userViewModel.userID)
           .updateData(newImageData);
     },

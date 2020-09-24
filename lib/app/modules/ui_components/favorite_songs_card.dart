@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 
 import '../favorite_songs/pages/favorite_songs_page.dart';
 
@@ -8,34 +9,44 @@ import '../favorite_songs/pages/favorite_songs_page.dart';
 class FavoriteSongsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => Navigator.pushNamed(context, FavoriteSongsPage.id),
-      child: Container(
-        height: 60.0,
-        decoration: BoxDecoration(
-          color: Theme.of(context).backgroundColor,
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            Flexible(
-              child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 10.0),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(5.0),
-                  child: Image.network(
-                    'https://images-na.ssl-images-amazon.com/images/I/815aiIN6wmL.jpg',
+    return Material(
+      color: Theme.of(context).backgroundColor,
+      borderRadius: BorderRadius.circular(10.0),
+      child: InkWell(
+        onTap: () => Navigator.pushNamed(context, FavoriteSongsPage.id),
+        borderRadius: BorderRadius.circular(10.0),
+        splashColor: Theme.of(context).scaffoldBackgroundColor,
+        child: Container(
+          height: 60.0,
+          decoration: BoxDecoration(
+            // color: Theme.of(context).backgroundColor,
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Flexible(
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8.0),
+                    color: Theme.of(context).primaryColor,
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.all(13.0),
+                    child: Icon(
+                      FlutterIcons.heart_mco,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ),
-            ),
-            Text(
-              'Favoritas',
-              overflow: TextOverflow.ellipsis,
-              style: Theme.of(context).textTheme.subtitle1,
-            ),
-          ],
+              Text(
+                'Favoritas',
+                overflow: TextOverflow.ellipsis,
+                style: Theme.of(context).textTheme.subtitle1,
+              ),
+            ],
+          ),
         ),
       ),
     );

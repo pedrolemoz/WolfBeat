@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../core/helpers/assets_helper.dart';
+
 /// [PlaylistTile] is a widget that redirects the user to ***.
 /// It's a Container with the first 4 music cover of the playlist inside.
 /// Used in [PlaylistsTab].
@@ -27,9 +29,7 @@ class PlaylistTile extends StatelessWidget {
                 mainAxisSpacing: 2.0,
               ),
               itemBuilder: (context, _) {
-                return Image.network(
-                  'https://images-na.ssl-images-amazon.com/images/I/815aiIN6wmL.jpg',
-                );
+                return Image.asset(AssetsHelper.artworkFallback);
               },
             ),
           ),

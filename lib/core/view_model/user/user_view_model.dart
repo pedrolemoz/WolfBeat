@@ -5,6 +5,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../../app/modules/welcome/pages/welcome_page.dart';
+import '../../helpers/firebase_helper.dart';
 
 part 'user_view_model.g.dart';
 
@@ -40,16 +41,19 @@ abstract class _UserViewModelBase with Store {
     var database = Firestore.instance;
     var user = await auth.currentUser();
 
-    var snapshot = await database.collection('users').document(user.uid).get();
+    var snapshot = await database
+        .collection(FirebaseHelper.usersCollection)
+        .document(user.uid)
+        .get();
 
     var data = snapshot.data;
 
     if (data.isNotEmpty) {
       userID = user.uid;
-      userName = data['name'];
-      userEmail = data['email'];
-      imageURI = data['imageURI'];
-      type = data['type'];
+      userName = data[FirebaseHelper.nameAttribute];
+      userEmail = data[FirebaseHelper.emailAttribute];
+      imageURI = data[FirebaseHelper.imageURIAttribute];
+      type = data[FirebaseHelper.typeAttribute];
     }
   }
 

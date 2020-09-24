@@ -22,14 +22,19 @@ class HomePage extends StatelessWidget {
                   'Início',
                   style: Theme.of(context).textTheme.headline6,
                 ),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.pushNamed(context, SettingsPage.id);
-                  },
-                  child: Icon(
-                    FlutterIcons.settings_sli,
-                    size: 20.0,
-                    color: Colors.white,
+                InkWell(
+                  onTap: () => Navigator.pushNamed(context, SettingsPage.id),
+                  splashColor: Theme.of(context).scaffoldBackgroundColor,
+                  borderRadius: BorderRadius.circular(50.0),
+                  child: Padding(
+                    padding: EdgeInsets.all(12.0),
+                    child: Center(
+                      child: Icon(
+                        FlutterIcons.settings_sli,
+                        size: 20.0,
+                        color: Colors.white,
+                      ),
+                    ),
                   ),
                 ),
               ],
@@ -41,6 +46,7 @@ class HomePage extends StatelessWidget {
             child: GridView.builder(
               itemCount: 4,
               shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 crossAxisSpacing: 10.0,

@@ -4,6 +4,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hexcolor/hexcolor.dart';
 
+import '../../../../core/helpers/assets_helper.dart';
 import '../../../../core/view_model/player/player_view_model.dart';
 import '../../../../utils/custom_track_shape.dart';
 
@@ -20,10 +21,17 @@ class PlayerPageState extends State<PlayerPage> {
   @override
   void initState() {
     super.initState();
+    playerViewModel.checkFavorited();
 
     if (!playerViewModel.isPlaying) {
       playerViewModel.play();
     }
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    playerViewModel.checkFavorited();
   }
 
   double _value = 50; // Tempo atual em segundos
@@ -39,7 +47,8 @@ class PlayerPageState extends State<PlayerPage> {
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
               colors: [
-                Hexcolor(playerViewModel.currentSong.backgroundColor),
+                Hexcolor(playerViewModel?.currentSong?.backgroundColor) ??
+                    Theme.of(context).scaffoldBackgroundColor,
                 Colors.black38,
               ],
             ),
@@ -72,9 +81,9 @@ class PlayerPageState extends State<PlayerPage> {
                   Flexible(
                     child: Padding(
                       padding: EdgeInsets.only(bottom: 10.0),
-                      child: Image.network(
-                        // TODO: Implementar a função loadingBuilder
-                        playerViewModel.currentSong.artworkURL,
+                      child: FadeInImage.assetNetwork(
+                        placeholder: AssetsHelper.artworkFallback,
+                        image: playerViewModel?.currentSong?.artworkURL,
                       ),
                     ),
                   ),
@@ -86,13 +95,15 @@ class PlayerPageState extends State<PlayerPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            playerViewModel.currentSong.title,
+                            playerViewModel?.currentSong?.title ??
+                                'Música desconhecida',
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: Theme.of(context).textTheme.headline6,
                           ),
                           Text(
-                            playerViewModel.currentSong.artist,
+                            playerViewModel?.currentSong?.artist ??
+                                'Artista desconhecido',
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: Theme.of(context).textTheme.subtitle1,
@@ -101,10 +112,12 @@ class PlayerPageState extends State<PlayerPage> {
                       ),
                       GestureDetector(
                         onTap: () async {
-                          await playerViewModel.favoriteSongs();
+                          await playerViewModel.favoriteSong();
                         },
                         child: Icon(
-                          FlutterIcons.favorite_border_mdi,
+                          playerViewModel.isFavorite
+                              ? FlutterIcons.favorite_mdi
+                              : FlutterIcons.favorite_border_mdi,
                           size: 30.0,
                           color: Colors.white,
                         ),

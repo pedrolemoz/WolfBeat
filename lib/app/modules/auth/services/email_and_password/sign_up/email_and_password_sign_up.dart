@@ -3,6 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
+import '../../../../../../core/exceptions/null_attribute_exception.dart';
+import '../../../../../../core/helpers/firebase_helper.dart';
 import '../../../../../../core/models/user/user.dart';
 import '../../../../../../core/view_model/user/user_view_model.dart';
 import '../../../../bottom_navigation/pages/bottom_navigation_bar.dart';
@@ -12,7 +14,7 @@ import '../../../../bottom_navigation/pages/bottom_navigation_bar.dart';
 /// Used in [SignUpWithEmailAndPasswordPage].
 Future<void> signUpUserWithEmailAndPassword(
     BuildContext context, User user) async {
-  assert(context != null);
+  assert(context != null, throw NullAttributeException('context'));
   var database = Firestore.instance;
 
   var auth = FirebaseAuth.instance;
@@ -22,7 +24,7 @@ Future<void> signUpUserWithEmailAndPassword(
       .then((firebaseUser) {
     user.uuid = firebaseUser.user.uid;
     database
-        .collection('users')
+        .collection(FirebaseHelper.usersCollection)
         .document(firebaseUser.user.uid)
         .setData(user.toMap());
     GetIt.I.get<UserViewModel>().recoverUserData();

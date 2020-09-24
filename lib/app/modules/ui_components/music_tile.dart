@@ -3,6 +3,7 @@ import 'package:flutter_icons/flutter_icons.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../../core/exceptions/null_attribute_exception.dart';
+import '../../../core/helpers/assets_helper.dart';
 import '../../../core/models/song/song.dart';
 import '../../../core/view_model/player/player_view_model.dart';
 import '../player/pages/player_page.dart';
@@ -94,24 +95,10 @@ class MusicTile extends StatelessWidget {
           );
         },
         child: ListTile(
-          leading: song.artworkURL != null
-              ? ClipRRect(
-                  borderRadius: BorderRadius.circular(10.0),
-                  child: Image.network(song.artworkURL),
-                )
-              : Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8.0),
-                    color: Theme.of(context).primaryColor,
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(13.0),
-                    child: Icon(
-                      FlutterIcons.music_note_mdi,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
+          leading: FadeInImage.assetNetwork(
+            placeholder: AssetsHelper.artworkFallback,
+            image: song?.artworkURL,
+          ),
           title: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[

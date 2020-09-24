@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 
 import '../../exceptions/null_attribute_exception.dart';
+import '../../helpers/firebase_helper.dart';
 
 /// [User] is a class that represents the user object.
 /// Used in [loginUserWithEmailAndPassword], [signUpUserWithEmailAndPassword]
@@ -24,12 +25,12 @@ class User {
 
   Map<String, dynamic> toMap() {
     final map = <String, dynamic>{
-      'name': name,
-      'email': email,
-      'favoriteSongs': [],
-      'type': 'Email',
-      'imageURI': imageURI,
-      'uuid': uuid,
+      FirebaseHelper.nameAttribute: name,
+      FirebaseHelper.emailAttribute: email,
+      FirebaseHelper.favoriteSongsAttribute: [],
+      FirebaseHelper.typeAttribute: 'Email',
+      FirebaseHelper.imageURIAttribute: imageURI,
+      FirebaseHelper.uuidAttribute: uuid,
     };
 
     return map;
@@ -37,12 +38,12 @@ class User {
 
   Map<String, dynamic> toMapGoogle() {
     final mapGoogle = {
-      'name': name,
-      'email': email,
-      'favoriteSongs': [],
-      'type': 'Google',
-      'imageURI': imageURI,
-      'uuid': uuid,
+      FirebaseHelper.nameAttribute: name,
+      FirebaseHelper.emailAttribute: email,
+      FirebaseHelper.favoriteSongsAttribute: [],
+      FirebaseHelper.typeAttribute: 'Google',
+      FirebaseHelper.imageURIAttribute: imageURI,
+      FirebaseHelper.uuidAttribute: uuid,
     };
 
     return mapGoogle;
@@ -50,12 +51,12 @@ class User {
 
   Map<String, dynamic> toMapFacebook() {
     final mapFacebook = {
-      'name': name,
-      'email': email,
-      'favoriteSongs': [],
-      'type': 'Facebook',
-      'imageURI': imageURI,
-      'uuid': uuid,
+      FirebaseHelper.nameAttribute: name,
+      FirebaseHelper.emailAttribute: email,
+      FirebaseHelper.favoriteSongsAttribute: [],
+      FirebaseHelper.typeAttribute: 'Facebook',
+      FirebaseHelper.imageURIAttribute: imageURI,
+      FirebaseHelper.uuidAttribute: uuid,
     };
 
     return mapFacebook;
