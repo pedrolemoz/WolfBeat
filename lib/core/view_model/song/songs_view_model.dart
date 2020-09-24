@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:mobx/mobx.dart';
 
+import '../../helpers/firebase_helper.dart';
 import '../../models/song/song.dart';
 
 part 'songs_view_model.g.dart';
@@ -27,20 +28,23 @@ abstract class _SongsViewModelBase with Store {
   void fetchSongs() {
     var database = Firestore.instance;
 
-    database.collection('songs').getDocuments().then(
+    database.collection(FirebaseHelper.songsCollection).getDocuments().then(
       (snapshot) {
         // ignore: avoid_function_literals_in_foreach_calls
         snapshot.documents.forEach(
           (songFromFirestore) {
             final song = Song(
-              title: songFromFirestore.data['title'],
-              songURL: songFromFirestore.data['songURL'],
-              album: songFromFirestore.data['album'],
-              artist: songFromFirestore.data['artist'],
-              artworkURL: songFromFirestore.data['artworkURL'],
-              duration: songFromFirestore.data['duration'],
-              genre: songFromFirestore.data['genre'],
-              backgroundColor: songFromFirestore.data['backgroundColor'],
+              title: songFromFirestore.data[FirebaseHelper.titleAttribute],
+              songURL: songFromFirestore.data[FirebaseHelper.songURLAttribute],
+              album: songFromFirestore.data[FirebaseHelper.albumAttribute],
+              artist: songFromFirestore.data[FirebaseHelper.artistAttribute],
+              artworkURL:
+                  songFromFirestore.data[FirebaseHelper.artworkURLAttribute],
+              duration:
+                  songFromFirestore.data[FirebaseHelper.durationAttribute],
+              genre: songFromFirestore.data[FirebaseHelper.genreAttribute],
+              backgroundColor: songFromFirestore
+                  .data[FirebaseHelper.backgroundColorAttribute],
               reference: songFromFirestore.reference.path,
             );
             addSong(song);

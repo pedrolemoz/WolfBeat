@@ -4,6 +4,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hexcolor/hexcolor.dart';
 
+import '../../../../core/helpers/assets_helper.dart';
 import '../../../../core/view_model/player/player_view_model.dart';
 import '../../../../utils/custom_track_shape.dart';
 
@@ -81,7 +82,7 @@ class PlayerPageState extends State<PlayerPage> {
                     child: Padding(
                       padding: EdgeInsets.only(bottom: 10.0),
                       child: FadeInImage.assetNetwork(
-                        placeholder: 'assets/fallback/artwork_fallback.png',
+                        placeholder: AssetsHelper.artworkFallback,
                         image: playerViewModel?.currentSong?.artworkURL,
                       ),
                     ),

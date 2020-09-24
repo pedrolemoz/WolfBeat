@@ -3,6 +3,7 @@ import 'package:flutter_icons/flutter_icons.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../../core/exceptions/null_attribute_exception.dart';
+import '../../../core/helpers/assets_helper.dart';
 import '../../../core/models/song/song.dart';
 import '../../../core/view_model/player/player_view_model.dart';
 import '../player/pages/player_page.dart';
@@ -95,7 +96,7 @@ class MusicTile extends StatelessWidget {
         },
         child: ListTile(
           leading: FadeInImage.assetNetwork(
-            placeholder: 'assets/fallback/artwork_fallback.png',
+            placeholder: AssetsHelper.artworkFallback,
             image: song?.artworkURL,
           ),
           title: Column(

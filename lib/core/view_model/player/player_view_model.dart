@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:mobx/mobx.dart';
 
+import '../../helpers/firebase_helper.dart';
 import '../../models/song/song.dart';
 
 part 'player_view_model.g.dart';
@@ -89,9 +90,12 @@ abstract class _PlayerViewModelBase with Store {
   @action
   Future<void> favoriteSong() async {
     var _isFavorited = false;
-    var _userData =
-        await _database.collection('users').document(_user.uid).get();
-    var _favoriteSongs = _userData.data['favoriteSongs'] as List;
+    var _userData = await _database
+        .collection(FirebaseHelper.usersCollection)
+        .document(_user.uid)
+        .get();
+    var _favoriteSongs =
+        _userData.data[FirebaseHelper.favoriteSongsAttribute] as List;
 
     for (DocumentReference song in _favoriteSongs) {
       if (song.path == currentSong.reference) {
@@ -103,17 +107,17 @@ abstract class _PlayerViewModelBase with Store {
     if (_isFavorited) {
       _favoriteSongs.remove(_database.document(currentSong.reference));
       await _database
-          .collection('users')
+          .collection(FirebaseHelper.usersCollection)
           .document(_user.uid)
-          .updateData({'favoriteSongs': _favoriteSongs});
+          .updateData({FirebaseHelper.favoriteSongsAttribute: _favoriteSongs});
       isFavorite = false;
       debugPrint('Song removed from favorites');
     } else {
       _favoriteSongs.add(_database.document(currentSong.reference));
       await _database
-          .collection('users')
+          .collection(FirebaseHelper.usersCollection)
           .document(_user.uid)
-          .updateData({'favoriteSongs': _favoriteSongs});
+          .updateData({FirebaseHelper.favoriteSongsAttribute: _favoriteSongs});
       isFavorite = true;
       debugPrint('Song added from favorites');
     }
@@ -122,9 +126,12 @@ abstract class _PlayerViewModelBase with Store {
   @action
   Future<void> checkFavorited() async {
     var _isFavorited = false;
-    var _userData =
-        await _database.collection('users').document(_user.uid).get();
-    var _favoriteSongs = _userData.data['favoriteSongs'] as List;
+    var _userData = await _database
+        .collection(FirebaseHelper.usersCollection)
+        .document(_user.uid)
+        .get();
+    var _favoriteSongs =
+        _userData.data[FirebaseHelper.favoriteSongsAttribute] as List;
 
     for (DocumentReference song in _favoriteSongs) {
       if (song.path == currentSong.reference) {

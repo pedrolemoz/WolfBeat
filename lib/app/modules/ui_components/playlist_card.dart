@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../core/helpers/assets_helper.dart';
+
 /// [PlaylistCard] redirects the user to ***.
 /// It's a Container with a music cover inside.
 /// Used in [HomePage].
@@ -32,7 +34,7 @@ class PlaylistCard extends StatelessWidget {
                   padding: EdgeInsets.symmetric(vertical: 10.0),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(5.0),
-                    child: Image.asset('assets/fallback/artwork_fallback.png'),
+                    child: Image.asset(AssetsHelper.artworkFallback),
                   ),
                 ),
               ),

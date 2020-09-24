@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
+import '../../../../../core/helpers/firebase_helper.dart';
 import '../../../../../core/models/user/user.dart';
 import '../../../../../core/view_model/user/user_view_model.dart';
 import '../../../bottom_navigation/pages/bottom_navigation_bar.dart';
@@ -32,7 +33,7 @@ Future<void> authWithGoogle(BuildContext context) async {
 
     var db = Firestore.instance;
     await db
-        .collection('users')
+        .collection(FirebaseHelper.usersCollection)
         .document(user.uid)
         .setData(userGoogle.toMapGoogle())
         .then((_) {
