@@ -9,6 +9,36 @@ part of 'songs_view_model.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$SongsViewModel on _SongsViewModelBase, Store {
+  final _$albumsAtom = Atom(name: '_SongsViewModelBase.albums');
+
+  @override
+  List<Album> get albums {
+    _$albumsAtom.reportRead();
+    return super.albums;
+  }
+
+  @override
+  set albums(List<Album> value) {
+    _$albumsAtom.reportWrite(value, super.albums, () {
+      super.albums = value;
+    });
+  }
+
+  final _$artistsAtom = Atom(name: '_SongsViewModelBase.artists');
+
+  @override
+  List<Artist> get artists {
+    _$artistsAtom.reportRead();
+    return super.artists;
+  }
+
+  @override
+  set artists(List<Artist> value) {
+    _$artistsAtom.reportWrite(value, super.artists, () {
+      super.artists = value;
+    });
+  }
+
   final _$songsAtom = Atom(name: '_SongsViewModelBase.songs');
 
   @override
@@ -52,6 +82,8 @@ mixin _$SongsViewModel on _SongsViewModelBase, Store {
   @override
   String toString() {
     return '''
+albums: ${albums},
+artists: ${artists},
 songs: ${songs}
     ''';
   }
