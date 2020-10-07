@@ -39,6 +39,21 @@ mixin _$PlayerViewModel on _PlayerViewModelBase, Store {
     });
   }
 
+  final _$playingFromAtom = Atom(name: '_PlayerViewModelBase.playingFrom');
+
+  @override
+  String get playingFrom {
+    _$playingFromAtom.reportRead();
+    return super.playingFrom;
+  }
+
+  @override
+  set playingFrom(String value) {
+    _$playingFromAtom.reportWrite(value, super.playingFrom, () {
+      super.playingFrom = value;
+    });
+  }
+
   final _$isPlayingAtom = Atom(name: '_PlayerViewModelBase.isPlaying');
 
   @override
@@ -162,6 +177,7 @@ mixin _$PlayerViewModel on _PlayerViewModelBase, Store {
     return '''
 playerQueue: ${playerQueue},
 currentSong: ${currentSong},
+playingFrom: ${playingFrom},
 isPlaying: ${isPlaying},
 currentTime: ${currentTime},
 isFavorite: ${isFavorite}

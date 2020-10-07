@@ -46,6 +46,7 @@ class PlayerPageState extends State<PlayerPage> {
             gradient: LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
+              stops: [0.0, 1.0],
               colors: [
                 Hexcolor(playerViewModel?.currentSong?.backgroundColor) ??
                     Theme.of(context).scaffoldBackgroundColor,
@@ -65,7 +66,7 @@ class PlayerPageState extends State<PlayerPage> {
                     style: Theme.of(context).textTheme.subtitle2,
                   ),
                   Text(
-                    'Suas Músicas',
+                    playerViewModel.playingFrom ?? 'Playlist',
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
                     style: Theme.of(context).textTheme.subtitle1,

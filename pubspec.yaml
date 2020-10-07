@@ -27,6 +27,8 @@ dependencies:
 
   # Player
   audioplayers: ^0.15.1
+  audio_service: ^0.15.0
+  just_audio: ^0.4.4
   
   # Firebase
   firebase_core: ^0.4.5

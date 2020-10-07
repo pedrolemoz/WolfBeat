@@ -34,6 +34,9 @@ abstract class _PlayerViewModelBase with Store {
   Song currentSong;
 
   @observable
+  String playingFrom;
+
+  @observable
   var isPlaying = false;
 
   @observable
