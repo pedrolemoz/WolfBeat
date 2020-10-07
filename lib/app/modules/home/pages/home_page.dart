@@ -1,5 +1,7 @@
+import 'package:WolfBeat/core/view_model/song/songs_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:get_it/get_it.dart';
 
 import '../../settings/pages/settings_page.dart';
 import '../../ui_components/favorite_songs_card.dart';
@@ -7,8 +9,10 @@ import '../../ui_components/playlist_card.dart';
 
 class HomePage extends StatelessWidget {
   static const String id = 'home_page';
+  
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: ListView(

@@ -1,3 +1,5 @@
+import 'package:WolfBeat/core/models/album/album.dart';
+import 'package:WolfBeat/core/models/artist/artist.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:mobx/mobx.dart';
 
@@ -15,6 +17,11 @@ abstract class _SongsViewModelBase with Store {
   _SongsViewModelBase() {
     fetchSongs();
   }
+  @observable
+  List<Album> albums = [];
+
+  @observable
+  List<Artist> artists = [];
 
   @observable
   List<Song> songs = [];
@@ -22,6 +29,21 @@ abstract class _SongsViewModelBase with Store {
   @action
   void addSong(Song song) {
     songs.add(song);
+
+    if (!albums.map((song) => song.albumName).contains(song.album)) {
+      albums.add(Album(
+        albumName: song.album,
+        artist: song.artist,
+        artworkURL: song.artworkURL,
+      ));
+    }
+
+    if (!artists.map((song) => song.artistName).contains(song.artist)) {
+      artists.add(Artist(
+        artistName: song.artist,
+        artworkURL: song.artworkURL,
+      ));
+    }
   }
 
   @action

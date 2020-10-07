@@ -9,20 +9,23 @@ import '../../ui_components/music_tile.dart';
 class PlaylistPage extends StatefulWidget {
   static const String id = 'playlist_page';
 
+  final List<MusicTile> songs;
+  final String playlistTitle;
+
+  PlaylistPage({@required this.songs, @required this.playlistTitle});
+
   @override
   _PlaylistPageState createState() => _PlaylistPageState();
 }
 
 class _PlaylistPageState extends State<PlaylistPage> {
-  final songsViewModel = GetIt.I.get<SongsViewModel>();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         title: Text(
-          'Playlist top',
+          widget.playlistTitle,
           overflow: TextOverflow.ellipsis,
           maxLines: 1,
           style: Theme.of(context).textTheme.headline6,
@@ -52,16 +55,11 @@ class _PlaylistPageState extends State<PlaylistPage> {
       ),
       body: Observer(builder: (_) {
         return ListView.builder(
-          itemCount: songsViewModel.songs.length,
+          itemCount: widget.songs.length,
           padding: EdgeInsets.symmetric(vertical: 13.0),
           physics: BouncingScrollPhysics(),
           itemBuilder: (context, index) {
-            return MusicTile(
-              song: songsViewModel.songs[index],
-              // image: Image.network(
-              //   'https://images-na.ssl-images-amazon.com/images/I/815aiIN6wmL.jpg',
-              // ),
-            );
+            return widget.songs.elementAt(index);
           },
         );
       }),
