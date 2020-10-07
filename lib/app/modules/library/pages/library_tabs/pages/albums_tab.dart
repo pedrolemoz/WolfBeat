@@ -1,3 +1,4 @@
+import 'package:WolfBeat/app/modules/playlist/pages/playlist_page.dart';
 import 'package:WolfBeat/core/helpers/media_helper.dart';
 import 'package:WolfBeat/core/view_model/song/songs_view_model.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +7,7 @@ import 'package:get_it/get_it.dart';
 class AlbumsTab extends StatelessWidget {
   final _albums = GetIt.I.get<SongsViewModel>().albums;
   final _mediaHelper = MediaHelper();
+
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
@@ -19,10 +21,19 @@ class AlbumsTab extends StatelessWidget {
         mainAxisSpacing: 15.0,
         childAspectRatio: 0.85,
       ),
-      itemBuilder: (context,index) {
+      itemBuilder: (context, index) {
         return GestureDetector(
-            onTap: () => _mediaHelper.getSongsFromAlbum(albumName:_albums.elementAt(index).albumName ),
-            child: Column(
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => PlaylistPage(
+                playlistTitle: _albums.elementAt(index).albumName,
+                songs: _mediaHelper.getSongsFromAlbum(
+                    albumName: _albums.elementAt(index).albumName),
+              ),
+            ),
+          ),
+          child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               ClipRRect(

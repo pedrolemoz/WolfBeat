@@ -29,14 +29,16 @@ abstract class _SongsViewModelBase with Store {
   @action
   void addSong(Song song) {
     songs.add(song);
-    if (!albums.contains(song.album)) {
+
+    if (!albums.map((song) => song.albumName).contains(song.album)) {
       albums.add(Album(
         albumName: song.album,
         artist: song.artist,
         artworkURL: song.artworkURL,
       ));
     }
-    if (!artists.contains(song.artist)) {
+
+    if (!artists.map((song) => song.artistName).contains(song.artist)) {
       artists.add(Artist(
         artistName: song.artist,
         artworkURL: song.artworkURL,

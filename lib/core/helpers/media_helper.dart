@@ -6,17 +6,16 @@ import 'package:get_it/get_it.dart';
 
 class MediaHelper {
   final _songsViewModel = GetIt.I.get<SongsViewModel>();
-  void getSongsFromAlbum({@required String albumName}) {
-    //var album = _songsViewModel.albums.map((album) => album.albumName);
 
-     print(_songsViewModel.songs
-        .where((song) => song.album == albumName)
-        .map((song) => MusicTile(
-              song: song,
-            )));
-  }
+  List<MusicTile> getSongsFromAlbum({@required String albumName}) =>
+      _songsViewModel.songs
+          .where((song) => song.album == albumName)
+          .map((song) => MusicTile(song: song))
+          .toList();
 
-  /*List<MusicTile> getSongsFromArtist() {
-
-  }*/
+  List<MusicTile> getSongsFromArtist({@required String artistName}) =>
+      _songsViewModel.songs
+          .where((song) => song.artist == artistName)
+          .map((song) => MusicTile(song: song))
+          .toList();
 }
