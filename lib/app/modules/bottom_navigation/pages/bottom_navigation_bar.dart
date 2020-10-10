@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:get_it/get_it.dart';
 
+import '../../../../core/view_model/player/player_view_model.dart';
 import '../../home/pages/home_page.dart';
 import '../../library/pages/library_page.dart';
 import '../../search/pages/search_page.dart';
+import '../../ui_components/mini_player.dart';
 
 class BottomNavigator extends StatefulWidget {
   static final String id = 'bottom_navigator';
@@ -20,11 +24,16 @@ class _BottomNavigatorState extends State<BottomNavigator> {
     SearchPage(),
     LibraryPage(),
   ];
+  final playerViewModel = GetIt.I.get<PlayerViewModel>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: tabs[_currentIndex],
+      bottomSheet: Observer(
+        builder: (context) =>
+            playerViewModel.currentSong != null ? MiniPlayer() : SizedBox(),
+      ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Color(0xFF2c2f33),
         elevation: 0.0,

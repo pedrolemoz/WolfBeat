@@ -9,10 +9,9 @@ import '../../ui_components/playlist_card.dart';
 
 class HomePage extends StatelessWidget {
   static const String id = 'home_page';
-  
+
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: ListView(

@@ -10,7 +10,7 @@ class SignInViewModel = _SignInViewModelBase with _$SignInViewModel;
 abstract class _SignInViewModelBase with Store {
   @observable
   bool _validEmail = false;
-  
+
   @observable
   bool _validPassword = false;
 
