@@ -126,47 +126,54 @@ class PlayerPageState extends State<PlayerPage> {
                       ),
                     ],
                   ),
-                  Column(
-                    children: [
-                      SliderTheme(
-                        data: SliderTheme.of(context).copyWith(
-                          activeTrackColor: Theme.of(context).primaryColor,
-                          thumbColor: Theme.of(context).primaryColor,
-                          inactiveTrackColor: Colors.grey[400],
-                          trackShape: CustomTrackShape(),
-                          trackHeight: 1.0,
-                          thumbShape:
-                              RoundSliderThumbShape(enabledThumbRadius: 7.0),
-                          overlayColor:
-                              Theme.of(context).primaryColor.withAlpha(80),
-                          overlayShape:
-                              RoundSliderOverlayShape(overlayRadius: 20.0),
-                        ),
-                        child: Slider(
-                          min: 0,
-                          max: 170, // 2 min e 50 seg em segundos
-                          value: _value,
-                          onChanged: (newValue) {
-                            setState(() {
-                              _value = newValue;
-                            });
-                          },
-                        ),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            '0:50',
-                            style: Theme.of(context).textTheme.caption,
+                  Observer(
+                    builder: (context) => Column(
+                      children: [
+                        SliderTheme(
+                          data: SliderTheme.of(context).copyWith(
+                            activeTrackColor: Theme.of(context).primaryColor,
+                            thumbColor: Theme.of(context).primaryColor,
+                            inactiveTrackColor: Colors.grey[400],
+                            trackShape: CustomTrackShape(),
+                            trackHeight: 1.0,
+                            thumbShape:
+                                RoundSliderThumbShape(enabledThumbRadius: 7.0),
+                            overlayColor:
+                                Theme.of(context).primaryColor.withAlpha(80),
+                            overlayShape:
+                                RoundSliderOverlayShape(overlayRadius: 20.0),
                           ),
-                          Text(
-                            '2:50',
-                            style: Theme.of(context).textTheme.caption,
+                          child: Slider(
+                            min: 0,
+                            max: playerViewModel.totalDuration.inSeconds
+                                .toDouble(),
+                            value: playerViewModel.currentPosition.inSeconds
+                                .toDouble(),
+                            onChanged: (newValue) {
+                              playerViewModel
+                                  .seek(Duration(seconds: newValue.toInt()));
+                            },
                           ),
-                        ],
-                      ),
-                    ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              playerViewModel.currentPosition
+                                  .toString()
+                                  .substring(2, 7),
+                              style: Theme.of(context).textTheme.caption,
+                            ),
+                            Text(
+                              Duration(
+                                seconds: playerViewModel.currentSong.duration,
+                              ).toString().substring(2, 7),
+                              style: Theme.of(context).textTheme.caption,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,

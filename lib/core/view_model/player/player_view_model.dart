@@ -1,3 +1,4 @@
+import 'package:audioplayers/audio_cache.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -40,7 +41,10 @@ abstract class _PlayerViewModelBase with Store {
   var isPlaying = false;
 
   @observable
-  int currentTime;
+  Duration currentPosition;
+
+  @observable
+  Duration totalDuration;
 
   @observable
   var isFavorite = false;
@@ -54,9 +58,18 @@ abstract class _PlayerViewModelBase with Store {
   @action
   Future<void> play() async {
     var _result = await _audioPlayer.play(currentSong.songURL);
+
     if (_result == 1) {
       debugPrint('Playing status: Playing');
       isPlaying = true;
+
+      await _audioPlayer.onDurationChanged.listen((newDuration) {
+        totalDuration = newDuration;
+      });
+
+      await _audioPlayer.onAudioPositionChanged.listen((newPosition) {
+        currentPosition = newPosition;
+      });
     }
   }
 
@@ -78,6 +91,13 @@ abstract class _PlayerViewModelBase with Store {
       debugPrint('Playing status: Stopped');
       isPlaying = false;
     }
+  }
+
+  @action
+  Future<void> seek(Duration position) async {
+    debugPrint(currentSong.songURL);
+    var _result = await _audioPlayer.seek(position);
+    print(_result);
   }
 
   @action

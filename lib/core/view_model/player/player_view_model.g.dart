@@ -69,18 +69,34 @@ mixin _$PlayerViewModel on _PlayerViewModelBase, Store {
     });
   }
 
-  final _$currentTimeAtom = Atom(name: '_PlayerViewModelBase.currentTime');
+  final _$currentPositionAtom =
+      Atom(name: '_PlayerViewModelBase.currentPosition');
 
   @override
-  int get currentTime {
-    _$currentTimeAtom.reportRead();
-    return super.currentTime;
+  Duration get currentPosition {
+    _$currentPositionAtom.reportRead();
+    return super.currentPosition;
   }
 
   @override
-  set currentTime(int value) {
-    _$currentTimeAtom.reportWrite(value, super.currentTime, () {
-      super.currentTime = value;
+  set currentPosition(Duration value) {
+    _$currentPositionAtom.reportWrite(value, super.currentPosition, () {
+      super.currentPosition = value;
+    });
+  }
+
+  final _$totalDurationAtom = Atom(name: '_PlayerViewModelBase.totalDuration');
+
+  @override
+  Duration get totalDuration {
+    _$totalDurationAtom.reportRead();
+    return super.totalDuration;
+  }
+
+  @override
+  set totalDuration(Duration value) {
+    _$totalDurationAtom.reportWrite(value, super.totalDuration, () {
+      super.totalDuration = value;
     });
   }
 
@@ -118,6 +134,13 @@ mixin _$PlayerViewModel on _PlayerViewModelBase, Store {
   @override
   Future<void> stop() {
     return _$stopAsyncAction.run(() => super.stop());
+  }
+
+  final _$seekAsyncAction = AsyncAction('_PlayerViewModelBase.seek');
+
+  @override
+  Future<void> seek(Duration position) {
+    return _$seekAsyncAction.run(() => super.seek(position));
   }
 
   final _$favoriteSongAsyncAction =
@@ -179,7 +202,8 @@ playerQueue: ${playerQueue},
 currentSong: ${currentSong},
 playingFrom: ${playingFrom},
 isPlaying: ${isPlaying},
-currentTime: ${currentTime},
+currentPosition: ${currentPosition},
+totalDuration: ${totalDuration},
 isFavorite: ${isFavorite}
     ''';
   }
