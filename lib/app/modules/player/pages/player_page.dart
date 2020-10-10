@@ -4,6 +4,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hexcolor/hexcolor.dart';
 
+
 import '../../ui_components/mini_player.dart';
 import '../../../../core/helpers/assets_helper.dart';
 import '../../../../core/view_model/player/player_view_model.dart';
@@ -35,8 +36,7 @@ class PlayerPageState extends State<PlayerPage> {
     playerViewModel.checkFavorited();
   }
 
-  double _value = 50; // Tempo atual em segundos
-  // double _duration = 100; // Duração total da música
+  
 
   @override
   Widget build(BuildContext context) {
@@ -103,12 +103,15 @@ class PlayerPageState extends State<PlayerPage> {
                             overflow: TextOverflow.ellipsis,
                             style: Theme.of(context).textTheme.headline6,
                           ),
+                          
                           Text(
                             playerViewModel?.currentSong?.artist ??
                                 'Artista desconhecido',
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: Theme.of(context).textTheme.subtitle1,
+
+                            softWrap: true,
                           ),
                         ],
                       ),
