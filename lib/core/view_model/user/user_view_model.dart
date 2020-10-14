@@ -1,3 +1,4 @@
+import 'package:WolfBeat/core/models/playlist/playlist.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +20,9 @@ abstract class _UserViewModelBase with Store {
   _UserViewModelBase() {
     recoverUserData();
   }
+
+  @observable
+  var playlists = <Playlist>[].asObservable();
 
   @observable
   String userID = '';
@@ -49,6 +53,7 @@ abstract class _UserViewModelBase with Store {
     var data = snapshot.data;
 
     if (data.isNotEmpty) {
+      await _recoverUserPlaylists(snapshot);
       userID = user.uid;
       userName = data[FirebaseHelper.nameAttribute];
       userEmail = data[FirebaseHelper.emailAttribute];
@@ -78,4 +83,38 @@ abstract class _UserViewModelBase with Store {
   // ignore: use_setters_to_change_properties
   @action
   void updateImageURI(String newImageURI) => imageURI = newImageURI;
+
+  @action
+  Future<void> _recoverUserPlaylists(DocumentSnapshot snapshot) async {
+    var data = snapshot.data;
+
+    var _playlists = data[FirebaseHelper.playlistsAttribute];
+
+    for (var playlist in _playlists) {
+      playlists.add(
+        Playlist(
+          playlistName: playlist[FirebaseHelper.playlistNameAttribute],
+          songs: playlist[FirebaseHelper.playlistSongsAttribute],
+        ),
+      );
+    }
+  }
+
+  // @action
+  // Future<void> createNewPlaylist({@required Playlist newPlaylist}) async {
+  //   var auth = FirebaseAuth.instance;
+  //   var database = Firestore.instance;
+  //   var user = await auth.currentUser();
+
+  //   var snapshot = await database
+  //       .collection(FirebaseHelper.usersCollection)
+  //       .document(user.uid)
+  //       .get();
+
+  //   var data = snapshot.data;
+
+  //   Map<String, dynamic> _playlists = data[FirebaseHelper.playlistsAttribute];
+
+  //   // playlists.add(newPlaylist);
+  // }
 }
