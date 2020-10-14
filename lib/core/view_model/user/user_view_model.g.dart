@@ -124,6 +124,25 @@ mixin _$UserViewModel on _UserViewModelBase, Store {
         .run(() => super._recoverUserPlaylists(snapshot));
   }
 
+  final _$addSongToPlaylistAsyncAction =
+      AsyncAction('_UserViewModelBase.addSongToPlaylist');
+
+  @override
+  Future<void> addSongToPlaylist(
+      {@required Playlist playlist, @required Song song}) {
+    return _$addSongToPlaylistAsyncAction
+        .run(() => super.addSongToPlaylist(playlist: playlist, song: song));
+  }
+
+  final _$createNewPlaylistAsyncAction =
+      AsyncAction('_UserViewModelBase.createNewPlaylist');
+
+  @override
+  Future<void> createNewPlaylist({@required Playlist newPlaylist}) {
+    return _$createNewPlaylistAsyncAction
+        .run(() => super.createNewPlaylist(newPlaylist: newPlaylist));
+  }
+
   final _$_UserViewModelBaseActionController =
       ActionController(name: '_UserViewModelBase');
 

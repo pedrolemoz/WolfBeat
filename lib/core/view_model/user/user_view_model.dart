@@ -1,4 +1,5 @@
 import 'package:WolfBeat/core/models/playlist/playlist.dart';
+import 'package:WolfBeat/core/models/song/song.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -100,21 +101,75 @@ abstract class _UserViewModelBase with Store {
     }
   }
 
-  // @action
-  // Future<void> createNewPlaylist({@required Playlist newPlaylist}) async {
-  //   var auth = FirebaseAuth.instance;
-  //   var database = Firestore.instance;
-  //   var user = await auth.currentUser();
+  @action
+  Future<void> addSongToPlaylist(
+      {@required Playlist playlist, @required Song song}) async {
+    var auth = FirebaseAuth.instance;
+    var database = Firestore.instance;
+    var user = await auth.currentUser();
 
-  //   var snapshot = await database
-  //       .collection(FirebaseHelper.usersCollection)
-  //       .document(user.uid)
-  //       .get();
+    var snapshot = await database
+        .collection(FirebaseHelper.usersCollection)
+        .document(user.uid)
+        .get();
 
-  //   var data = snapshot.data;
+    var data = snapshot.data;
 
-  //   Map<String, dynamic> _playlists = data[FirebaseHelper.playlistsAttribute];
+    var _songs = playlist.songs;
 
-  //   // playlists.add(newPlaylist);
-  // }
+    _songs.add(song.reference);
+
+    List<dynamic> userPlaylists = data[FirebaseHelper.playlistsAttribute];
+
+    Map<String, dynamic> currentPlaylist = userPlaylists.singleWhere(
+        (userPlaylist) =>
+            userPlaylist[FirebaseHelper.playlistNameAttribute] ==
+            playlist.playlistName);
+
+    print(currentPlaylist);
+
+    // userPlaylists.add(
+    //   <String, dynamic>{
+    //     FirebaseHelper.playlistNameAttribute: newPlaylist.playlistName,
+    //     FirebaseHelper.playlistSongsAttribute: newPlaylist.songs,
+    //   },
+    // );
+
+    await database
+        .collection(FirebaseHelper.usersCollection)
+        .document(user.uid)
+        .updateData({FirebaseHelper.playlistsAttribute: userPlaylists});
+
+    // playlist.copyWith(songs: _songs);
+  }
+
+  @action
+  Future<void> createNewPlaylist({@required Playlist newPlaylist}) async {
+    var auth = FirebaseAuth.instance;
+    var database = Firestore.instance;
+    var user = await auth.currentUser();
+
+    var snapshot = await database
+        .collection(FirebaseHelper.usersCollection)
+        .document(user.uid)
+        .get();
+
+    var data = snapshot.data;
+
+    List<dynamic> userPlaylists = data[FirebaseHelper.playlistsAttribute];
+
+    userPlaylists.add(
+      <String, dynamic>{
+        FirebaseHelper.playlistNameAttribute: newPlaylist.playlistName,
+        FirebaseHelper.playlistSongsAttribute: newPlaylist.songs,
+      },
+    );
+
+    await database
+        .collection(FirebaseHelper.usersCollection)
+        .document(user.uid)
+        .updateData({FirebaseHelper.playlistsAttribute: userPlaylists});
+
+    playlists.add(newPlaylist);
+  }
 }

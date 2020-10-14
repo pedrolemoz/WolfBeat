@@ -1,3 +1,5 @@
+import 'package:WolfBeat/core/view_model/song/songs_view_model.dart';
+import 'package:WolfBeat/core/view_model/user/user_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -24,7 +26,10 @@ class _BottomNavigatorState extends State<BottomNavigator> {
     SearchPage(),
     LibraryPage(),
   ];
+
   final playerViewModel = GetIt.I.get<PlayerViewModel>();
+  final user = GetIt.I.get<UserViewModel>();
+  final song = GetIt.I.get<SongsViewModel>();
 
   @override
   Widget build(BuildContext context) {
@@ -56,6 +61,11 @@ class _BottomNavigatorState extends State<BottomNavigator> {
         showUnselectedLabels: true,
         type: BottomNavigationBarType.fixed,
         onTap: (index) {
+          user.addSongToPlaylist(
+            playlist: user.playlists[0],
+            song: song.songs[1],
+          );
+
           setState(() {
             _currentIndex = index;
           });
