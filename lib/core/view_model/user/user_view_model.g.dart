@@ -124,14 +124,14 @@ mixin _$UserViewModel on _UserViewModelBase, Store {
         .run(() => super._recoverUserPlaylists(snapshot));
   }
 
-  final _$addSongToPlaylistAsyncAction =
-      AsyncAction('_UserViewModelBase.addSongToPlaylist');
+  final _$_changeSongInPlaylistAsyncAction =
+      AsyncAction('_UserViewModelBase._changeSongInPlaylist');
 
   @override
-  Future<void> addSongToPlaylist(
-      {@required Playlist playlist, @required Song song}) {
-    return _$addSongToPlaylistAsyncAction
-        .run(() => super.addSongToPlaylist(playlist: playlist, song: song));
+  Future<void> _changeSongInPlaylist(
+      {@required Playlist playlist, @required List<dynamic> songs}) {
+    return _$_changeSongInPlaylistAsyncAction.run(
+        () => super._changeSongInPlaylist(playlist: playlist, songs: songs));
   }
 
   final _$createNewPlaylistAsyncAction =
@@ -152,6 +152,30 @@ mixin _$UserViewModel on _UserViewModelBase, Store {
         name: '_UserViewModelBase.updateImageURI');
     try {
       return super.updateImageURI(newImageURI);
+    } finally {
+      _$_UserViewModelBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  Future<void> addSongToPlaylist(
+      {@required Playlist playlist, @required Song song}) {
+    final _$actionInfo = _$_UserViewModelBaseActionController.startAction(
+        name: '_UserViewModelBase.addSongToPlaylist');
+    try {
+      return super.addSongToPlaylist(playlist: playlist, song: song);
+    } finally {
+      _$_UserViewModelBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  Future<void> removeSongFromPlaylist(
+      {@required Playlist playlist, @required Song song}) {
+    final _$actionInfo = _$_UserViewModelBaseActionController.startAction(
+        name: '_UserViewModelBase.removeSongFromPlaylist');
+    try {
+      return super.removeSongFromPlaylist(playlist: playlist, song: song);
     } finally {
       _$_UserViewModelBaseActionController.endAction(_$actionInfo);
     }

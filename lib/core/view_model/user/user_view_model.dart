@@ -103,7 +103,31 @@ abstract class _UserViewModelBase with Store {
 
   @action
   Future<void> addSongToPlaylist(
-      {@required Playlist playlist, @required Song song}) async {
+      {@required Playlist playlist, @required Song song}) {
+    var _songs = playlist.songs;
+    if (_songs.contains(song.reference)) {
+      debugPrint('Song already added to playlist ${playlist.playlistName}');
+    } else {
+      _songs.add(song.reference);
+      _changeSongInPlaylist(playlist: playlist, songs: _songs);
+    }
+  }
+
+  @action
+  Future<void> removeSongFromPlaylist(
+      {@required Playlist playlist, @required Song song}) {
+    var _songs = playlist.songs;
+    if (_songs.contains(song.reference)) {
+      _songs.remove(song.reference);
+      _changeSongInPlaylist(playlist: playlist, songs: _songs);
+    } else {
+      debugPrint('Song don\'t exist in playlist ${playlist.playlistName}');
+    }
+  }
+
+  @action
+  Future<void> _changeSongInPlaylist(
+      {@required Playlist playlist, @required List songs}) async {
     var auth = FirebaseAuth.instance;
     var database = Firestore.instance;
     var user = await auth.currentUser();
@@ -115,9 +139,6 @@ abstract class _UserViewModelBase with Store {
 
     var data = snapshot.data;
 
-    var _songs = playlist.songs;
-    _songs.add(song.reference);
-
     List _userPlaylists = data[FirebaseHelper.playlistsAttribute];
 
     Map<String, dynamic> _currentPlaylist = _userPlaylists.singleWhere(
@@ -127,7 +148,7 @@ abstract class _UserViewModelBase with Store {
 
     var _index = _userPlaylists.indexOf(_currentPlaylist);
 
-    _currentPlaylist[FirebaseHelper.playlistSongsAttribute] = _songs;
+    _currentPlaylist[FirebaseHelper.playlistSongsAttribute] = songs;
 
     _userPlaylists[_index] = _currentPlaylist;
 
@@ -136,7 +157,7 @@ abstract class _UserViewModelBase with Store {
         .document(user.uid)
         .updateData({FirebaseHelper.playlistsAttribute: _userPlaylists});
 
-    playlists[playlists.indexOf(playlist)] = playlist.copyWith(songs: _songs);
+    playlists[playlists.indexOf(playlist)] = playlist.copyWith(songs: songs);
   }
 
   @action
