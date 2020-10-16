@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 
 import '../../exceptions/null_attribute_exception.dart';
@@ -42,5 +43,5 @@ class Song {
 
   final String backgroundColor;
 
-  final String reference;
+  final DocumentReference reference;
 }

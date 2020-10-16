@@ -118,33 +118,25 @@ abstract class _UserViewModelBase with Store {
     var _songs = playlist.songs;
     _songs.add(song.reference);
 
-    var userPlaylists = data[FirebaseHelper.playlistsAttribute];
+    List _userPlaylists = data[FirebaseHelper.playlistsAttribute];
 
-    Map<String, dynamic> currentPlaylist = userPlaylists.singleWhere(
+    Map<String, dynamic> _currentPlaylist = _userPlaylists.singleWhere(
         (userPlaylist) =>
             userPlaylist[FirebaseHelper.playlistNameAttribute] ==
             playlist.playlistName);
 
-    var index = userPlaylists.indexOf(currentPlaylist);
+    var _index = _userPlaylists.indexOf(_currentPlaylist);
 
-    currentPlaylist[FirebaseHelper.playlistSongsAttribute] = _songs;
+    _currentPlaylist[FirebaseHelper.playlistSongsAttribute] = _songs;
 
-    // print([currentPlaylist, index]);
-
-    // userPlaylists.add(
-    //   <String, dynamic>{
-    //     FirebaseHelper.playlistNameAttribute: newPlaylist.playlistName,
-    //     FirebaseHelper.playlistSongsAttribute: newPlaylist.songs,
-    //   },
-    // );
+    _userPlaylists[_index] = _currentPlaylist;
 
     await database
         .collection(FirebaseHelper.usersCollection)
         .document(user.uid)
-        .updateData(
-            {FirebaseHelper.playlistsAttribute[index]: currentPlaylist});
+        .updateData({FirebaseHelper.playlistsAttribute: _userPlaylists});
 
-    // playlist.copyWith(songs: _songs);
+    playlists[playlists.indexOf(playlist)] = playlist.copyWith(songs: _songs);
   }
 
   @action
@@ -160,9 +152,9 @@ abstract class _UserViewModelBase with Store {
 
     var data = snapshot.data;
 
-    List<dynamic> userPlaylists = data[FirebaseHelper.playlistsAttribute];
+    List<dynamic> _userPlaylists = data[FirebaseHelper.playlistsAttribute];
 
-    userPlaylists.add(
+    _userPlaylists.add(
       <String, dynamic>{
         FirebaseHelper.playlistNameAttribute: newPlaylist.playlistName,
         FirebaseHelper.playlistSongsAttribute: newPlaylist.songs,
@@ -172,7 +164,7 @@ abstract class _UserViewModelBase with Store {
     await database
         .collection(FirebaseHelper.usersCollection)
         .document(user.uid)
-        .updateData({FirebaseHelper.playlistsAttribute: userPlaylists});
+        .updateData({FirebaseHelper.playlistsAttribute: _userPlaylists});
 
     playlists.add(newPlaylist);
   }
