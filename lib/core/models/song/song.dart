@@ -17,6 +17,7 @@ class Song {
     @required this.songURL,
     @required this.backgroundColor,
     @required this.reference,
+    this.isFavorite = false,
   })  : assert(title != null, throw NullAttributeException('title')),
         assert(artist != null, throw NullAttributeException('artist')),
         assert(album != null, throw NullAttributeException('album')),
@@ -44,5 +45,33 @@ class Song {
 
   final String backgroundColor;
 
+  bool isFavorite;
+
   final DocumentReference reference;
+
+  Song copyWith({
+    String title,
+    String artist,
+    String album,
+    String artworkURL,
+    String genre,
+    int duration,
+    String songURL,
+    String backgroundColor,
+    bool isFavorite,
+    DocumentReference reference,
+  }) {
+    return Song(
+      album: album ?? this.album,
+      artist: artist ?? this.artist,
+      artworkURL: artworkURL ?? this.artworkURL,
+      backgroundColor: backgroundColor ?? this.backgroundColor,
+      duration: duration ?? this.duration,
+      genre: genre ?? this.genre,
+      reference: reference ?? this.reference,
+      songURL: songURL ?? this.songURL,
+      title: title ?? this.title,
+      isFavorite: isFavorite ?? this.isFavorite,
+    );
+  }
 }

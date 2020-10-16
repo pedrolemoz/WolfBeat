@@ -161,7 +161,7 @@ abstract class _UserViewModelBase with Store {
   }
 
   @action
-  Future<void> createNewPlaylist({@required Playlist newPlaylist}) async {
+  Future<int> createNewPlaylist({@required Playlist newPlaylist}) async {
     var auth = FirebaseAuth.instance;
     var database = Firestore.instance;
     var user = await auth.currentUser();
@@ -188,5 +188,7 @@ abstract class _UserViewModelBase with Store {
         .updateData({FirebaseHelper.playlistsAttribute: _userPlaylists});
 
     playlists.add(newPlaylist);
+
+    return playlists.indexOf(newPlaylist);
   }
 }

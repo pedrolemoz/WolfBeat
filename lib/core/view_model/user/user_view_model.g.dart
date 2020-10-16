@@ -138,7 +138,7 @@ mixin _$UserViewModel on _UserViewModelBase, Store {
       AsyncAction('_UserViewModelBase.createNewPlaylist');
 
   @override
-  Future<void> createNewPlaylist({@required Playlist newPlaylist}) {
+  Future<int> createNewPlaylist({@required Playlist newPlaylist}) {
     return _$createNewPlaylistAsyncAction
         .run(() => super.createNewPlaylist(newPlaylist: newPlaylist));
   }

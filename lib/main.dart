@@ -1,3 +1,4 @@
+import 'package:WolfBeat/app/modules/library/pages/library_tabs/pages/playlists_tab.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
@@ -56,6 +57,7 @@ class WolfBeat extends StatelessWidget {
         WelcomePage.id: (context) => WelcomePage(),
         BottomNavigator.id: (context) => BottomNavigator(),
         LibraryPage.id: (context) => LibraryPage(),
+        CreateNewPlaylistPage.id: (context) => CreateNewPlaylistPage(),
         PlayerPage.id: (context) => PlayerPage(),
         FavoriteSongsPage.id: (context) => FavoriteSongsPage(),
         HomePage.id: (context) => HomePage(),

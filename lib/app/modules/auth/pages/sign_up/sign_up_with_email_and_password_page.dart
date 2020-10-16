@@ -48,6 +48,7 @@ class SignUpWithEmailAndPasswordPage extends StatelessWidget {
                         hintText: 'Qual o seu nome?',
                         padding: EdgeInsets.symmetric(vertical: 18.0),
                         keyboardType: TextInputType.emailAddress,
+                        textInputAction: TextInputAction.done,
                         onChanged: () {
                           signUpViewModel.isNameValid(_nameTextField.text);
                           signUpViewModel.canProceed();
@@ -60,6 +61,7 @@ class SignUpWithEmailAndPasswordPage extends StatelessWidget {
                           hintText: 'Qual o seu email?',
                           padding: EdgeInsets.symmetric(vertical: 18.0),
                           keyboardType: TextInputType.emailAddress,
+                          textInputAction: TextInputAction.done,
                           onChanged: () {
                             signUpViewModel.isEmailValid(_emailTextField.text);
                             signUpViewModel.canProceed();
@@ -76,6 +78,7 @@ class SignUpWithEmailAndPasswordPage extends StatelessWidget {
                           signUpViewModel.canProceed();
                         },
                         keyboardType: TextInputType.visiblePassword,
+                        textInputAction: TextInputAction.done,
                         obscureText: true,
                       ),
                       Padding(
@@ -84,6 +87,7 @@ class SignUpWithEmailAndPasswordPage extends StatelessWidget {
                           textController: _passwordConfirmationTextField,
                           hintText: 'Digite a senha novamente',
                           padding: EdgeInsets.symmetric(vertical: 18.0),
+                          textInputAction: TextInputAction.done,
                           onChanged: () {
                             signUpViewModel.passwordsMatch(
                               _passwordTextField.text,
