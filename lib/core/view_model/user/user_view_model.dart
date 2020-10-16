@@ -116,17 +116,20 @@ abstract class _UserViewModelBase with Store {
     var data = snapshot.data;
 
     var _songs = playlist.songs;
-
     _songs.add(song.reference);
 
-    List<dynamic> userPlaylists = data[FirebaseHelper.playlistsAttribute];
+    var userPlaylists = data[FirebaseHelper.playlistsAttribute];
 
     Map<String, dynamic> currentPlaylist = userPlaylists.singleWhere(
         (userPlaylist) =>
             userPlaylist[FirebaseHelper.playlistNameAttribute] ==
             playlist.playlistName);
 
-    print(currentPlaylist);
+    var index = userPlaylists.indexOf(currentPlaylist);
+
+    currentPlaylist[FirebaseHelper.playlistSongsAttribute] = _songs;
+
+    // print([currentPlaylist, index]);
 
     // userPlaylists.add(
     //   <String, dynamic>{
@@ -138,7 +141,8 @@ abstract class _UserViewModelBase with Store {
     await database
         .collection(FirebaseHelper.usersCollection)
         .document(user.uid)
-        .updateData({FirebaseHelper.playlistsAttribute: userPlaylists});
+        .updateData(
+            {FirebaseHelper.playlistsAttribute[index]: currentPlaylist});
 
     // playlist.copyWith(songs: _songs);
   }
