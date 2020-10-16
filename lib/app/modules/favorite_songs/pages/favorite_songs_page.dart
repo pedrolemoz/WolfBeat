@@ -56,6 +56,7 @@ class _FavoriteSongsPageState extends State<FavoriteSongsPage> {
           physics: BouncingScrollPhysics(),
           itemBuilder: (context, index) {
             return MusicTile(
+              playlistName: 'músicas favoritas',
               song: songsViewModel.songs[index],
             );
           },

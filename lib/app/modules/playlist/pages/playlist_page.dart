@@ -53,16 +53,14 @@ class _PlaylistPageState extends State<PlaylistPage> {
           size: 30.0,
         ),
       ),
-      body: Observer(builder: (_) {
-        return ListView.builder(
-          itemCount: widget.songs.length,
-          padding: EdgeInsets.symmetric(vertical: 13.0),
-          physics: BouncingScrollPhysics(),
-          itemBuilder: (context, index) {
-            return widget.songs.elementAt(index);
-          },
-        );
-      }),
+      body: ListView.builder(
+        itemCount: widget.songs.length,
+        padding: EdgeInsets.symmetric(vertical: 13.0),
+        physics: BouncingScrollPhysics(),
+        itemBuilder: (context, index) {
+          return widget.songs.elementAt(index);
+        },
+      ),
     );
   }
 }

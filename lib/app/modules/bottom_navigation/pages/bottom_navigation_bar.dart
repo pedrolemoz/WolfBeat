@@ -28,8 +28,6 @@ class _BottomNavigatorState extends State<BottomNavigator> {
   ];
 
   final playerViewModel = GetIt.I.get<PlayerViewModel>();
-  final user = GetIt.I.get<UserViewModel>();
-  final song = GetIt.I.get<SongsViewModel>();
 
   @override
   Widget build(BuildContext context) {
@@ -61,11 +59,6 @@ class _BottomNavigatorState extends State<BottomNavigator> {
         showUnselectedLabels: true,
         type: BottomNavigationBarType.fixed,
         onTap: (index) {
-          user.addSongToPlaylist(
-            playlist: user.playlists[0],
-            song: song.songs[1],
-          );
-
           setState(() {
             _currentIndex = index;
           });
@@ -75,15 +68,15 @@ class _BottomNavigatorState extends State<BottomNavigator> {
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(FlutterIcons.home_mdi),
-            title: Text('Página inicial'),
+            label: 'Página inicial',
           ),
           BottomNavigationBarItem(
             icon: Icon(FlutterIcons.search_mdi),
-            title: Text('Buscar'),
+            label: 'Buscar',
           ),
           BottomNavigationBarItem(
             icon: Icon(FlutterIcons.library_music_outline_mco),
-            title: Text('Biblioteca'),
+            label: 'Biblioteca',
           ),
         ],
       ),

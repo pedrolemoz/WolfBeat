@@ -102,32 +102,32 @@ abstract class _UserViewModelBase with Store {
   }
 
   @action
-  Future<void> addSongToPlaylist(
-      {@required Playlist playlist, @required Song song}) {
+  Future<void> addSongToPlaylist({
+    @required Playlist playlist,
+    @required Song song,
+  }) {
     var _songs = playlist.songs;
-    if (_songs.contains(song.reference)) {
-      debugPrint('Song already added to playlist ${playlist.playlistName}');
-    } else {
-      _songs.add(song.reference);
-      _changeSongInPlaylist(playlist: playlist, songs: _songs);
-    }
+
+    _songs.add(song.reference);
+    _changeSongInPlaylist(playlist: playlist, songs: _songs);
   }
 
   @action
-  Future<void> removeSongFromPlaylist(
-      {@required Playlist playlist, @required Song song}) {
+  Future<void> removeSongFromPlaylist({
+    @required Playlist playlist,
+    @required Song song,
+  }) {
     var _songs = playlist.songs;
-    if (_songs.contains(song.reference)) {
-      _songs.remove(song.reference);
-      _changeSongInPlaylist(playlist: playlist, songs: _songs);
-    } else {
-      debugPrint('Song don\'t exist in playlist ${playlist.playlistName}');
-    }
+
+    _songs.remove(song.reference);
+    _changeSongInPlaylist(playlist: playlist, songs: _songs);
   }
 
   @action
-  Future<void> _changeSongInPlaylist(
-      {@required Playlist playlist, @required List songs}) async {
+  Future<void> _changeSongInPlaylist({
+    @required Playlist playlist,
+    @required List songs,
+  }) async {
     var auth = FirebaseAuth.instance;
     var database = Firestore.instance;
     var user = await auth.currentUser();

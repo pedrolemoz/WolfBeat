@@ -12,10 +12,13 @@ import '../player/pages/player_page.dart';
 /// It's a GestureDetector with a provider for the [PlayerViewModel].
 /// Used in [FavoriteSongsPage].
 class MusicTile extends StatelessWidget {
-  MusicTile({@required this.song})
-      : assert(song != null, throw NullAttributeException('song'));
+  MusicTile({
+    @required this.song,
+    this.playlistName,
+  }) : assert(song != null, throw NullAttributeException('song'));
 
   final Song song;
+  final String playlistName;
   final playerViewModel = GetIt.I.get<PlayerViewModel>();
 
   @override
@@ -30,69 +33,72 @@ class MusicTile extends StatelessWidget {
         },
         onLongPress: () {
           // TODO: Refazer bottom sheet
-          showBottomSheet(
-            context: context,
-            backgroundColor: Theme.of(context).backgroundColor,
-            builder: (context) {
-              return Container(
-                height: MediaQuery.of(context).size.height * 0.3,
-                child: Column(
-                  children: [
-                    GestureDetector(
-                      onTap: () {},
-                      child: ListTile(
-                        leading: Icon(
-                          FlutterIcons.trash_can_outline_mco,
-                          color: Colors.white,
-                        ),
-                        title: Text(
-                          'Remover dos favoritos',
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: Theme.of(context).textTheme.subtitle1,
-                        ),
+          playlistName != null
+              ? showBottomSheet(
+                  context: context,
+                  backgroundColor: Theme.of(context).backgroundColor,
+                  builder: (context) {
+                    return Container(
+                      height: MediaQuery.of(context).size.height * 0.3,
+                      child: Column(
+                        children: [
+                          GestureDetector(
+                            onTap: () {},
+                            child: ListTile(
+                              leading: Icon(
+                                FlutterIcons.trash_can_outline_mco,
+                                color: Colors.white,
+                              ),
+                              title: Text(
+                                'Remover de $playlistName',
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: Theme.of(context).textTheme.subtitle1,
+                              ),
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () {},
+                            child: ListTile(
+                              leading: Icon(
+                                FlutterIcons.share_2_fea,
+                                color: Colors.white,
+                              ),
+                              title: Text(
+                                'Compartilhar',
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: Theme.of(context).textTheme.subtitle1,
+                              ),
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: ListTile(
+                              leading: Icon(
+                                FlutterIcons.cancel_mco,
+                                color: Theme.of(context).primaryColor,
+                              ),
+                              title: Text(
+                                'Fechar',
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .subtitle1
+                                    .copyWith(
+                                        color: Theme.of(context).primaryColor),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                    GestureDetector(
-                      onTap: () {},
-                      child: ListTile(
-                        leading: Icon(
-                          FlutterIcons.share_2_fea,
-                          color: Colors.white,
-                        ),
-                        title: Text(
-                          'Compartilhar',
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: Theme.of(context).textTheme.subtitle1,
-                        ),
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                      child: ListTile(
-                        leading: Icon(
-                          FlutterIcons.cancel_mco,
-                          color: Theme.of(context).primaryColor,
-                        ),
-                        title: Text(
-                          'Fechar',
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: Theme.of(context)
-                              .textTheme
-                              .subtitle1
-                              .copyWith(color: Theme.of(context).primaryColor),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            },
-          );
+                    );
+                  },
+                )
+              : null;
         },
         child: ListTile(
           leading: FadeInImage.assetNetwork(
