@@ -3,6 +3,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_media_notification/flutter_media_notification.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../helpers/firebase_helper.dart';
@@ -70,6 +71,8 @@ abstract class _PlayerViewModelBase with Store {
       await _audioPlayer.onAudioPositionChanged.listen((newPosition) {
         currentPosition = newPosition;
       });
+      await MediaNotification.showNotification(
+                        title: 'Title', author: 'Song author',isPlaying: true);
     }
   }
 

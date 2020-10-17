@@ -29,6 +29,7 @@ dependencies:
   audioplayers: 
   # audio_service: ^0.15.0
   # just_audio: ^0.4.4
+  flutter_media_notification: ^1.2.6
   
   # Firebase
   firebase_core: ^0.4.5
@@ -39,6 +40,8 @@ dependencies:
   # Services
   google_sign_in: ^4.5.1
   image_picker: ^0.6.7+4
+
+  
   
 dev_dependencies:
   # Linter
