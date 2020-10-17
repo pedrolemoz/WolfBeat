@@ -15,22 +15,25 @@ class MusicTile extends StatelessWidget {
   MusicTile({
     @required this.song,
     this.playlistName,
+    this.onTap,
   }) : assert(song != null, throw NullAttributeException('song'));
 
   final Song song;
   final String playlistName;
   final playerViewModel = GetIt.I.get<PlayerViewModel>();
+  final Function onTap;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 2.0),
       child: GestureDetector(
-        onTap: () {
-          playerViewModel.stop();
-          playerViewModel.updateCurrentSong(song);
-          Navigator.pushNamed(context, PlayerPage.id);
-        },
+        onTap: onTap ??
+            () {
+              playerViewModel.stop();
+              playerViewModel.updateCurrentSong(song);
+              Navigator.pushNamed(context, PlayerPage.id);
+            },
         onLongPress: () {
           // TODO: Refazer bottom sheet
           playlistName != null

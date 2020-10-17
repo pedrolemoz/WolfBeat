@@ -153,6 +153,7 @@ class CreateNewPlaylistPage extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                         builder: (context) => PlaylistPage(
+                          playlistIndex: index,
                           songs: musicTiles,
                           playlistTitle:
                               _userViewModel.playlists[index].playlistName,

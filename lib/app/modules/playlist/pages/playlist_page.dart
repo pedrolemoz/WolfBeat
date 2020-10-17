@@ -1,5 +1,6 @@
 import 'package:WolfBeat/app/modules/ui_components/mini_player.dart';
 import 'package:WolfBeat/core/view_model/player/player_view_model.dart';
+import 'package:WolfBeat/core/view_model/user/user_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -13,22 +14,28 @@ class PlaylistPage extends StatefulWidget {
 
   final List<MusicTile> songs;
   final String playlistTitle;
+  final int playlistIndex;
 
-  PlaylistPage({@required this.songs, @required this.playlistTitle});
+  PlaylistPage(
+      {@required this.songs,
+      @required this.playlistTitle,
+      @required this.playlistIndex});
 
   @override
   _PlaylistPageState createState() => _PlaylistPageState();
 }
 
 class _PlaylistPageState extends State<PlaylistPage> {
-  final playerViewModel = GetIt.I.get<PlayerViewModel>();
+  final _playerViewModel = GetIt.I.get<PlayerViewModel>();
+  final _songsViewModel = GetIt.I.get<SongsViewModel>();
+  final _userViewModel = GetIt.I.get<UserViewModel>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       bottomSheet: Observer(
         builder: (context) =>
-            playerViewModel.currentSong != null ? MiniPlayer() : SizedBox(),
+            _playerViewModel.currentSong != null ? MiniPlayer() : SizedBox(),
       ),
       appBar: AppBar(
         centerTitle: true,
@@ -50,7 +57,28 @@ class _PlaylistPageState extends State<PlaylistPage> {
                   ),
                 ),
                 backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-                builder: (context) => Container(),
+                builder: (context) {
+                  return ListView.builder(
+                    itemCount: _songsViewModel.songs.length,
+                    itemBuilder: (context, index) {
+                      print(widget.playlistTitle);
+                      print(_songsViewModel.songs[index].title);
+                      print(_userViewModel
+                          .playlists);
+
+                      return Container();
+                      // return MusicTile(
+                      //     playlistName: widget.playlistTitle,
+                      //     song: _songsViewModel.songs[index],
+                      //     onTap: () {
+                      //       _userViewModel.addSongToPlaylist(
+                      //           playlist: _userViewModel
+                      //               .playlists[widget.playlistIndex],
+                      //           song: _songsViewModel.songs[index]);
+                      //     });
+                    },
+                  );
+                },
               );
             },
             child: Padding(
