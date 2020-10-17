@@ -1,5 +1,7 @@
-import 'package:WolfBeat/app/modules/playlist/pages/playlist_page.dart';
+import 'package:WolfBeat/app/modules/playlist/pages/category_playlist_page.dart';
+import 'package:WolfBeat/app/modules/playlist/pages/custom_playlist_page.dart';
 import 'package:WolfBeat/core/helpers/media_helper.dart';
+import 'package:WolfBeat/core/models/playlist/playlist.dart';
 import 'package:WolfBeat/core/view_model/song/songs_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
@@ -32,10 +34,12 @@ class ArtistsTab extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => PlaylistPage(
-                  playlistTitle: _artists.elementAt(index).artistName,
-                  songs: _mediaHelper.getSongsFromArtist(
-                      artistName: _artists.elementAt(index).artistName),
+                builder: (context) => CategoryPlaylistPage(
+                  playlist: Playlist(
+                    playlistName: _artists.elementAt(index).artistName,
+                    songs: _mediaHelper.getSongsFromArtist(
+                        artistName: _artists.elementAt(index).artistName),
+                  ),
                 ),
               ),
             );

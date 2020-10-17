@@ -128,10 +128,9 @@ mixin _$UserViewModel on _UserViewModelBase, Store {
       AsyncAction('_UserViewModelBase._changeSongInPlaylist');
 
   @override
-  Future<void> _changeSongInPlaylist(
-      {@required Playlist playlist, @required List<dynamic> songs}) {
-    return _$_changeSongInPlaylistAsyncAction.run(
-        () => super._changeSongInPlaylist(playlist: playlist, songs: songs));
+  Future<void> _changeSongInPlaylist({@required Playlist playlist}) {
+    return _$_changeSongInPlaylistAsyncAction
+        .run(() => super._changeSongInPlaylist(playlist: playlist));
   }
 
   final _$createNewPlaylistAsyncAction =

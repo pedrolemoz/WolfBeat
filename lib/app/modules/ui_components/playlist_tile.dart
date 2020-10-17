@@ -1,10 +1,13 @@
-import 'package:WolfBeat/app/modules/playlist/pages/playlist_page.dart';
+import 'package:WolfBeat/app/modules/playlist/pages/custom_playlist_page.dart';
 import 'package:WolfBeat/app/modules/ui_components/music_tile.dart';
 import 'package:WolfBeat/core/helpers/firebase_helper.dart';
 import 'package:WolfBeat/core/models/playlist/playlist.dart';
 import 'package:WolfBeat/core/models/song/song.dart';
+import 'package:WolfBeat/core/view_model/user/user_view_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:get_it/get_it.dart';
 
 import '../../../core/helpers/assets_helper.dart';
 
@@ -19,41 +22,15 @@ class PlaylistTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var musicTiles = <MusicTile>[];
-
-    playlist.songs.forEach(
-      (playlistSong) async {
-        final _playlistSong = playlistSong as DocumentReference;
-        final song = await _playlistSong.get();
-
-        musicTiles.add(
-          MusicTile(
-            playlistName: playlist.playlistName,
-            song: Song(
-              title: song.data[FirebaseHelper.titleAttribute],
-              songURL: song.data[FirebaseHelper.songURLAttribute],
-              album: song.data[FirebaseHelper.albumAttribute],
-              artist: song.data[FirebaseHelper.artistAttribute],
-              artworkURL: song.data[FirebaseHelper.artworkURLAttribute],
-              duration: song.data[FirebaseHelper.durationAttribute],
-              genre: song.data[FirebaseHelper.genreAttribute],
-              backgroundColor:
-                  song.data[FirebaseHelper.backgroundColorAttribute],
-              reference: song.reference,
-            ),
-          ),
-        );
-      },
-    );
+    final _userViewModel = GetIt.I.get<UserViewModel>();
 
     return GestureDetector(
       onTap: () {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => PlaylistPage(
-              songs: musicTiles,
-              playlistTitle: playlist.playlistName,
+            builder: (context) => CustomPlaylistPage(
+              playlistIndex: _userViewModel.playlists.indexOf(playlist),
             ),
           ),
         );
@@ -73,8 +50,15 @@ class PlaylistTile extends StatelessWidget {
                   crossAxisSpacing: 2.0,
                   mainAxisSpacing: 2.0,
                 ),
-                itemBuilder: (context, _) {
-                  return Image.asset(AssetsHelper.artworkFallback);
+                itemBuilder: (context, index) {
+                  try {
+                    return FadeInImage.assetNetwork(
+                      placeholder: AssetsHelper.artworkFallback,
+                      image: playlist.songs?.elementAt(index)?.artworkURL,
+                    );
+                  } on RangeError catch (_) {
+                    return Image.asset(AssetsHelper.artworkFallback);
+                  }
                 },
               ),
             ),

@@ -92,10 +92,30 @@ abstract class _UserViewModelBase with Store {
     var _playlists = data[FirebaseHelper.playlistsAttribute];
 
     for (var playlist in _playlists) {
+      var songs = <Song>[];
+      for (DocumentReference songReference
+          in playlist[FirebaseHelper.playlistSongsAttribute] as List) {
+        final song = await songReference.get();
+
+        songs.add(
+          Song(
+            title: song.data[FirebaseHelper.titleAttribute],
+            songURL: song.data[FirebaseHelper.songURLAttribute],
+            album: song.data[FirebaseHelper.albumAttribute],
+            artist: song.data[FirebaseHelper.artistAttribute],
+            artworkURL: song.data[FirebaseHelper.artworkURLAttribute],
+            duration: song.data[FirebaseHelper.durationAttribute],
+            genre: song.data[FirebaseHelper.genreAttribute],
+            backgroundColor: song.data[FirebaseHelper.backgroundColorAttribute],
+            reference: song.reference,
+          ),
+        );
+      }
+
       playlists.add(
         Playlist(
           playlistName: playlist[FirebaseHelper.playlistNameAttribute],
-          songs: playlist[FirebaseHelper.playlistSongsAttribute],
+          songs: songs,
         ),
       );
     }
@@ -106,10 +126,8 @@ abstract class _UserViewModelBase with Store {
     @required Playlist playlist,
     @required Song song,
   }) {
-    var _songs = playlist.songs;
-
-    _songs.add(song.reference);
-    _changeSongInPlaylist(playlist: playlist, songs: _songs);
+    playlist.songs.add(song);
+    _changeSongInPlaylist(playlist: playlist);
   }
 
   @action
@@ -117,16 +135,13 @@ abstract class _UserViewModelBase with Store {
     @required Playlist playlist,
     @required Song song,
   }) {
-    var _songs = playlist.songs;
-
-    _songs.remove(song.reference);
-    _changeSongInPlaylist(playlist: playlist, songs: _songs);
+    playlist.songs.remove(song);
+    _changeSongInPlaylist(playlist: playlist);
   }
 
   @action
   Future<void> _changeSongInPlaylist({
     @required Playlist playlist,
-    @required List songs,
   }) async {
     var auth = FirebaseAuth.instance;
     var database = Firestore.instance;
@@ -148,6 +163,8 @@ abstract class _UserViewModelBase with Store {
 
     var _index = _userPlaylists.indexOf(_currentPlaylist);
 
+    var songs = playlist.songs.map((song) => song.reference).toList();
+
     _currentPlaylist[FirebaseHelper.playlistSongsAttribute] = songs;
 
     _userPlaylists[_index] = _currentPlaylist;
@@ -157,7 +174,8 @@ abstract class _UserViewModelBase with Store {
         .document(user.uid)
         .updateData({FirebaseHelper.playlistsAttribute: _userPlaylists});
 
-    playlists[playlists.indexOf(playlist)] = playlist.copyWith(songs: songs);
+    playlists[playlists.indexOf(playlist)] =
+        playlist.copyWith(songs: playlist.songs);
   }
 
   @action

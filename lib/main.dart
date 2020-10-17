@@ -16,6 +16,7 @@ import 'app/modules/favorite_songs/pages/favorite_songs_page.dart';
 import 'app/modules/home/pages/home_page.dart';
 import 'app/modules/library/pages/library_page.dart';
 import 'app/modules/player/pages/player_page.dart';
+import 'app/modules/playlist/pages/create_new_playlist_page.dart';
 import 'app/modules/search/view_model/search_view_model.dart';
 import 'app/modules/settings/pages/profile_settings_page.dart';
 import 'app/modules/settings/pages/settings_page.dart';

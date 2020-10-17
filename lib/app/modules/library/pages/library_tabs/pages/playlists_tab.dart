@@ -1,4 +1,5 @@
-import 'package:WolfBeat/app/modules/playlist/pages/playlist_page.dart';
+import 'package:WolfBeat/app/modules/playlist/pages/create_new_playlist_page.dart';
+import 'package:WolfBeat/app/modules/playlist/pages/custom_playlist_page.dart';
 import 'package:WolfBeat/app/modules/ui_components/music_tile.dart';
 import 'package:WolfBeat/app/modules/ui_components/rounded_button.dart';
 import 'package:WolfBeat/app/modules/ui_components/rounded_text_field.dart';
@@ -36,7 +37,8 @@ class PlaylistsTab extends StatelessWidget {
                   return FavoriteSongsTile();
                 default:
                   return PlaylistTile(
-                      playlist: _userViewModel.playlists[index - 1]);
+                    playlist: _userViewModel.playlists[index - 1],
+                  );
               }
             },
           );
@@ -59,117 +61,6 @@ class PlaylistsTab extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-}
-
-class CreateNewPlaylistPage extends StatelessWidget {
-  static const String id = 'create_new_playlist_page';
-
-  final _userViewModel = GetIt.I.get<UserViewModel>();
-
-  @override
-  Widget build(BuildContext context) {
-    final _playlistNameController = TextEditingController();
-
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text(
-          'Criar nova playlist',
-          style: Theme.of(context).textTheme.headline6,
-        ),
-      ),
-      body: ListView(
-        physics: NeverScrollableScrollPhysics(),
-        padding: const EdgeInsets.symmetric(horizontal: 15.0),
-        children: [
-          SizedBox(height: 150.0),
-          Column(
-            children: [
-              Text(
-                'Qual o nome da sua playlist?',
-                style: Theme.of(context).textTheme.subtitle1,
-              ),
-              SizedBox(height: 20.0),
-              RoundedTextField(
-                padding: const EdgeInsets.symmetric(vertical: 18.0),
-                textController: _playlistNameController,
-                hintText: 'Insira o nome da playlist',
-                keyboardType: TextInputType.name,
-                textInputAction: TextInputAction.done,
-                onSubmitted: () {
-                  _userViewModel.createNewPlaylist(
-                    newPlaylist: Playlist(
-                      playlistName: _playlistNameController.text,
-                      songs: [],
-                    ),
-                  );
-                },
-              ),
-              SizedBox(height: 20.0),
-              RoundedButton(
-                onTap: () {
-                  _userViewModel
-                      .createNewPlaylist(
-                    newPlaylist: Playlist(
-                      playlistName: _playlistNameController.text,
-                      songs: [],
-                    ),
-                  )
-                      .then((index) {
-                    var musicTiles = <MusicTile>[];
-
-                    _userViewModel.playlists[index].songs.forEach(
-                      (playlistSong) async {
-                        final _playlistSong = playlistSong as DocumentReference;
-                        final song = await _playlistSong.get();
-
-                        musicTiles.add(
-                          MusicTile(
-                            playlistName:
-                                _userViewModel.playlists[index].playlistName,
-                            song: Song(
-                              title: song.data[FirebaseHelper.titleAttribute],
-                              songURL:
-                                  song.data[FirebaseHelper.songURLAttribute],
-                              album: song.data[FirebaseHelper.albumAttribute],
-                              artist: song.data[FirebaseHelper.artistAttribute],
-                              artworkURL:
-                                  song.data[FirebaseHelper.artworkURLAttribute],
-                              duration:
-                                  song.data[FirebaseHelper.durationAttribute],
-                              genre: song.data[FirebaseHelper.genreAttribute],
-                              backgroundColor: song.data[
-                                  FirebaseHelper.backgroundColorAttribute],
-                              reference: song.reference,
-                            ),
-                          ),
-                        );
-                      },
-                    );
-
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => PlaylistPage(
-                          playlistIndex: index,
-                          songs: musicTiles,
-                          playlistTitle:
-                              _userViewModel.playlists[index].playlistName,
-                        ),
-                      ),
-                    );
-                  });
-                },
-                label: 'Criar nova playlist',
-                enabledColor: Theme.of(context).primaryColor,
-                isEnabled: true,
-              ),
-            ],
-          )
-        ],
-      ),
     );
   }
 }

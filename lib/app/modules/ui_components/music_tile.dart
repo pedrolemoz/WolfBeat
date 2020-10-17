@@ -1,3 +1,4 @@
+import 'package:WolfBeat/core/view_model/user/user_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:get_it/get_it.dart';
@@ -16,15 +17,19 @@ class MusicTile extends StatelessWidget {
     @required this.song,
     this.playlistName,
     this.onTap,
+    this.onDelete,
   }) : assert(song != null, throw NullAttributeException('song'));
 
   final Song song;
   final String playlistName;
-  final playerViewModel = GetIt.I.get<PlayerViewModel>();
   final Function onTap;
+  final Function onDelete;
+  final playerViewModel = GetIt.I.get<PlayerViewModel>();
+  final userViewModel = GetIt.I.get<UserViewModel>();
 
   @override
   Widget build(BuildContext context) {
+    print(playlistName);
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 2.0),
       child: GestureDetector(
@@ -32,6 +37,7 @@ class MusicTile extends StatelessWidget {
             () {
               playerViewModel.stop();
               playerViewModel.updateCurrentSong(song);
+              playerViewModel.playingFrom = playlistName;
               Navigator.pushNamed(context, PlayerPage.id);
             },
         onLongPress: () {
@@ -46,14 +52,14 @@ class MusicTile extends StatelessWidget {
                       child: Column(
                         children: [
                           GestureDetector(
-                            onTap: () {},
+                            onTap: onDelete,
                             child: ListTile(
                               leading: Icon(
                                 FlutterIcons.trash_can_outline_mco,
                                 color: Colors.white,
                               ),
                               title: Text(
-                                'Remover de $playlistName',
+                                'Remover de "$playlistName"',
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: Theme.of(context).textTheme.subtitle1,
@@ -77,7 +83,7 @@ class MusicTile extends StatelessWidget {
                           ),
                           GestureDetector(
                             onTap: () {
-                              Navigator.pop(context);
+                              Navigator.maybePop(context);
                             },
                             child: ListTile(
                               leading: Icon(
