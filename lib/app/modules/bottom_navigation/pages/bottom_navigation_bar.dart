@@ -1,3 +1,5 @@
+import 'package:WolfBeat/core/view_model/song/songs_view_model.dart';
+import 'package:WolfBeat/core/view_model/user/user_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -24,6 +26,7 @@ class _BottomNavigatorState extends State<BottomNavigator> {
     SearchPage(),
     LibraryPage(),
   ];
+
   final playerViewModel = GetIt.I.get<PlayerViewModel>();
 
   @override
@@ -65,15 +68,15 @@ class _BottomNavigatorState extends State<BottomNavigator> {
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(FlutterIcons.home_mdi),
-            title: Text('Página inicial'),
+            label: 'Página inicial',
           ),
           BottomNavigationBarItem(
             icon: Icon(FlutterIcons.search_mdi),
-            title: Text('Buscar'),
+            label: 'Buscar',
           ),
           BottomNavigationBarItem(
             icon: Icon(FlutterIcons.library_music_outline_mco),
-            title: Text('Biblioteca'),
+            label: 'Biblioteca',
           ),
         ],
       ),

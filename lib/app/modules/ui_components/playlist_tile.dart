@@ -1,4 +1,13 @@
+import 'package:WolfBeat/app/modules/playlist/pages/custom_playlist_page.dart';
+import 'package:WolfBeat/app/modules/ui_components/music_tile.dart';
+import 'package:WolfBeat/core/helpers/firebase_helper.dart';
+import 'package:WolfBeat/core/models/playlist/playlist.dart';
+import 'package:WolfBeat/core/models/song/song.dart';
+import 'package:WolfBeat/core/view_model/user/user_view_model.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:get_it/get_it.dart';
 
 import '../../../core/helpers/assets_helper.dart';
 
@@ -7,49 +16,70 @@ import '../../../core/helpers/assets_helper.dart';
 /// Used in [PlaylistsTab].
 
 class PlaylistTile extends StatelessWidget {
-  PlaylistTile({this.index});
+  PlaylistTile({this.playlist});
 
-  final int index;
+  final Playlist playlist;
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 5.0),
-      child: ListTile(
-        leading: ClipRRect(
-          borderRadius: BorderRadius.circular(8.0),
-          child: Container(
-            width: 50.0,
-            child: GridView.builder(
-              itemCount: 4,
-              shrinkWrap: true,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                crossAxisSpacing: 2.0,
-                mainAxisSpacing: 2.0,
-              ),
-              itemBuilder: (context, _) {
-                return Image.asset(AssetsHelper.artworkFallback);
-              },
+    final _userViewModel = GetIt.I.get<UserViewModel>();
+
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => CustomPlaylistPage(
+              playlistIndex: _userViewModel.playlists.indexOf(playlist),
             ),
           ),
-        ),
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text(
-              'Playlist ${index + 1}',
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: Theme.of(context).textTheme.subtitle1,
+        );
+      },
+      child: Padding(
+        padding: EdgeInsets.symmetric(vertical: 5.0),
+        child: ListTile(
+          leading: ClipRRect(
+            borderRadius: BorderRadius.circular(8.0),
+            child: Container(
+              width: 50.0,
+              child: GridView.builder(
+                itemCount: 4,
+                shrinkWrap: true,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 2.0,
+                  mainAxisSpacing: 2.0,
+                ),
+                itemBuilder: (context, index) {
+                  try {
+                    return FadeInImage.assetNetwork(
+                      placeholder: AssetsHelper.artworkFallback,
+                      image: playlist.songs?.elementAt(index)?.artworkURL,
+                    );
+                  } on RangeError catch (_) {
+                    return Image.asset(AssetsHelper.artworkFallback);
+                  }
+                },
+              ),
             ),
-            Text(
-              '${(index + 42) * 100} músicas',
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: Theme.of(context).textTheme.subtitle2,
-            ),
-          ],
+          ),
+          title: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                '${playlist.playlistName}',
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: Theme.of(context).textTheme.subtitle1,
+              ),
+              Text(
+                '${playlist.songs.length} músicas',
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: Theme.of(context).textTheme.subtitle2,
+              ),
+            ],
+          ),
         ),
       ),
     );

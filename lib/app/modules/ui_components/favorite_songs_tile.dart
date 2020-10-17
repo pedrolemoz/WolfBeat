@@ -1,3 +1,4 @@
+import 'package:WolfBeat/core/view_model/song/songs_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:get_it/get_it.dart';
@@ -11,6 +12,8 @@ import '../favorite_songs/pages/favorite_songs_page.dart';
 class FavoriteSongsTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final songsViewModel = GetIt.I.get<SongsViewModel>();
+
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 5.0),
       child: GestureDetector(
@@ -41,7 +44,7 @@ class FavoriteSongsTile extends StatelessWidget {
                 style: Theme.of(context).textTheme.subtitle1,
               ),
               Text(
-                '512 músicas',
+                '${songsViewModel.songs.length} músicas',
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: Theme.of(context).textTheme.subtitle2,

@@ -48,6 +48,7 @@ class SignInWithEmailAndPasswordPage extends StatelessWidget {
                         hintText: 'Insira seu email',
                         padding: EdgeInsets.symmetric(vertical: 18.0),
                         keyboardType: TextInputType.emailAddress,
+                        textInputAction: TextInputAction.done,
                         onChanged: () {
                           print(_emailTextField.text);
                           signInViewModel.isEmailValid(_emailTextField.text);
@@ -60,6 +61,7 @@ class SignInWithEmailAndPasswordPage extends StatelessWidget {
                           textController: _passwordTextField,
                           hintText: 'Insira sua senha',
                           padding: EdgeInsets.symmetric(vertical: 18.0),
+                          textInputAction: TextInputAction.done,
                           onChanged: () {
                             signInViewModel
                                 .isPasswordValid(_passwordTextField.text);

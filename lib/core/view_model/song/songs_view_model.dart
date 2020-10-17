@@ -67,7 +67,7 @@ abstract class _SongsViewModelBase with Store {
               genre: songFromFirestore.data[FirebaseHelper.genreAttribute],
               backgroundColor: songFromFirestore
                   .data[FirebaseHelper.backgroundColorAttribute],
-              reference: songFromFirestore.reference.path,
+              reference: songFromFirestore.reference,
             );
             addSong(song);
 

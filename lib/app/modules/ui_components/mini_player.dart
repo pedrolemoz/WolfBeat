@@ -15,6 +15,11 @@ class MiniPlayer extends StatelessWidget {
     return Observer(
       builder: (_) {
         return GestureDetector(
+          onTap: () {
+            if (playerViewModel.currentSong != null) {
+              Navigator.pushNamed(context, PlayerPage.id);
+            }
+          },
           onVerticalDragUpdate: (DragUpdateDetails details) {
             //TODO Ações para movimento vertical
             if (details.delta.dy > 0) {
@@ -37,8 +42,18 @@ class MiniPlayer extends StatelessWidget {
             }
           },
           child: Container(
-            color: Color(0xFF2c2f33),
             height: 70,
+            decoration: BoxDecoration(
+              color: Color(0xFF2c2f33),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.3),
+                  spreadRadius: 3,
+                  blurRadius: 15,
+                  offset: Offset(0, -10), // changes position of shadow
+                ),
+              ],
+            ),
             child: Padding(
               padding:
                   const EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),

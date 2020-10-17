@@ -9,6 +9,21 @@ part of 'user_view_model.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$UserViewModel on _UserViewModelBase, Store {
+  final _$playlistsAtom = Atom(name: '_UserViewModelBase.playlists');
+
+  @override
+  ObservableList<Playlist> get playlists {
+    _$playlistsAtom.reportRead();
+    return super.playlists;
+  }
+
+  @override
+  set playlists(ObservableList<Playlist> value) {
+    _$playlistsAtom.reportWrite(value, super.playlists, () {
+      super.playlists = value;
+    });
+  }
+
   final _$userIDAtom = Atom(name: '_UserViewModelBase.userID');
 
   @override
@@ -100,6 +115,33 @@ mixin _$UserViewModel on _UserViewModelBase, Store {
     return _$signOutUserAsyncAction.run(() => super.signOutUser(context));
   }
 
+  final _$_recoverUserPlaylistsAsyncAction =
+      AsyncAction('_UserViewModelBase._recoverUserPlaylists');
+
+  @override
+  Future<void> _recoverUserPlaylists(DocumentSnapshot snapshot) {
+    return _$_recoverUserPlaylistsAsyncAction
+        .run(() => super._recoverUserPlaylists(snapshot));
+  }
+
+  final _$_changeSongInPlaylistAsyncAction =
+      AsyncAction('_UserViewModelBase._changeSongInPlaylist');
+
+  @override
+  Future<void> _changeSongInPlaylist({@required Playlist playlist}) {
+    return _$_changeSongInPlaylistAsyncAction
+        .run(() => super._changeSongInPlaylist(playlist: playlist));
+  }
+
+  final _$createNewPlaylistAsyncAction =
+      AsyncAction('_UserViewModelBase.createNewPlaylist');
+
+  @override
+  Future<int> createNewPlaylist({@required Playlist newPlaylist}) {
+    return _$createNewPlaylistAsyncAction
+        .run(() => super.createNewPlaylist(newPlaylist: newPlaylist));
+  }
+
   final _$_UserViewModelBaseActionController =
       ActionController(name: '_UserViewModelBase');
 
@@ -115,8 +157,33 @@ mixin _$UserViewModel on _UserViewModelBase, Store {
   }
 
   @override
+  Future<void> addSongToPlaylist(
+      {@required Playlist playlist, @required Song song}) {
+    final _$actionInfo = _$_UserViewModelBaseActionController.startAction(
+        name: '_UserViewModelBase.addSongToPlaylist');
+    try {
+      return super.addSongToPlaylist(playlist: playlist, song: song);
+    } finally {
+      _$_UserViewModelBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  Future<void> removeSongFromPlaylist(
+      {@required Playlist playlist, @required Song song}) {
+    final _$actionInfo = _$_UserViewModelBaseActionController.startAction(
+        name: '_UserViewModelBase.removeSongFromPlaylist');
+    try {
+      return super.removeSongFromPlaylist(playlist: playlist, song: song);
+    } finally {
+      _$_UserViewModelBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
+playlists: ${playlists},
 userID: ${userID},
 userName: ${userName},
 userEmail: ${userEmail},

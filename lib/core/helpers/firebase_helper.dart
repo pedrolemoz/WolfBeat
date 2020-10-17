@@ -11,6 +11,11 @@ class FirebaseHelper {
   static String get uuidAttribute => 'uuid';
   static String get favoriteSongsAttribute => 'favoriteSongs';
 
+  // Playlist related
+  static String get playlistsAttribute => 'playlists';
+  static String get playlistNameAttribute => 'playlistName';
+  static String get playlistSongsAttribute => 'songs';
+
   // Song related
   static String get titleAttribute => 'title';
   static String get artistAttribute => 'artist';

@@ -131,7 +131,7 @@ abstract class _PlayerViewModelBase with Store {
     }
 
     if (_isFavorited) {
-      _favoriteSongs.remove(_database.document(currentSong.reference));
+      _favoriteSongs.remove(_database.document(currentSong.reference.path));
       await _database
           .collection(FirebaseHelper.usersCollection)
           .document(_user.uid)
@@ -139,7 +139,7 @@ abstract class _PlayerViewModelBase with Store {
       isFavorite = false;
       debugPrint('Song removed from favorites');
     } else {
-      _favoriteSongs.add(_database.document(currentSong.reference));
+      _favoriteSongs.add(_database.document(currentSong.reference.path));
       await _database
           .collection(FirebaseHelper.usersCollection)
           .document(_user.uid)

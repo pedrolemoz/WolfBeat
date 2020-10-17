@@ -41,7 +41,7 @@ abstract class _SearchViewModelBase with Store {
                   duration: song.data[FirebaseHelper.durationAttribute],
                   genre: song.data[FirebaseHelper.genreAttribute],
                   songURL: song.data[FirebaseHelper.songURLAttribute],
-                  reference: song.reference.path,
+                  reference: song.reference,
                 ));
       });
 

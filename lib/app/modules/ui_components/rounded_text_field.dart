@@ -10,16 +10,17 @@ class RoundedTextField extends StatelessWidget {
   RoundedTextField({
     @required this.textController,
     @required this.hintText,
-    @required this.onChanged,
+    this.onChanged,
+    this.onSubmitted,
     this.onIconTap,
     this.icon,
     this.keyboardType,
+    this.textInputAction,
     this.padding = EdgeInsets.zero,
     this.obscureText = false,
   })  : assert(textController != null,
             throw NullAttributeException('textController')),
-        assert(hintText != null, throw NullAttributeException('hintText')),
-        assert(onChanged != null, throw NullAttributeException('label'));
+        assert(hintText != null, throw NullAttributeException('hintText'));
 
   final TextEditingController textController;
   final String hintText;
@@ -28,14 +29,16 @@ class RoundedTextField extends StatelessWidget {
   final TextInputType keyboardType;
   final bool obscureText;
   final Function onChanged;
+  final Function onSubmitted;
   final EdgeInsets padding;
+  final TextInputAction textInputAction;
 
   @override
   Widget build(BuildContext context) {
     return TextField(
       controller: textController,
       //onSubmitted: (value) => value.toLowerCase(),
-      textInputAction: TextInputAction.search,
+      textInputAction: textInputAction ?? TextInputAction.search,
       textCapitalization: TextCapitalization.sentences,
       keyboardType: keyboardType,
       enableSuggestions: true,
@@ -79,9 +82,12 @@ class RoundedTextField extends StatelessWidget {
           borderRadius: BorderRadius.all(Radius.circular(5.0)),
         ),
       ),
-      onChanged: (input) {
-        onChanged();
-        debugPrint(textController.text);
+      onSubmitted: (_) {
+        onSubmitted != null ? onSubmitted() : null;
+      },
+      onChanged: (_) {
+        onChanged != null ? onChanged() : null;
+        // debugPrint(textController.text);
       },
     );
   }
