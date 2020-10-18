@@ -1,3 +1,4 @@
+import 'package:WolfBeat/core/models/playlist/playlist.dart';
 import 'package:audioplayers/audio_cache.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -33,7 +34,10 @@ abstract class _PlayerViewModelBase with Store {
   var playerQueue = <Song>[].asObservable();
 
   @observable
-  Song currentSong;
+  var currentIndex = 0;
+
+  @observable
+  var isShuffled = false;
 
   @observable
   String playingFrom;
@@ -53,32 +57,52 @@ abstract class _PlayerViewModelBase with Store {
   final _audioPlayer = AudioPlayer();
 
   // ignore: use_setters_to_change_properties
-  @action
-  void updateCurrentSong(Song newSong) => currentSong = newSong;
 
   @action
   Future<void> play() async {
-    var _result = await _audioPlayer.play(currentSong.songURL);
+    try {
+      var _result =
+          await _audioPlayer.play(playerQueue.elementAt(currentIndex).songURL);
 
-    if (_result == 1) {
-      debugPrint('Playing status: Playing');
-      isPlaying = true;
+      if (_result == 1) {
+        debugPrint('Playing status: Playing');
+        isPlaying = true;
 
-      await _audioPlayer.onDurationChanged.listen((newDuration) {
-        totalDuration = newDuration;
-      });
+        await _audioPlayer.onDurationChanged.listen((newDuration) {
+          totalDuration = newDuration;
+        });
 
-      await _audioPlayer.onAudioPositionChanged.listen((newPosition) {
-        currentPosition = newPosition;
-      });
-      await MediaNotification.showNotification(
-                        title: 'Title', author: 'Song author',isPlaying: true);
+        await _audioPlayer.onAudioPositionChanged.listen((newPosition) {
+          currentPosition = newPosition;
+        });
+
+        await MediaNotification.showNotification(
+          title: playerQueue.elementAt(currentIndex).title,
+          author: playerQueue.elementAt(currentIndex).artist,
+          isPlaying: true,
+        );
+      }
+    } on RangeError catch (exception) {
+      rethrow;
     }
   }
 
   @action
+  Future<void> playSongFromPlaylist({Playlist playlist, Song song}) {
+    if (isShuffled) {
+      playlist.songs.sort((a, b) => a.title.compareTo(b.title));
+      isShuffled = false;
+    }
+
+    currentIndex = playlist.songs.indexOf(song);
+    playerQueue = playlist.songs.asObservable();
+    playingFrom = playlist.playlistName;
+
+    play();
+  }
+
+  @action
   Future<void> pause() async {
-    debugPrint(currentSong.songURL);
     var _result = await _audioPlayer.pause();
     if (_result == 1) {
       debugPrint('Playing status: Paused');
@@ -87,8 +111,41 @@ abstract class _PlayerViewModelBase with Store {
   }
 
   @action
+  void playRandomlyFromPlaylist(Playlist playlist) {
+    _checkPlayerStatus();
+
+    playlist.songs.shuffle();
+    playingFrom = playlist.playlistName;
+
+    playerQueue = playlist.songs.asObservable();
+
+    play();
+  }
+
+  @action
+  void shuffleQueue() {
+    isShuffled = true;
+
+    var currentSong = playerQueue.elementAt(currentIndex);
+    var queue = playerQueue;
+
+    queue.remove(currentSong);
+    queue.shuffle();
+    queue.insert(0, currentSong);
+
+    playerQueue = queue;
+  }
+
+  @computed
+  bool get canSkipFoward =>
+      !(playerQueue.elementAt(currentIndex) == playerQueue.last);
+
+  @computed
+  bool get canSkipPrevious =>
+      !(playerQueue.elementAt(currentIndex) == playerQueue.first);
+
+  @action
   Future<void> stop() async {
-    debugPrint(currentSong.songURL);
     var _result = await _audioPlayer.stop();
     if (_result == 1) {
       debugPrint('Playing status: Stopped');
@@ -98,16 +155,30 @@ abstract class _PlayerViewModelBase with Store {
 
   @action
   Future<void> seek(Duration position) async {
-    debugPrint(currentSong.songURL);
     var _result = await _audioPlayer.seek(position);
     print(_result);
   }
 
   @action
-  void skipToNextSong() {}
+  void skipToNextSong() {
+    _checkPlayerStatus();
+    currentIndex++;
+    play();
+  }
 
   @action
-  void skipToPreviousSong() {}
+  void skipToPreviousSong() {
+    _checkPlayerStatus();
+    currentIndex--;
+    play();
+  }
+
+  @action
+  void _checkPlayerStatus() {
+    if (isPlaying) {
+      stop();
+    }
+  }
 
   /// [_isFavorited] will check if the song is already favorited. If it's the
   /// case, the song reference will be removed from `favoriteSongs` array in
@@ -124,14 +195,15 @@ abstract class _PlayerViewModelBase with Store {
         _userData.data[FirebaseHelper.favoriteSongsAttribute] as List;
 
     for (DocumentReference song in _favoriteSongs) {
-      if (song.path == currentSong.reference) {
+      if (song.path == playerQueue.elementAt(currentIndex).reference.path) {
         _isFavorited = true;
         debugPrint('The song is already marked as favorited');
       }
     }
 
     if (_isFavorited) {
-      _favoriteSongs.remove(_database.document(currentSong.reference.path));
+      _favoriteSongs.remove(_database
+          .document(playerQueue.elementAt(currentIndex).reference.path));
       await _database
           .collection(FirebaseHelper.usersCollection)
           .document(_user.uid)
@@ -139,7 +211,8 @@ abstract class _PlayerViewModelBase with Store {
       isFavorite = false;
       debugPrint('Song removed from favorites');
     } else {
-      _favoriteSongs.add(_database.document(currentSong.reference.path));
+      _favoriteSongs.add(_database
+          .document(playerQueue.elementAt(currentIndex).reference.path));
       await _database
           .collection(FirebaseHelper.usersCollection)
           .document(_user.uid)
@@ -160,7 +233,7 @@ abstract class _PlayerViewModelBase with Store {
         _userData.data[FirebaseHelper.favoriteSongsAttribute] as List;
 
     for (DocumentReference song in _favoriteSongs) {
-      if (song.path == currentSong.reference) {
+      if (song.path == playerQueue.elementAt(currentIndex).reference.path) {
         _isFavorited = true;
         debugPrint('The song is marked as favorited');
       }

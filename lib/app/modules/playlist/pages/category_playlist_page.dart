@@ -1,4 +1,6 @@
+import 'package:WolfBeat/app/modules/player/pages/player_page.dart';
 import 'package:WolfBeat/core/models/playlist/playlist.dart';
+import 'package:WolfBeat/core/view_model/player/player_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -16,6 +18,8 @@ class CategoryPlaylistPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var _playerViewModel = GetIt.I.get<PlayerViewModel>();
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -27,7 +31,11 @@ class CategoryPlaylistPage extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          _playerViewModel.playRandomlyFromPlaylist(playlist);
+
+          Navigator.pushNamed(context, PlayerPage.id);
+        },
         backgroundColor: Theme.of(context).primaryColor,
         child: Icon(
           FlutterIcons.shuffle_mco,
@@ -42,6 +50,14 @@ class CategoryPlaylistPage extends StatelessWidget {
           physics: BouncingScrollPhysics(),
           itemBuilder: (context, index) {
             return MusicTile(
+              onTap: () {
+                _playerViewModel.playSongFromPlaylist(
+                  playlist: playlist,
+                  song: playlist.songs.elementAt(index),
+                );
+
+                Navigator.pushNamed(context, PlayerPage.id);
+              },
               song: playlist.songs.elementAt(index),
             );
           },

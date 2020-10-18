@@ -33,10 +33,12 @@ class _BottomNavigatorState extends State<BottomNavigator> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: tabs[_currentIndex],
-      bottomSheet: Observer(
-        builder: (context) =>
-            playerViewModel.currentSong != null ? MiniPlayer() : SizedBox(),
-      ),
+      // bottomSheet: Observer(
+      //   builder: (context) =>
+      //       playerViewModel.playerQueue[playerViewModel.currentIndex] != null
+      //           ? MiniPlayer()
+      //           : SizedBox(),
+      // ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Color(0xFF2c2f33),
         elevation: 0.0,

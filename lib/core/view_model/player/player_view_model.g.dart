@@ -9,6 +9,21 @@ part of 'player_view_model.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$PlayerViewModel on _PlayerViewModelBase, Store {
+  Computed<bool> _$canSkipFowardComputed;
+
+  @override
+  bool get canSkipFoward =>
+      (_$canSkipFowardComputed ??= Computed<bool>(() => super.canSkipFoward,
+              name: '_PlayerViewModelBase.canSkipFoward'))
+          .value;
+  Computed<bool> _$canSkipPreviousComputed;
+
+  @override
+  bool get canSkipPrevious =>
+      (_$canSkipPreviousComputed ??= Computed<bool>(() => super.canSkipPrevious,
+              name: '_PlayerViewModelBase.canSkipPrevious'))
+          .value;
+
   final _$playerQueueAtom = Atom(name: '_PlayerViewModelBase.playerQueue');
 
   @override
@@ -24,18 +39,33 @@ mixin _$PlayerViewModel on _PlayerViewModelBase, Store {
     });
   }
 
-  final _$currentSongAtom = Atom(name: '_PlayerViewModelBase.currentSong');
+  final _$currentIndexAtom = Atom(name: '_PlayerViewModelBase.currentIndex');
 
   @override
-  Song get currentSong {
-    _$currentSongAtom.reportRead();
-    return super.currentSong;
+  int get currentIndex {
+    _$currentIndexAtom.reportRead();
+    return super.currentIndex;
   }
 
   @override
-  set currentSong(Song value) {
-    _$currentSongAtom.reportWrite(value, super.currentSong, () {
-      super.currentSong = value;
+  set currentIndex(int value) {
+    _$currentIndexAtom.reportWrite(value, super.currentIndex, () {
+      super.currentIndex = value;
+    });
+  }
+
+  final _$isShuffledAtom = Atom(name: '_PlayerViewModelBase.isShuffled');
+
+  @override
+  bool get isShuffled {
+    _$isShuffledAtom.reportRead();
+    return super.isShuffled;
+  }
+
+  @override
+  set isShuffled(bool value) {
+    _$isShuffledAtom.reportWrite(value, super.isShuffled, () {
+      super.isShuffled = value;
     });
   }
 
@@ -163,11 +193,33 @@ mixin _$PlayerViewModel on _PlayerViewModelBase, Store {
       ActionController(name: '_PlayerViewModelBase');
 
   @override
-  void updateCurrentSong(Song newSong) {
+  Future<void> playSongFromPlaylist({Playlist playlist, Song song}) {
     final _$actionInfo = _$_PlayerViewModelBaseActionController.startAction(
-        name: '_PlayerViewModelBase.updateCurrentSong');
+        name: '_PlayerViewModelBase.playSongFromPlaylist');
     try {
-      return super.updateCurrentSong(newSong);
+      return super.playSongFromPlaylist(playlist: playlist, song: song);
+    } finally {
+      _$_PlayerViewModelBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void playRandomlyFromPlaylist(Playlist playlist) {
+    final _$actionInfo = _$_PlayerViewModelBaseActionController.startAction(
+        name: '_PlayerViewModelBase.playRandomlyFromPlaylist');
+    try {
+      return super.playRandomlyFromPlaylist(playlist);
+    } finally {
+      _$_PlayerViewModelBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void shuffleQueue() {
+    final _$actionInfo = _$_PlayerViewModelBaseActionController.startAction(
+        name: '_PlayerViewModelBase.shuffleQueue');
+    try {
+      return super.shuffleQueue();
     } finally {
       _$_PlayerViewModelBaseActionController.endAction(_$actionInfo);
     }
@@ -196,15 +248,29 @@ mixin _$PlayerViewModel on _PlayerViewModelBase, Store {
   }
 
   @override
+  void _checkPlayerStatus() {
+    final _$actionInfo = _$_PlayerViewModelBaseActionController.startAction(
+        name: '_PlayerViewModelBase._checkPlayerStatus');
+    try {
+      return super._checkPlayerStatus();
+    } finally {
+      _$_PlayerViewModelBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 playerQueue: ${playerQueue},
-currentSong: ${currentSong},
+currentIndex: ${currentIndex},
+isShuffled: ${isShuffled},
 playingFrom: ${playingFrom},
 isPlaying: ${isPlaying},
 currentPosition: ${currentPosition},
 totalDuration: ${totalDuration},
-isFavorite: ${isFavorite}
+isFavorite: ${isFavorite},
+canSkipFoward: ${canSkipFoward},
+canSkipPrevious: ${canSkipPrevious}
     ''';
   }
 }

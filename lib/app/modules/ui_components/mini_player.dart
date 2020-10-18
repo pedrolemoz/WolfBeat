@@ -16,7 +16,9 @@ class MiniPlayer extends StatelessWidget {
       builder: (_) {
         return GestureDetector(
           onTap: () {
-            if (playerViewModel.currentSong != null) {
+            if (playerViewModel.playerQueue
+                    .elementAt(playerViewModel.currentIndex) !=
+                null) {
               Navigator.pushNamed(context, PlayerPage.id);
             }
           },
@@ -26,7 +28,9 @@ class MiniPlayer extends StatelessWidget {
               print("Dragging in +Y direction");
             } else {
               print("Dragging in -Y direction");
-              if (playerViewModel.currentSong != null) {
+              if (playerViewModel.playerQueue
+                      .elementAt(playerViewModel.currentIndex) !=
+                  null) {
                 Navigator.pushNamed(context, PlayerPage.id);
               }
               // Navigator.pop(context);
@@ -67,7 +71,9 @@ class MiniPlayer extends StatelessWidget {
                         borderRadius: BorderRadius.circular(5.0),
                         child: FadeInImage.assetNetwork(
                           placeholder: AssetsHelper.artworkFallback,
-                          image: playerViewModel?.currentSong?.artworkURL,
+                          image: playerViewModel?.playerQueue
+                              .elementAt(playerViewModel.currentIndex)
+                              ?.artworkURL,
                         ),
                       ),
                       VerticalDivider(),
@@ -76,14 +82,18 @@ class MiniPlayer extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            playerViewModel?.currentSong?.title ??
+                            playerViewModel?.playerQueue
+                                    .elementAt(playerViewModel.currentIndex)
+                                    ?.title ??
                                 'Música desconhecida',
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: Theme.of(context).textTheme.subtitle1,
                           ),
                           Text(
-                            playerViewModel?.currentSong?.artist ??
+                            playerViewModel?.playerQueue
+                                    .elementAt(playerViewModel.currentIndex)
+                                    ?.artist ??
                                 'Artista desconhecido',
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,

@@ -9,11 +9,13 @@ class Playlist {
     @required this.songs,
   })  : assert(
             playlistName != null, throw NullAttributeException('playlistName')),
-        assert(songs != null, throw NullAttributeException('songs'));
+        assert(songs != null, throw NullAttributeException('songs')) {
+    songs.sort((a, b) => a.title.compareTo(b.title));
+  }
 
   final String playlistName;
 
-  final List<Song> songs;
+  List<Song> songs;
 
   Playlist copyWith({
     String playlistName,

@@ -29,17 +29,10 @@ class MusicTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(playlistName);
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 2.0),
       child: GestureDetector(
-        onTap: onTap ??
-            () {
-              playerViewModel.stop();
-              playerViewModel.updateCurrentSong(song);
-              playerViewModel.playingFrom = playlistName;
-              Navigator.pushNamed(context, PlayerPage.id);
-            },
+        onTap: onTap,
         onLongPress: () {
           // TODO: Refazer bottom sheet
           playlistName != null

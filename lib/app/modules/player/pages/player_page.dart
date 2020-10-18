@@ -4,7 +4,6 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hexcolor/hexcolor.dart';
 
-
 import '../../ui_components/mini_player.dart';
 import '../../../../core/helpers/assets_helper.dart';
 import '../../../../core/view_model/player/player_view_model.dart';
@@ -36,12 +35,10 @@ class PlayerPageState extends State<PlayerPage> {
     playerViewModel.checkFavorited();
   }
 
-  
-
   @override
   Widget build(BuildContext context) {
     return Observer(
-      builder: (_) {
+      builder: (context) {
         return Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
@@ -49,7 +46,9 @@ class PlayerPageState extends State<PlayerPage> {
               end: Alignment.bottomCenter,
               stops: [0.0, 1.0],
               colors: [
-                Hexcolor(playerViewModel?.currentSong?.backgroundColor) ??
+                Hexcolor(playerViewModel?.playerQueue
+                        ?.elementAt(playerViewModel.currentIndex)
+                        ?.backgroundColor) ??
                     Theme.of(context).scaffoldBackgroundColor,
                 Colors.black38,
               ],
@@ -85,7 +84,9 @@ class PlayerPageState extends State<PlayerPage> {
                       padding: EdgeInsets.only(bottom: 10.0),
                       child: FadeInImage.assetNetwork(
                         placeholder: AssetsHelper.artworkFallback,
-                        image: playerViewModel?.currentSong?.artworkURL,
+                        image: playerViewModel?.playerQueue
+                            .elementAt(playerViewModel.currentIndex)
+                            ?.artworkURL,
                       ),
                     ),
                   ),
@@ -97,20 +98,22 @@ class PlayerPageState extends State<PlayerPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            playerViewModel?.currentSong?.title ??
+                            playerViewModel?.playerQueue
+                                    .elementAt(playerViewModel.currentIndex)
+                                    ?.title ??
                                 'Música desconhecida',
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: Theme.of(context).textTheme.headline6,
                           ),
-                          
                           Text(
-                            playerViewModel?.currentSong?.artist ??
+                            playerViewModel?.playerQueue
+                                    .elementAt(playerViewModel.currentIndex)
+                                    ?.artist ??
                                 'Artista desconhecido',
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: Theme.of(context).textTheme.subtitle1,
-
                             softWrap: true,
                           ),
                         ],
@@ -129,54 +132,54 @@ class PlayerPageState extends State<PlayerPage> {
                       ),
                     ],
                   ),
-                  Observer(
-                    builder: (context) => Column(
-                      children: [
-                        SliderTheme(
-                          data: SliderTheme.of(context).copyWith(
-                            activeTrackColor: Theme.of(context).primaryColor,
-                            thumbColor: Theme.of(context).primaryColor,
-                            inactiveTrackColor: Colors.grey[400],
-                            trackShape: CustomTrackShape(),
-                            trackHeight: 1.0,
-                            thumbShape:
-                                RoundSliderThumbShape(enabledThumbRadius: 7.0),
-                            overlayColor:
-                                Theme.of(context).primaryColor.withAlpha(80),
-                            overlayShape:
-                                RoundSliderOverlayShape(overlayRadius: 20.0),
-                          ),
-                          child: Slider(
-                            min: 0,
-                            max: playerViewModel.totalDuration.inSeconds
-                                .toDouble(),
-                            value: playerViewModel.currentPosition.inSeconds
-                                .toDouble(),
-                            onChanged: (newValue) {
-                              playerViewModel
-                                  .seek(Duration(seconds: newValue.toInt()));
-                            },
-                          ),
+                  Column(
+                    children: [
+                      SliderTheme(
+                        data: SliderTheme.of(context).copyWith(
+                          activeTrackColor: Theme.of(context).primaryColor,
+                          thumbColor: Theme.of(context).primaryColor,
+                          inactiveTrackColor: Colors.grey[400],
+                          trackShape: CustomTrackShape(),
+                          trackHeight: 1.0,
+                          thumbShape:
+                              RoundSliderThumbShape(enabledThumbRadius: 7.0),
+                          overlayColor:
+                              Theme.of(context).primaryColor.withAlpha(80),
+                          overlayShape:
+                              RoundSliderOverlayShape(overlayRadius: 20.0),
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              playerViewModel.currentPosition
-                                  .toString()
-                                  .substring(2, 7),
-                              style: Theme.of(context).textTheme.caption,
-                            ),
-                            Text(
-                              Duration(
-                                seconds: playerViewModel.currentSong.duration,
-                              ).toString().substring(2, 7),
-                              style: Theme.of(context).textTheme.caption,
-                            ),
-                          ],
+                        child: Slider(
+                          min: 0,
+                          max: playerViewModel.totalDuration.inSeconds
+                              .toDouble(),
+                          value: playerViewModel.currentPosition.inSeconds
+                              .toDouble(),
+                          onChanged: (newValue) {
+                            playerViewModel
+                                .seek(Duration(seconds: newValue.toInt()));
+                          },
                         ),
-                      ],
-                    ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            playerViewModel.currentPosition
+                                .toString()
+                                .substring(2, 7),
+                            style: Theme.of(context).textTheme.caption,
+                          ),
+                          Text(
+                            Duration(
+                              seconds: playerViewModel.playerQueue
+                                  .elementAt(playerViewModel.currentIndex)
+                                  .duration,
+                            ).toString().substring(2, 7),
+                            style: Theme.of(context).textTheme.caption,
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -186,10 +189,19 @@ class PlayerPageState extends State<PlayerPage> {
                         color: Color(0xFFF0F0F5),
                         size: 30.0,
                       ),
-                      Icon(
-                        FlutterIcons.skip_previous_mco,
-                        color: Color(0xFFF0F0F5),
-                        size: 40.0,
+                      GestureDetector(
+                        onTap: () {
+                          if (playerViewModel.canSkipPrevious) {
+                            playerViewModel.skipToPreviousSong();
+                          }
+                        },
+                        child: Icon(
+                          FlutterIcons.skip_previous_mco,
+                          color: playerViewModel.canSkipPrevious
+                              ? Color(0xFFF0F0F5)
+                              : Colors.grey[900],
+                          size: 40.0,
+                        ),
                       ),
                       RawMaterialButton(
                         onPressed: () {
@@ -211,15 +223,31 @@ class PlayerPageState extends State<PlayerPage> {
                           ),
                         ),
                       ),
-                      Icon(
-                        FlutterIcons.skip_next_mco,
-                        color: Color(0xFFF0F0F5),
-                        size: 40.0,
+                      GestureDetector(
+                        onTap: () {
+                          if (playerViewModel.canSkipFoward) {
+                            playerViewModel.skipToNextSong();
+                          }
+                        },
+                        child: Icon(
+                          FlutterIcons.skip_next_mco,
+                          color: playerViewModel.canSkipFoward
+                              ? Color(0xFFF0F0F5)
+                              : Colors.grey[900],
+                          size: 40.0,
+                        ),
                       ),
-                      Icon(
-                        FlutterIcons.shuffle_mco,
-                        color: Color(0xFFF0F0F5),
-                        size: 30.0,
+                      GestureDetector(
+                        onTap: () {
+                          playerViewModel.shuffleQueue();
+                        },
+                        child: Icon(
+                          FlutterIcons.shuffle_mco,
+                          color: playerViewModel.isShuffled
+                              ? Color(0xFFF0F0F5)
+                              : Colors.grey[900],
+                          size: 30.0,
+                        ),
                       ),
                     ],
                   )
