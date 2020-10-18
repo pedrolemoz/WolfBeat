@@ -1,13 +1,12 @@
-import '../../player/pages/player_page.dart';
-import '../../../../core/models/playlist/playlist.dart';
-import '../../../../core/view_model/player/player_view_model.dart';
-import '../../../../core/view_model/user/user_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 
-import '../../../../core/view_model/song/songs_view_model.dart';
+import '../../../../core/models/playlist/playlist.dart';
+import '../../../../core/view_model/player/player_view_model.dart';
+import '../../../../core/view_model/user/user_view_model.dart';
+import '../../player/pages/player_page.dart';
 import '../../ui_components/music_tile.dart';
 
 class FavoriteSongsPage extends StatelessWidget {

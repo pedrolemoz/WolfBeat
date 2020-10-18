@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
-import 'package:get_it/get_it.dart';
 
 import '../../../core/exceptions/null_attribute_exception.dart';
 import '../../../core/helpers/assets_helper.dart';
 import '../../../core/models/song/song.dart';
 import '../../../core/view_model/player/player_view_model.dart';
-import '../../../core/view_model/user/user_view_model.dart';
 
 /// [MusicTile] redirects the user to the player in the selected song.
 /// It's a GestureDetector with a provider for the [PlayerViewModel].

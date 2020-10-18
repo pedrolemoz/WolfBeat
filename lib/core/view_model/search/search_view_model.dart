@@ -1,8 +1,7 @@
+import '../../helpers/firebase_helper.dart';
+import '../../models/song/song.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:mobx/mobx.dart';
-
-import '../../../../core/helpers/firebase_helper.dart';
-import '../../../../core/models/song/song.dart';
 
 part 'search_view_model.g.dart';
 
