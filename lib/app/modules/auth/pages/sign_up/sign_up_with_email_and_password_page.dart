@@ -112,7 +112,7 @@ class SignUpWithEmailAndPasswordPage extends StatelessWidget {
                               email: _emailTextField.text,
                               password: _passwordTextField.text,
                               imageURI:
-                                  'https://www.musicdot.com.br/assets/api/share/musicdot.jpg',
+                                  'https://firebasestorage.googleapis.com/v0/b/firefly-c82b1.appspot.com/o/fallback%2Fuser%2Fuser_fallback.jpg?alt=media&token=bc968227-e42a-4a3b-aa7a-9abf22b4f22b',
                             ),
                           );
                         },

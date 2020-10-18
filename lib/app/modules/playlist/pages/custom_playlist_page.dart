@@ -16,12 +16,11 @@ class CustomPlaylistPage extends StatelessWidget {
 
   CustomPlaylistPage({@required this.playlistIndex});
 
-  final _playerViewModel = GetIt.I.get<PlayerViewModel>();
-  final _songsViewModel = GetIt.I.get<SongsViewModel>();
-  final _userViewModel = GetIt.I.get<UserViewModel>();
-
   @override
   Widget build(BuildContext context) {
+    final _playerViewModel = GetIt.I.get<PlayerViewModel>();
+    final _songsViewModel = GetIt.I.get<SongsViewModel>();
+    final _userViewModel = GetIt.I.get<UserViewModel>();
     final _scaffoldGlobalKey = GlobalKey<ScaffoldState>();
 
     return Scaffold(
@@ -62,8 +61,6 @@ class CustomPlaylistPage extends StatelessWidget {
                 backgroundColor: Theme.of(context).scaffoldBackgroundColor,
                 builder: (context) {
                   return AddSongsToPlaylistBottomSheet(
-                    songsViewModel: _songsViewModel,
-                    userViewModel: _userViewModel,
                     playlistIndex: playlistIndex,
                     scaffoldGlobalKey: _scaffoldGlobalKey,
                   );

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
 import '../../../core/view_model/song/songs_view_model.dart';
 import '../../../core/view_model/user/user_view_model.dart';
@@ -6,23 +7,18 @@ import 'music_tile.dart';
 
 class AddSongsToPlaylistBottomSheet extends StatelessWidget {
   const AddSongsToPlaylistBottomSheet({
-    Key key,
-    @required SongsViewModel songsViewModel,
-    @required UserViewModel userViewModel,
     @required this.playlistIndex,
-    @required GlobalKey<ScaffoldState> scaffoldGlobalKey,
-  })  : _songsViewModel = songsViewModel,
-        _userViewModel = userViewModel,
-        _scaffoldGlobalKey = scaffoldGlobalKey,
-        super(key: key);
+    @required this.scaffoldGlobalKey,
+  });
 
-  final SongsViewModel _songsViewModel;
-  final UserViewModel _userViewModel;
   final int playlistIndex;
-  final GlobalKey<ScaffoldState> _scaffoldGlobalKey;
+  final GlobalKey<ScaffoldState> scaffoldGlobalKey;
 
   @override
   Widget build(BuildContext context) {
+    final _songsViewModel = GetIt.I.get<SongsViewModel>();
+    final _userViewModel = GetIt.I.get<UserViewModel>();
+
     return ListView(
       padding: const EdgeInsets.symmetric(vertical: 15.0),
       children: [
@@ -51,7 +47,7 @@ class AddSongsToPlaylistBottomSheet extends StatelessWidget {
 
                 Navigator.maybePop(context);
 
-                _scaffoldGlobalKey.currentState.showSnackBar(
+                scaffoldGlobalKey.currentState.showSnackBar(
                   SnackBar(
                     content: Text(
                       'Música adicionada à playlist "${_userViewModel.playlists.elementAt(playlistIndex).playlistName}"',

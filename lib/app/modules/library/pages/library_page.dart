@@ -22,7 +22,6 @@ class _LibraryPageState extends State<LibraryPage>
 
   @override
   Widget build(BuildContext context) {
-    // TODO: Implementar App e Tab Bar roláveis
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(

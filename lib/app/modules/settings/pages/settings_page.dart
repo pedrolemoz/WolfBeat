@@ -8,10 +8,11 @@ import 'profile_settings_page.dart';
 
 class SettingsPage extends StatelessWidget {
   static const String id = 'settings_page';
-  final userViewModel = GetIt.I.get<UserViewModel>();
 
   @override
   Widget build(BuildContext context) {
+    final _userViewModel = GetIt.I.get<UserViewModel>();
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -38,10 +39,10 @@ class SettingsPage extends StatelessWidget {
                     Navigator.pushNamed(context, ProfileSettingsPage.id);
                   },
                   leading: CircleAvatar(
-                    backgroundImage: NetworkImage(userViewModel.imageURI),
+                    backgroundImage: NetworkImage(_userViewModel.imageURI),
                   ),
                   title: Text(
-                    userViewModel.userName,
+                    _userViewModel.userName,
                     style: Theme.of(context)
                         .textTheme
                         .headline6
@@ -49,7 +50,7 @@ class SettingsPage extends StatelessWidget {
                   ),
                   trailing: GestureDetector(
                     onTap: () {
-                      userViewModel.signOutUser(context);
+                      _userViewModel.signOutUser(context);
                     },
                     child: Icon(
                       FlutterIcons.log_out_fea,

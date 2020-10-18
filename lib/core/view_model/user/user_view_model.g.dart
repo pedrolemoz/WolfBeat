@@ -24,6 +24,21 @@ mixin _$UserViewModel on _UserViewModelBase, Store {
     });
   }
 
+  final _$favoriteSongsAtom = Atom(name: '_UserViewModelBase.favoriteSongs');
+
+  @override
+  ObservableList<Song> get favoriteSongs {
+    _$favoriteSongsAtom.reportRead();
+    return super.favoriteSongs;
+  }
+
+  @override
+  set favoriteSongs(ObservableList<Song> value) {
+    _$favoriteSongsAtom.reportWrite(value, super.favoriteSongs, () {
+      super.favoriteSongs = value;
+    });
+  }
+
   final _$userIDAtom = Atom(name: '_UserViewModelBase.userID');
 
   @override
@@ -124,6 +139,15 @@ mixin _$UserViewModel on _UserViewModelBase, Store {
         .run(() => super._recoverUserPlaylists(snapshot));
   }
 
+  final _$_recoverFavoriteSongsAsyncAction =
+      AsyncAction('_UserViewModelBase._recoverFavoriteSongs');
+
+  @override
+  Future<void> _recoverFavoriteSongs(DocumentSnapshot snapshot) {
+    return _$_recoverFavoriteSongsAsyncAction
+        .run(() => super._recoverFavoriteSongs(snapshot));
+  }
+
   final _$_changeSongInPlaylistAsyncAction =
       AsyncAction('_UserViewModelBase._changeSongInPlaylist');
 
@@ -157,8 +181,7 @@ mixin _$UserViewModel on _UserViewModelBase, Store {
   }
 
   @override
-  Future<void> addSongToPlaylist(
-      {@required Playlist playlist, @required Song song}) {
+  void addSongToPlaylist({@required Playlist playlist, @required Song song}) {
     final _$actionInfo = _$_UserViewModelBaseActionController.startAction(
         name: '_UserViewModelBase.addSongToPlaylist');
     try {
@@ -169,7 +192,7 @@ mixin _$UserViewModel on _UserViewModelBase, Store {
   }
 
   @override
-  Future<void> removeSongFromPlaylist(
+  void removeSongFromPlaylist(
       {@required Playlist playlist, @required Song song}) {
     final _$actionInfo = _$_UserViewModelBaseActionController.startAction(
         name: '_UserViewModelBase.removeSongFromPlaylist');
@@ -184,6 +207,7 @@ mixin _$UserViewModel on _UserViewModelBase, Store {
   String toString() {
     return '''
 playlists: ${playlists},
+favoriteSongs: ${favoriteSongs},
 userID: ${userID},
 userName: ${userName},
 userEmail: ${userEmail},

@@ -21,10 +21,10 @@ class _WelcomePageState extends State<WelcomePage> {
   }
 
   Future<void> checkUserAuth(BuildContext context) async {
-    var auth = FirebaseAuth.instance;
-    var user = await auth.currentUser();
+    var _auth = FirebaseAuth.instance;
+    var _user = await _auth.currentUser();
 
-    if (user != null) {
+    if (_user != null) {
       await Navigator.pushNamedAndRemoveUntil(
         context,
         BottomNavigator.id,

@@ -12,9 +12,9 @@ import '../../../../bottom_navigation/pages/bottom_navigation_bar.dart';
 Future<void> loginUserWithEmailAndPassword(
     BuildContext context, User user) async {
   assert(context != null);
-  var auth = FirebaseAuth.instance;
+  var _auth = FirebaseAuth.instance;
 
-  await auth
+  await _auth
       .signInWithEmailAndPassword(email: user.email, password: user.password)
       .then((firebaseUser) {
     GetIt.I.get<UserViewModel>().recoverUserData();

@@ -1,3 +1,7 @@
+import '../../player/pages/player_page.dart';
+import '../../../../core/models/playlist/playlist.dart';
+import '../../../../core/view_model/player/player_view_model.dart';
+import '../../../../core/view_model/user/user_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -11,7 +15,8 @@ class FavoriteSongsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _songsViewModel = GetIt.I.get<SongsViewModel>();
+    final _userViewModel = GetIt.I.get<UserViewModel>();
+    final _playerViewModel = GetIt.I.get<PlayerViewModel>();
 
     return Scaffold(
       appBar: AppBar(
@@ -34,13 +39,24 @@ class FavoriteSongsPage extends StatelessWidget {
       ),
       body: Observer(builder: (_) {
         return ListView.builder(
-          itemCount: _songsViewModel.songs.length,
+          itemCount: _userViewModel.favoriteSongs.length,
           padding: EdgeInsets.symmetric(vertical: 13.0),
           physics: BouncingScrollPhysics(),
           itemBuilder: (context, index) {
             return MusicTile(
               playlistName: 'músicas favoritas',
-              song: _songsViewModel.songs[index],
+              song: _userViewModel.favoriteSongs[index],
+              onTap: () {
+                _playerViewModel.playSongFromPlaylist(
+                  playlist: Playlist(
+                    songs: _userViewModel.favoriteSongs,
+                    playlistName: 'Músicas favoritas',
+                  ),
+                  song: _userViewModel.favoriteSongs[index],
+                );
+
+                Navigator.pushNamed(context, PlayerPage.id);
+              },
             );
           },
         );

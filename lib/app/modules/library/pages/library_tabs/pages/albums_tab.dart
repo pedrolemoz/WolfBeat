@@ -9,12 +9,12 @@ import '../../../../../../core/view_model/song/songs_view_model.dart';
 import '../../../../playlist/pages/category_playlist_page.dart';
 
 class AlbumsTab extends StatelessWidget {
-  final _albums = GetIt.I.get<SongsViewModel>().albums;
-  final _playerViewModel = GetIt.I.get<PlayerViewModel>();
-  final _mediaHelper = MediaHelper();
-
   @override
   Widget build(BuildContext context) {
+    final _albums = GetIt.I.get<SongsViewModel>().albums;
+    final _playerViewModel = GetIt.I.get<PlayerViewModel>();
+    final _mediaHelper = MediaHelper();
+
     return GridView.builder(
       itemCount: _albums.length,
       shrinkWrap: true,

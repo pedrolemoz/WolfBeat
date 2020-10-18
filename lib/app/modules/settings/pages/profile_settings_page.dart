@@ -9,10 +9,11 @@ import '../services/change_profile_photo.dart';
 
 class ProfileSettingsPage extends StatelessWidget {
   static const String id = 'profile_settings_page';
-  final userViewModel = GetIt.I.get<UserViewModel>();
 
   @override
   Widget build(BuildContext context) {
+    final _userViewModel = GetIt.I.get<UserViewModel>();
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -34,7 +35,8 @@ class ProfileSettingsPage extends StatelessWidget {
                     height: 150.0,
                     width: 150.0,
                     child: CircleAvatar(
-                        backgroundImage: NetworkImage(userViewModel.imageURI)),
+                      backgroundImage: NetworkImage(_userViewModel?.imageURI),
+                    ),
                   ),
                 ),
                 Padding(
@@ -42,11 +44,11 @@ class ProfileSettingsPage extends StatelessWidget {
                   child: Column(
                     children: [
                       Text(
-                        userViewModel.userName,
+                        _userViewModel?.userName ?? 'Obtendo dados...',
                         style: Theme.of(context).textTheme.subtitle1,
                       ),
                       Text(
-                        userViewModel.userEmail,
+                        _userViewModel?.userEmail ?? 'Obtendo dados...',
                         style: Theme.of(context).textTheme.subtitle2,
                       ),
                     ],
@@ -58,7 +60,7 @@ class ProfileSettingsPage extends StatelessWidget {
                     label: 'Alterar a foto de perfil',
                     enabledColor: Theme.of(context).backgroundColor,
                     splashColor: Theme.of(context).scaffoldBackgroundColor,
-                    isEnabled: userViewModel.type == 'Email',
+                    isEnabled: _userViewModel?.type ?? 'null' == 'Email',
                     onTap: () {
                       showBottomSheet(
                         context: context,
@@ -140,7 +142,7 @@ class ProfileSettingsPage extends StatelessWidget {
                   splashColor: Theme.of(context).primaryColor.withOpacity(0.8),
                   isEnabled: true,
                   onTap: () {
-                    userViewModel.signOutUser(context);
+                    _userViewModel.signOutUser(context);
                   },
                 ),
               ],

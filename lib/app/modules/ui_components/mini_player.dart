@@ -8,10 +8,10 @@ import '../../../core/view_model/player/player_view_model.dart';
 import '../player/pages/player_page.dart';
 
 class MiniPlayer extends StatelessWidget {
-  final playerViewModel = GetIt.I.get<PlayerViewModel>();
-
   @override
   Widget build(BuildContext context) {
+    final playerViewModel = GetIt.I.get<PlayerViewModel>();
+
     return Observer(
       builder: (_) {
         return GestureDetector(

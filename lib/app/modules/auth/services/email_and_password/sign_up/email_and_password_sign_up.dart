@@ -15,15 +15,14 @@ import '../../../../bottom_navigation/pages/bottom_navigation_bar.dart';
 Future<void> signUpUserWithEmailAndPassword(
     BuildContext context, User user) async {
   assert(context != null, throw NullAttributeException('context'));
-  var database = Firestore.instance;
+  var _database = Firestore.instance;
 
-  var auth = FirebaseAuth.instance;
-  await auth
+  var _auth = FirebaseAuth.instance;
+  await _auth
       .createUserWithEmailAndPassword(
           email: user.email, password: user.password)
       .then((firebaseUser) {
-    user.uuid = firebaseUser.user.uid;
-    database
+    _database
         .collection(FirebaseHelper.usersCollection)
         .document(firebaseUser.user.uid)
         .setData(user.toMap());

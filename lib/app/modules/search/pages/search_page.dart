@@ -14,7 +14,7 @@ class SearchPage extends StatefulWidget {
 
 class _SearchPageState extends State<SearchPage> {
   final _searchTextController = TextEditingController();
-  final searchViewModel = GetIt.I.get<SearchViewModel>();
+  final _searchViewModel = GetIt.I.get<SearchViewModel>();
 
   @override
   Widget build(BuildContext context) {
@@ -28,23 +28,24 @@ class _SearchPageState extends State<SearchPage> {
               icon: Icon(FlutterIcons.search_mdi),
               onChanged: () {
                 _searchTextController.text == ''
-                    ? searchViewModel.cleanResults()
-                    : searchViewModel.performSearch(_searchTextController.text);
+                    ? _searchViewModel.cleanResults()
+                    : _searchViewModel
+                        .performSearch(_searchTextController.text);
               },
               onIconTap: () {
-                searchViewModel.performSearch(_searchTextController.text);
+                _searchViewModel.performSearch(_searchTextController.text);
               },
             ),
           ),
-          body: searchViewModel.searchResult.isNotEmpty
+          body: _searchViewModel.searchResult.isNotEmpty
               ? ListView.builder(
-                  itemCount: searchViewModel.searchResult.length,
+                  itemCount: _searchViewModel.searchResult.length,
                   padding: const EdgeInsets.only(top: 20.0),
                   itemBuilder: (context, index) {
                     return Padding(
                       padding: const EdgeInsets.symmetric(vertical: 5.0),
                       child: MusicTile(
-                        song: searchViewModel.searchResult.elementAt(index),
+                        song: _searchViewModel.searchResult.elementAt(index),
                       ),
                     );
                   },

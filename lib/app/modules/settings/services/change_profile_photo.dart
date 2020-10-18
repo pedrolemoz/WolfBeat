@@ -13,37 +13,31 @@ import '../../../../core/view_model/user/user_view_model.dart';
 /// switch the profile photo.
 /// Used in [ProfileSettingsPage].
 Future<void> changeProfilePhotoFromGallery(BuildContext context) async {
-  // final imagePicker = ImagePicker();
+  final _image = await ImagePicker.pickImage(source: ImageSource.gallery);
 
-  // TODO: Usar .getImage()
-
-  final image = await ImagePicker.pickImage(source: ImageSource.gallery);
-
-  await _uploadNewPhotoAndUpdate(context, newPhoto: image);
+  await _uploadNewPhotoAndUpdate(context, newPhoto: _image);
 }
 
 Future<void> changeProfilePhotoFromCamera(BuildContext context) async {
-  // final imagePicker = ImagePicker();
+  final _image = await ImagePicker.pickImage(source: ImageSource.camera);
 
-  final image = await ImagePicker.pickImage(source: ImageSource.camera);
-
-  await _uploadNewPhotoAndUpdate(context, newPhoto: image);
+  await _uploadNewPhotoAndUpdate(context, newPhoto: _image);
 }
 
 Future<void> _uploadNewPhotoAndUpdate(BuildContext context,
     {File newPhoto}) async {
-  var storage = FirebaseStorage.instance;
-  var userViewModel = GetIt.I.get<UserViewModel>();
+  var _storage = FirebaseStorage.instance;
+  var _userViewModel = GetIt.I.get<UserViewModel>();
 
-  final root = storage.ref();
-  final file = root
+  final _root = _storage.ref();
+  final _file = _root
       .child(FirebaseHelper.usersProfilePicturesFolder)
-      .child(userViewModel.userID)
-      .child('${userViewModel.userID}.jpg');
+      .child(_userViewModel.userID)
+      .child('${_userViewModel.userID}.jpg');
 
-  var task = file.putFile(newPhoto);
+  var _task = _file.putFile(newPhoto);
 
-  task.events.listen(
+  _task.events.listen(
     (storageEvent) {
       if (storageEvent.type == StorageTaskEventType.progress) {
         debugPrint('Fazendo o upload');
@@ -53,20 +47,20 @@ Future<void> _uploadNewPhotoAndUpdate(BuildContext context,
     },
   );
 
-  await task.onComplete.then(
+  await _task.onComplete.then(
     (snapshot) async {
-      var newImageURI = await snapshot.ref.getDownloadURL();
+      var _newImageURI = await snapshot.ref.getDownloadURL();
 
       // Updating the image locally
-      userViewModel.updateImageURI(newImageURI);
+      _userViewModel.updateImageURI(_newImageURI);
 
       // Updating in Firestore
-      var database = Firestore.instance;
-      final newImageData = {FirebaseHelper.imageURIAttribute: newImageURI};
-      await database
+      var _database = Firestore.instance;
+      final _newImageData = {FirebaseHelper.imageURIAttribute: _newImageURI};
+      await _database
           .collection(FirebaseHelper.usersCollection)
-          .document(userViewModel.userID)
-          .updateData(newImageData);
+          .document(_userViewModel.userID)
+          .updateData(_newImageData);
     },
   );
 }

@@ -10,10 +10,9 @@ import 'custom_playlist_page.dart';
 class CreateNewPlaylistPage extends StatelessWidget {
   static const String id = 'create_new_playlist_page';
 
-  final _userViewModel = GetIt.I.get<UserViewModel>();
-
   @override
   Widget build(BuildContext context) {
+    final _userViewModel = GetIt.I.get<UserViewModel>();
     final _playlistNameController = TextEditingController();
 
     return Scaffold(

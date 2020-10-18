@@ -1,15 +1,12 @@
-import '../../../../core/view_model/song/songs_view_model.dart';
-import '../../../../core/view_model/user/user_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../../../core/view_model/player/player_view_model.dart';
+import '../../../../core/view_model/user/user_view_model.dart';
 import '../../home/pages/home_page.dart';
 import '../../library/pages/library_page.dart';
 import '../../search/pages/search_page.dart';
-import '../../ui_components/mini_player.dart';
 
 class BottomNavigator extends StatefulWidget {
   static final String id = 'bottom_navigator';
@@ -21,21 +18,22 @@ class BottomNavigator extends StatefulWidget {
 class _BottomNavigatorState extends State<BottomNavigator> {
   int _currentIndex = 0;
 
-  final List<Widget> tabs = [
+  final List<Widget> _tabs = [
     HomePage(),
     SearchPage(),
     LibraryPage(),
   ];
 
-  final playerViewModel = GetIt.I.get<PlayerViewModel>();
-
   @override
   Widget build(BuildContext context) {
+    final _playerViewModel = GetIt.I.get<PlayerViewModel>();
+    final _userViewModel = GetIt.I.get<UserViewModel>();
+
     return Scaffold(
-      body: tabs[_currentIndex],
+      body: _tabs[_currentIndex],
       // bottomSheet: Observer(
       //   builder: (context) =>
-      //       playerViewModel.playerQueue[playerViewModel.currentIndex] != null
+      //       _playerViewModel.playerQueue[_playerViewModel.currentIndex] != null
       //           ? MiniPlayer()
       //           : SizedBox(),
       // ),

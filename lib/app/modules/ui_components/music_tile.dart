@@ -23,8 +23,6 @@ class MusicTile extends StatelessWidget {
   final String playlistName;
   final Function onTap;
   final Function onDelete;
-  final playerViewModel = GetIt.I.get<PlayerViewModel>();
-  final userViewModel = GetIt.I.get<UserViewModel>();
 
   @override
   Widget build(BuildContext context) {

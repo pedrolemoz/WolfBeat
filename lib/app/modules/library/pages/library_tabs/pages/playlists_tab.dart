@@ -9,11 +9,10 @@ import '../../../../ui_components/favorite_songs_tile.dart';
 import '../../../../ui_components/playlist_tile.dart';
 
 class PlaylistsTab extends StatelessWidget {
-  final _userViewModel = GetIt.I.get<UserViewModel>();
-
   @override
   Widget build(BuildContext context) {
-    print(_userViewModel.playlists.length);
+    final _userViewModel = GetIt.I.get<UserViewModel>();
+
     return ListView(
       physics: BouncingScrollPhysics(),
       padding: EdgeInsets.symmetric(vertical: 13.0),

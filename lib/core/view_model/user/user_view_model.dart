@@ -26,50 +26,55 @@ abstract class _UserViewModelBase with Store {
   var playlists = <Playlist>[].asObservable();
 
   @observable
-  String userID = '';
+  var favoriteSongs = <Song>[].asObservable();
 
   @observable
-  String userName = '';
+  String userID;
 
   @observable
-  String userEmail = '';
+  String userName;
 
   @observable
-  String imageURI = 'https://www.musicdot.com.br/assets/api/share/musicdot.jpg';
+  String userEmail;
 
   @observable
-  String type = '';
+  String imageURI;
+
+  @observable
+  String type;
 
   @action
   Future<void> recoverUserData() async {
-    var auth = FirebaseAuth.instance;
-    var database = Firestore.instance;
-    var user = await auth.currentUser();
+    var _auth = FirebaseAuth.instance;
+    var _database = Firestore.instance;
+    var _user = await _auth.currentUser();
 
-    var snapshot = await database
+    var _snapshot = await _database
         .collection(FirebaseHelper.usersCollection)
-        .document(user.uid)
+        .document(_user.uid)
         .get();
 
-    var data = snapshot.data;
+    var _data = _snapshot.data;
 
-    if (data.isNotEmpty) {
-      await _recoverUserPlaylists(snapshot);
-      userID = user.uid;
-      userName = data[FirebaseHelper.nameAttribute];
-      userEmail = data[FirebaseHelper.emailAttribute];
-      imageURI = data[FirebaseHelper.imageURIAttribute];
-      type = data[FirebaseHelper.typeAttribute];
+    if (_data.isNotEmpty) {
+      await _recoverUserPlaylists(_snapshot);
+      await _recoverFavoriteSongs(_snapshot);
+
+      userID = _user.uid;
+      userName = _data[FirebaseHelper.nameAttribute];
+      userEmail = _data[FirebaseHelper.emailAttribute];
+      imageURI = _data[FirebaseHelper.imageURIAttribute];
+      type = _data[FirebaseHelper.typeAttribute];
     }
   }
 
   @action
   Future<void> signOutUser(BuildContext context) async {
-    var auth = FirebaseAuth.instance;
-    var googleSignIn = GoogleSignIn();
+    var _auth = FirebaseAuth.instance;
+    var _googleSignIn = GoogleSignIn();
 
-    await auth.signOut().then((value) {
-      googleSignIn.signOut().then((_) {
+    await _auth.signOut().then((value) {
+      _googleSignIn.signOut().then((_) {
         debugPrint('Logged out');
       });
     });
@@ -81,23 +86,23 @@ abstract class _UserViewModelBase with Store {
     );
   }
 
-  // ignore: use_setters_to_change_properties
   @action
   void updateImageURI(String newImageURI) => imageURI = newImageURI;
 
   @action
   Future<void> _recoverUserPlaylists(DocumentSnapshot snapshot) async {
-    var data = snapshot.data;
+    var _data = snapshot.data;
 
-    var _playlists = data[FirebaseHelper.playlistsAttribute];
+    var _playlists = _data[FirebaseHelper.playlistsAttribute];
 
     for (var playlist in _playlists) {
-      var songs = <Song>[];
+      var _songs = <Song>[];
+
       for (DocumentReference songReference
           in playlist[FirebaseHelper.playlistSongsAttribute] as List) {
         final song = await songReference.get();
 
-        songs.add(
+        _songs.add(
           Song(
             title: song.data[FirebaseHelper.titleAttribute],
             songURL: song.data[FirebaseHelper.songURLAttribute],
@@ -115,14 +120,38 @@ abstract class _UserViewModelBase with Store {
       playlists.add(
         Playlist(
           playlistName: playlist[FirebaseHelper.playlistNameAttribute],
-          songs: songs,
+          songs: _songs,
         ),
       );
     }
   }
 
   @action
-  Future<void> addSongToPlaylist({
+  Future<void> _recoverFavoriteSongs(DocumentSnapshot snapshot) async {
+    var _data = snapshot.data;
+
+    for (DocumentReference songReference
+        in _data[FirebaseHelper.favoriteSongsAttribute] as List) {
+      final song = await songReference.get();
+
+      favoriteSongs.add(
+        Song(
+          title: song.data[FirebaseHelper.titleAttribute],
+          songURL: song.data[FirebaseHelper.songURLAttribute],
+          album: song.data[FirebaseHelper.albumAttribute],
+          artist: song.data[FirebaseHelper.artistAttribute],
+          artworkURL: song.data[FirebaseHelper.artworkURLAttribute],
+          duration: song.data[FirebaseHelper.durationAttribute],
+          genre: song.data[FirebaseHelper.genreAttribute],
+          backgroundColor: song.data[FirebaseHelper.backgroundColorAttribute],
+          reference: song.reference,
+        ),
+      );
+    }
+  }
+
+  @action
+  void addSongToPlaylist({
     @required Playlist playlist,
     @required Song song,
   }) {
@@ -131,7 +160,7 @@ abstract class _UserViewModelBase with Store {
   }
 
   @action
-  Future<void> removeSongFromPlaylist({
+  void removeSongFromPlaylist({
     @required Playlist playlist,
     @required Song song,
   }) {
@@ -143,18 +172,18 @@ abstract class _UserViewModelBase with Store {
   Future<void> _changeSongInPlaylist({
     @required Playlist playlist,
   }) async {
-    var auth = FirebaseAuth.instance;
-    var database = Firestore.instance;
-    var user = await auth.currentUser();
+    var _auth = FirebaseAuth.instance;
+    var _database = Firestore.instance;
+    var _user = await _auth.currentUser();
 
-    var snapshot = await database
+    var _snapshot = await _database
         .collection(FirebaseHelper.usersCollection)
-        .document(user.uid)
+        .document(_user.uid)
         .get();
 
-    var data = snapshot.data;
+    var _data = _snapshot.data;
 
-    List _userPlaylists = data[FirebaseHelper.playlistsAttribute];
+    List _userPlaylists = _data[FirebaseHelper.playlistsAttribute];
 
     Map<String, dynamic> _currentPlaylist = _userPlaylists.singleWhere(
         (userPlaylist) =>
@@ -169,9 +198,9 @@ abstract class _UserViewModelBase with Store {
 
     _userPlaylists[_index] = _currentPlaylist;
 
-    await database
+    await _database
         .collection(FirebaseHelper.usersCollection)
-        .document(user.uid)
+        .document(_user.uid)
         .updateData({FirebaseHelper.playlistsAttribute: _userPlaylists});
 
     playlists[playlists.indexOf(playlist)] =
@@ -180,18 +209,18 @@ abstract class _UserViewModelBase with Store {
 
   @action
   Future<int> createNewPlaylist({@required Playlist newPlaylist}) async {
-    var auth = FirebaseAuth.instance;
-    var database = Firestore.instance;
-    var user = await auth.currentUser();
+    var _auth = FirebaseAuth.instance;
+    var _database = Firestore.instance;
+    var _user = await _auth.currentUser();
 
-    var snapshot = await database
+    var snapshot = await _database
         .collection(FirebaseHelper.usersCollection)
-        .document(user.uid)
+        .document(_user.uid)
         .get();
 
-    var data = snapshot.data;
+    var _data = snapshot.data;
 
-    List<dynamic> _userPlaylists = data[FirebaseHelper.playlistsAttribute];
+    List<dynamic> _userPlaylists = _data[FirebaseHelper.playlistsAttribute];
 
     _userPlaylists.add(
       <String, dynamic>{
@@ -200,9 +229,9 @@ abstract class _UserViewModelBase with Store {
       },
     );
 
-    await database
+    await _database
         .collection(FirebaseHelper.usersCollection)
-        .document(user.uid)
+        .document(_user.uid)
         .updateData({FirebaseHelper.playlistsAttribute: _userPlaylists});
 
     playlists.add(newPlaylist);

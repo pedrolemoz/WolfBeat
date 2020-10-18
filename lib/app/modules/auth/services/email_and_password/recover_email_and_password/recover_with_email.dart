@@ -6,8 +6,8 @@ import '../../../pages/recover_email_and_password/recover_email_page.dart';
 
 Future<void> recover_with_email(BuildContext context, String email) async {
   assert(context != null, throw NullAttributeException('context'));
-  var auth = FirebaseAuth.instance;
-  await auth.sendPasswordResetEmail(email: email).then((_) {
+  var _auth = FirebaseAuth.instance;
+  await _auth.sendPasswordResetEmail(email: email).then((_) {
     Navigator.pushNamed(context, RecoverEmailPage.id);
   });
 }

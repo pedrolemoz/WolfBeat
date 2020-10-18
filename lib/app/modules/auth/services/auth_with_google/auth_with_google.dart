@@ -13,29 +13,28 @@ import '../../../bottom_navigation/pages/bottom_navigation_bar.dart';
 /// register a google email, and redirects the user to [BottomNavigator].
 /// Used in [AuthWithGooglePage].
 Future<void> authWithGoogle(BuildContext context) async {
-  var auth = FirebaseAuth.instance;
-  var googleSignIn = GoogleSignIn();
-  var googleSignInAccount = await googleSignIn.signIn();
-  var googleSignInAuthentication = await googleSignInAccount.authentication;
-  var isRegistered = false;
-  var credential = GoogleAuthProvider.getCredential(
-      idToken: googleSignInAuthentication.idToken,
-      accessToken: googleSignInAuthentication.accessToken);
-  var user = ((await auth.signInWithCredential(credential)).user);
+  var _auth = FirebaseAuth.instance;
+  var _googleSignIn = GoogleSignIn();
+  var _googleSignInAccount = await _googleSignIn.signIn();
+  var _googleSignInAuthentication = await _googleSignInAccount.authentication;
+  var _credential = GoogleAuthProvider.getCredential(
+      idToken: _googleSignInAuthentication.idToken,
+      accessToken: _googleSignInAuthentication.accessToken);
+  var _user = ((await _auth.signInWithCredential(_credential)).user);
 
-  if (user != null) {
-    var userGoogle = User(
-      name: user.displayName,
-      email: user.email,
-      imageURI: user.photoUrl,
-      uuid: user.uid,
+  if (_user != null) {
+    var _userGoogle = User(
+      name: _user.displayName,
+      email: _user.email,
+      imageURI: _user.photoUrl,
+      uuid: _user.uid,
     );
 
-    var db = Firestore.instance;
-    await db
+    var _db = Firestore.instance;
+    await _db
         .collection(FirebaseHelper.usersCollection)
-        .document(user.uid)
-        .setData(userGoogle.toMapGoogle())
+        .document(_user.uid)
+        .setData(_userGoogle.toMapGoogle())
         .then((_) {
       GetIt.I.get<UserViewModel>().recoverUserData();
       Navigator.pushNamedAndRemoveUntil(

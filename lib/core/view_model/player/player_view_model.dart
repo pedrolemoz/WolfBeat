@@ -3,11 +3,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_media_notification/flutter_media_notification.dart';
+import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../helpers/firebase_helper.dart';
 import '../../models/playlist/playlist.dart';
 import '../../models/song/song.dart';
+import '../user/user_view_model.dart';
 
 part 'player_view_model.g.dart';
 
@@ -20,6 +22,8 @@ abstract class _PlayerViewModelBase with Store {
   Firestore _database;
   FirebaseAuth _auth;
   FirebaseUser _user;
+
+  final _userViewModel = GetIt.I.get<UserViewModel>();
 
   _PlayerViewModelBase() {
     _database = Firestore.instance;
@@ -81,17 +85,17 @@ abstract class _PlayerViewModelBase with Store {
           isPlaying: true,
         );
       }
-    } on RangeError catch (exception) {
+    } on RangeError {
       rethrow;
     }
   }
 
   @action
   Future<void> playSongFromPlaylist({Playlist playlist, Song song}) {
-    if (isShuffled) {
-      playlist.songs.sort((a, b) => a.title.compareTo(b.title));
-      isShuffled = false;
-    }
+    // if (isShuffled) {
+    // playlist.songs.sort((a, b) => a.title.compareTo(b.title));
+    // playerQueue.sort((a, b) => a.title.compareTo(b.title));
+    // isShuffled = false;
 
     currentIndex = playlist.songs.indexOf(song);
     playerQueue = playlist.songs.asObservable();
@@ -160,6 +164,7 @@ abstract class _PlayerViewModelBase with Store {
 
   @action
   void skipToNextSong() {
+    checkFavorited();
     _checkPlayerStatus();
     currentIndex++;
     play();
@@ -167,6 +172,7 @@ abstract class _PlayerViewModelBase with Store {
 
   @action
   void skipToPreviousSong() {
+    checkFavorited();
     _checkPlayerStatus();
     currentIndex--;
     play();
@@ -186,10 +192,12 @@ abstract class _PlayerViewModelBase with Store {
   @action
   Future<void> favoriteSong() async {
     var _isFavorited = false;
+
     var _userData = await _database
         .collection(FirebaseHelper.usersCollection)
         .document(_user.uid)
         .get();
+
     var _favoriteSongs =
         _userData.data[FirebaseHelper.favoriteSongsAttribute] as List;
 
@@ -203,20 +211,30 @@ abstract class _PlayerViewModelBase with Store {
     if (_isFavorited) {
       _favoriteSongs.remove(_database
           .document(playerQueue.elementAt(currentIndex).reference.path));
+
       await _database
           .collection(FirebaseHelper.usersCollection)
           .document(_user.uid)
           .updateData({FirebaseHelper.favoriteSongsAttribute: _favoriteSongs});
+
+      _userViewModel.favoriteSongs.remove(playerQueue.elementAt(currentIndex));
+
       isFavorite = false;
+
       debugPrint('Song removed from favorites');
     } else {
       _favoriteSongs.add(_database
           .document(playerQueue.elementAt(currentIndex).reference.path));
+
       await _database
           .collection(FirebaseHelper.usersCollection)
           .document(_user.uid)
           .updateData({FirebaseHelper.favoriteSongsAttribute: _favoriteSongs});
+
+      _userViewModel.favoriteSongs.add(playerQueue.elementAt(currentIndex));
+
       isFavorite = true;
+
       debugPrint('Song added from favorites');
     }
   }

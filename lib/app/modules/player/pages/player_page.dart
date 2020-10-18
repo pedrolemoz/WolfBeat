@@ -17,22 +17,22 @@ class PlayerPage extends StatefulWidget {
 }
 
 class PlayerPageState extends State<PlayerPage> {
-  final playerViewModel = GetIt.I.get<PlayerViewModel>();
+  final _playerViewModel = GetIt.I.get<PlayerViewModel>();
 
   @override
   void initState() {
     super.initState();
-    playerViewModel.checkFavorited();
+    _playerViewModel.checkFavorited();
 
-    if (!playerViewModel.isPlaying) {
-      playerViewModel.play();
+    if (!_playerViewModel.isPlaying) {
+      _playerViewModel.play();
     }
   }
 
   @override
   void dispose() {
     super.dispose();
-    playerViewModel.checkFavorited();
+    _playerViewModel.checkFavorited();
   }
 
   @override
@@ -46,8 +46,8 @@ class PlayerPageState extends State<PlayerPage> {
               end: Alignment.bottomCenter,
               stops: [0.0, 1.0],
               colors: [
-                Hexcolor(playerViewModel?.playerQueue
-                        ?.elementAt(playerViewModel.currentIndex)
+                Hexcolor(_playerViewModel?.playerQueue
+                        ?.elementAt(_playerViewModel.currentIndex)
                         ?.backgroundColor) ??
                     Theme.of(context).scaffoldBackgroundColor,
                 Colors.black38,
@@ -66,7 +66,7 @@ class PlayerPageState extends State<PlayerPage> {
                     style: Theme.of(context).textTheme.subtitle2,
                   ),
                   Text(
-                    playerViewModel.playingFrom ?? 'Playlist',
+                    _playerViewModel.playingFrom ?? 'Playlist',
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
                     style: Theme.of(context).textTheme.subtitle1,
@@ -84,8 +84,8 @@ class PlayerPageState extends State<PlayerPage> {
                       padding: EdgeInsets.only(bottom: 10.0),
                       child: FadeInImage.assetNetwork(
                         placeholder: AssetsHelper.artworkFallback,
-                        image: playerViewModel?.playerQueue
-                            .elementAt(playerViewModel.currentIndex)
+                        image: _playerViewModel?.playerQueue
+                            ?.elementAt(_playerViewModel.currentIndex)
                             ?.artworkURL,
                       ),
                     ),
@@ -98,8 +98,8 @@ class PlayerPageState extends State<PlayerPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            playerViewModel?.playerQueue
-                                    .elementAt(playerViewModel.currentIndex)
+                            _playerViewModel?.playerQueue
+                                    ?.elementAt(_playerViewModel.currentIndex)
                                     ?.title ??
                                 'Música desconhecida',
                             maxLines: 1,
@@ -107,8 +107,8 @@ class PlayerPageState extends State<PlayerPage> {
                             style: Theme.of(context).textTheme.headline6,
                           ),
                           Text(
-                            playerViewModel?.playerQueue
-                                    .elementAt(playerViewModel.currentIndex)
+                            _playerViewModel?.playerQueue
+                                    ?.elementAt(_playerViewModel.currentIndex)
                                     ?.artist ??
                                 'Artista desconhecido',
                             maxLines: 1,
@@ -120,10 +120,10 @@ class PlayerPageState extends State<PlayerPage> {
                       ),
                       GestureDetector(
                         onTap: () async {
-                          await playerViewModel.favoriteSong();
+                          await _playerViewModel.favoriteSong();
                         },
                         child: Icon(
-                          playerViewModel.isFavorite
+                          _playerViewModel.isFavorite
                               ? FlutterIcons.favorite_mdi
                               : FlutterIcons.favorite_border_mdi,
                           size: 30.0,
@@ -150,12 +150,14 @@ class PlayerPageState extends State<PlayerPage> {
                         ),
                         child: Slider(
                           min: 0,
-                          max: playerViewModel.totalDuration.inSeconds
-                              .toDouble(),
-                          value: playerViewModel.currentPosition.inSeconds
-                              .toDouble(),
+                          max: _playerViewModel?.totalDuration?.inSeconds
+                                  ?.toDouble() ??
+                              2,
+                          value: _playerViewModel?.currentPosition?.inSeconds
+                                  ?.toDouble() ??
+                              0,
                           onChanged: (newValue) {
-                            playerViewModel
+                            _playerViewModel
                                 .seek(Duration(seconds: newValue.toInt()));
                           },
                         ),
@@ -164,15 +166,16 @@ class PlayerPageState extends State<PlayerPage> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            playerViewModel.currentPosition
-                                .toString()
-                                .substring(2, 7),
+                            _playerViewModel?.currentPosition
+                                    ?.toString()
+                                    ?.substring(2, 7) ??
+                                '0:00',
                             style: Theme.of(context).textTheme.caption,
                           ),
                           Text(
                             Duration(
-                              seconds: playerViewModel.playerQueue
-                                  .elementAt(playerViewModel.currentIndex)
+                              seconds: _playerViewModel.playerQueue
+                                  .elementAt(_playerViewModel.currentIndex)
                                   .duration,
                             ).toString().substring(2, 7),
                             style: Theme.of(context).textTheme.caption,
@@ -191,13 +194,13 @@ class PlayerPageState extends State<PlayerPage> {
                       ),
                       GestureDetector(
                         onTap: () {
-                          if (playerViewModel.canSkipPrevious) {
-                            playerViewModel.skipToPreviousSong();
+                          if (_playerViewModel.canSkipPrevious) {
+                            _playerViewModel.skipToPreviousSong();
                           }
                         },
                         child: Icon(
                           FlutterIcons.skip_previous_mco,
-                          color: playerViewModel.canSkipPrevious
+                          color: _playerViewModel.canSkipPrevious
                               ? Color(0xFFF0F0F5)
                               : Colors.grey[900],
                           size: 40.0,
@@ -205,9 +208,9 @@ class PlayerPageState extends State<PlayerPage> {
                       ),
                       RawMaterialButton(
                         onPressed: () {
-                          playerViewModel.isPlaying
-                              ? playerViewModel.pause()
-                              : playerViewModel.play();
+                          _playerViewModel.isPlaying
+                              ? _playerViewModel.pause()
+                              : _playerViewModel.play();
                         },
                         fillColor: Color(0xFFF0F0F5),
                         splashColor: Colors.grey[400],
@@ -215,7 +218,7 @@ class PlayerPageState extends State<PlayerPage> {
                         child: Padding(
                           padding: EdgeInsets.all(12.0),
                           child: Icon(
-                            playerViewModel.isPlaying
+                            _playerViewModel.isPlaying
                                 ? FlutterIcons.pause_mco
                                 : FlutterIcons.play_mco,
                             size: 40.0,
@@ -225,13 +228,13 @@ class PlayerPageState extends State<PlayerPage> {
                       ),
                       GestureDetector(
                         onTap: () {
-                          if (playerViewModel.canSkipFoward) {
-                            playerViewModel.skipToNextSong();
+                          if (_playerViewModel.canSkipFoward) {
+                            _playerViewModel.skipToNextSong();
                           }
                         },
                         child: Icon(
                           FlutterIcons.skip_next_mco,
-                          color: playerViewModel.canSkipFoward
+                          color: _playerViewModel.canSkipFoward
                               ? Color(0xFFF0F0F5)
                               : Colors.grey[900],
                           size: 40.0,
@@ -239,11 +242,11 @@ class PlayerPageState extends State<PlayerPage> {
                       ),
                       GestureDetector(
                         onTap: () {
-                          playerViewModel.shuffleQueue();
+                          _playerViewModel.shuffleQueue();
                         },
                         child: Icon(
                           FlutterIcons.shuffle_mco,
-                          color: playerViewModel.isShuffled
+                          color: _playerViewModel.isShuffled
                               ? Color(0xFFF0F0F5)
                               : Colors.grey[900],
                           size: 30.0,
