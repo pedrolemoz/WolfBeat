@@ -54,21 +54,6 @@ mixin _$SongsViewModel on _SongsViewModelBase, Store {
     });
   }
 
-  final _$recentlyPlayedAtom = Atom(name: '_SongsViewModelBase.recentlyPlayed');
-
-  @override
-  ObservableList<Song> get recentlyPlayed {
-    _$recentlyPlayedAtom.reportRead();
-    return super.recentlyPlayed;
-  }
-
-  @override
-  set recentlyPlayed(ObservableList<Song> value) {
-    _$recentlyPlayedAtom.reportWrite(value, super.recentlyPlayed, () {
-      super.recentlyPlayed = value;
-    });
-  }
-
   final _$recommendedSongsAtom =
       Atom(name: '_SongsViewModelBase.recommendedSongs');
 
@@ -125,7 +110,6 @@ mixin _$SongsViewModel on _SongsViewModelBase, Store {
 albums: ${albums},
 artists: ${artists},
 songs: ${songs},
-recentlyPlayed: ${recentlyPlayed},
 recommendedSongs: ${recommendedSongs}
     ''';
   }

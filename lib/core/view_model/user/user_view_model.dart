@@ -29,6 +29,9 @@ abstract class _UserViewModelBase with Store {
   var favoriteSongs = <Song>[].asObservable();
 
   @observable
+  var recentlyPlayedSongs = <Song>[].asObservable();
+
+  @observable
   String userID;
 
   @observable
@@ -59,6 +62,7 @@ abstract class _UserViewModelBase with Store {
     if (_data.isNotEmpty) {
       await _recoverUserPlaylists(_snapshot);
       await _recoverFavoriteSongs(_snapshot);
+      await _recoverRecentlyPlayedSongs(_snapshot);
 
       userID = _user.uid;
       userName = _data[FirebaseHelper.nameAttribute];
@@ -86,6 +90,7 @@ abstract class _UserViewModelBase with Store {
     );
   }
 
+  // ignore: use_setters_to_change_properties
   @action
   void updateImageURI(String newImageURI) => imageURI = newImageURI;
 
@@ -121,6 +126,81 @@ abstract class _UserViewModelBase with Store {
         Playlist(
           playlistName: playlist[FirebaseHelper.playlistNameAttribute],
           songs: _songs,
+        ),
+      );
+    }
+  }
+
+  @action
+  Future<void> addSongToRecentlyPlayed({Song song}) async {
+    var _auth = FirebaseAuth.instance;
+    var _database = Firestore.instance;
+    var _user = await _auth.currentUser();
+
+    var _snapshot = await _database
+        .collection(FirebaseHelper.usersCollection)
+        .document(_user.uid)
+        .get();
+
+    var _data = _snapshot.data;
+
+    var _recentlyPlayed = _data[FirebaseHelper.recentlyPlayed] as List;
+
+    _recentlyPlayed.add(song.reference);
+
+    await _database
+        .collection(FirebaseHelper.usersCollection)
+        .document(_user.uid)
+        .updateData({FirebaseHelper.recentlyPlayed: _recentlyPlayed});
+
+    recentlyPlayedSongs.add(song);
+  }
+
+  @action
+  Future<void> removeSongFromRecentlyPlayed({Song song}) async {
+    var _auth = FirebaseAuth.instance;
+    var _database = Firestore.instance;
+    var _user = await _auth.currentUser();
+
+    var _snapshot = await _database
+        .collection(FirebaseHelper.usersCollection)
+        .document(_user.uid)
+        .get();
+
+    var _data = _snapshot.data;
+
+    var _recentlyPlayed = _data[FirebaseHelper.recentlyPlayed] as List;
+
+    _recentlyPlayed.remove(song.reference);
+
+    await _database
+        .collection(FirebaseHelper.usersCollection)
+        .document(_user.uid)
+        .updateData({FirebaseHelper.recentlyPlayed: _recentlyPlayed});
+
+    recentlyPlayedSongs.remove(song);
+  }
+
+  @action
+  Future<void> _recoverRecentlyPlayedSongs(DocumentSnapshot snapshot) async {
+    var _data = snapshot.data;
+
+    for (DocumentReference songReference
+        in _data[FirebaseHelper.recentlyPlayed] as List) {
+      final song = await songReference.get();
+
+      recentlyPlayedSongs.insert(
+        0,
+        Song(
+          title: song.data[FirebaseHelper.titleAttribute],
+          songURL: song.data[FirebaseHelper.songURLAttribute],
+          album: song.data[FirebaseHelper.albumAttribute],
+          artist: song.data[FirebaseHelper.artistAttribute],
+          artworkURL: song.data[FirebaseHelper.artworkURLAttribute],
+          duration: song.data[FirebaseHelper.durationAttribute],
+          genre: song.data[FirebaseHelper.genreAttribute],
+          backgroundColor: song.data[FirebaseHelper.backgroundColorAttribute],
+          reference: song.reference,
         ),
       );
     }

@@ -1,5 +1,8 @@
+import 'package:WolfBeat/app/modules/ui_components/mini_player.dart';
+import 'package:WolfBeat/core/view_model/player/player_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:get_it/get_it.dart';
 
 import '../../home/pages/home_page.dart';
 import '../../library/pages/library_page.dart';
@@ -23,14 +26,11 @@ class _BottomNavigatorState extends State<BottomNavigator> {
 
   @override
   Widget build(BuildContext context) {
+    final _playerViewModel = GetIt.I.get<PlayerViewModel>();
+
     return Scaffold(
       body: _tabs[_currentIndex],
-      // bottomSheet: Observer(
-      //   builder: (context) =>
-      //       _playerViewModel.playerQueue[_playerViewModel.currentIndex] != null
-      //           ? MiniPlayer()
-      //           : SizedBox(),
-      // ),
+      bottomSheet: _playerViewModel.isPlaying ? MiniPlayer() : null,
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Color(0xFF2c2f33),
         elevation: 0.0,

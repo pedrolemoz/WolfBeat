@@ -39,6 +39,22 @@ mixin _$UserViewModel on _UserViewModelBase, Store {
     });
   }
 
+  final _$recentlyPlayedSongsAtom =
+      Atom(name: '_UserViewModelBase.recentlyPlayedSongs');
+
+  @override
+  ObservableList<Song> get recentlyPlayedSongs {
+    _$recentlyPlayedSongsAtom.reportRead();
+    return super.recentlyPlayedSongs;
+  }
+
+  @override
+  set recentlyPlayedSongs(ObservableList<Song> value) {
+    _$recentlyPlayedSongsAtom.reportWrite(value, super.recentlyPlayedSongs, () {
+      super.recentlyPlayedSongs = value;
+    });
+  }
+
   final _$userIDAtom = Atom(name: '_UserViewModelBase.userID');
 
   @override
@@ -139,6 +155,33 @@ mixin _$UserViewModel on _UserViewModelBase, Store {
         .run(() => super._recoverUserPlaylists(snapshot));
   }
 
+  final _$addSongToRecentlyPlayedAsyncAction =
+      AsyncAction('_UserViewModelBase.addSongToRecentlyPlayed');
+
+  @override
+  Future<void> addSongToRecentlyPlayed({Song song}) {
+    return _$addSongToRecentlyPlayedAsyncAction
+        .run(() => super.addSongToRecentlyPlayed(song: song));
+  }
+
+  final _$removeSongFromRecentlyPlayedAsyncAction =
+      AsyncAction('_UserViewModelBase.removeSongFromRecentlyPlayed');
+
+  @override
+  Future<void> removeSongFromRecentlyPlayed({Song song}) {
+    return _$removeSongFromRecentlyPlayedAsyncAction
+        .run(() => super.removeSongFromRecentlyPlayed(song: song));
+  }
+
+  final _$_recoverRecentlyPlayedSongsAsyncAction =
+      AsyncAction('_UserViewModelBase._recoverRecentlyPlayedSongs');
+
+  @override
+  Future<void> _recoverRecentlyPlayedSongs(DocumentSnapshot snapshot) {
+    return _$_recoverRecentlyPlayedSongsAsyncAction
+        .run(() => super._recoverRecentlyPlayedSongs(snapshot));
+  }
+
   final _$_recoverFavoriteSongsAsyncAction =
       AsyncAction('_UserViewModelBase._recoverFavoriteSongs');
 
@@ -208,6 +251,7 @@ mixin _$UserViewModel on _UserViewModelBase, Store {
     return '''
 playlists: ${playlists},
 favoriteSongs: ${favoriteSongs},
+recentlyPlayedSongs: ${recentlyPlayedSongs},
 userID: ${userID},
 userName: ${userName},
 userEmail: ${userEmail},

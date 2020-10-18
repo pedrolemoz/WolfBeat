@@ -15,8 +15,8 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final userViewModel = GetIt.I.get<UserViewModel>();
-    final songsViewModel = GetIt.I.get<SongsViewModel>();
+    final _userViewModel = GetIt.I.get<UserViewModel>();
+    final _songsViewModel = GetIt.I.get<SongsViewModel>();
 
     return Observer(
       builder: (context) => Scaffold(
@@ -52,11 +52,10 @@ class HomePage extends StatelessWidget {
             ),
             Padding(
               padding: EdgeInsets.all(15.0),
-              // Deve retornar as 3 primeiras playlists (Favoritas + 3 playlists)
               child: GridView.builder(
-                itemCount: userViewModel.playlists.length >= 4
+                itemCount: _userViewModel.playlists.length >= 4
                     ? 4
-                    : userViewModel.playlists.length + 1,
+                    : _userViewModel.playlists.length + 1,
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -71,60 +70,82 @@ class HomePage extends StatelessWidget {
                       return FavoriteSongsCard();
                     default:
                       return PlaylistCard(
-                        playlist: userViewModel.playlists.elementAt(index - 1),
+                        playlist: _userViewModel.playlists.elementAt(index - 1),
                       );
                   }
                 },
               ),
             ),
-            Padding(
-              padding: EdgeInsets.all(15.0),
-              child: Text(
-                'Tocadas recentemente',
-                style: Theme.of(context).textTheme.headline6,
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 15.0),
-              child: Container(
-                constraints: BoxConstraints(
-                  maxHeight: 200.0,
-                ),
-                child: ListView.builder(
-                  // Deve retornar as 5 músicas escutadas recentemente
-                  scrollDirection: Axis.horizontal,
-                  shrinkWrap: true,
-                  itemCount: 5,
-                  physics: BouncingScrollPhysics(),
-                  padding: EdgeInsets.symmetric(horizontal: 10.0),
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 5.0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Flexible(
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(10.0),
-                              child: Image.network(
-                                'https://images-na.ssl-images-amazon.com/images/I/815aiIN6wmL.jpg',
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(top: 10.0),
-                            child: Text(
-                              'Playlist ${index + 1}',
-                              overflow: TextOverflow.ellipsis,
-                              style: Theme.of(context).textTheme.subtitle1,
-                            ),
-                          ),
-                        ],
+            Observer(
+              builder: (_) {
+                if (_userViewModel.recentlyPlayedSongs.isEmpty) {
+                  return SizedBox();
+                }
+
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.all(15.0),
+                      child: Text(
+                        'Tocadas recentemente',
+                        style: Theme.of(context).textTheme.headline6,
                       ),
-                    );
-                  },
-                ),
-              ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: 15.0),
+                      child: Container(
+                        constraints: BoxConstraints(
+                          maxHeight: 200.0,
+                        ),
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          shrinkWrap: true,
+                          itemCount: _userViewModel.recentlyPlayedSongs.length,
+                          physics: BouncingScrollPhysics(),
+                          padding: EdgeInsets.symmetric(horizontal: 10.0),
+                          itemBuilder: (context, index) {
+                            return Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 5.0),
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Flexible(
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                      child: FadeInImage.assetNetwork(
+                                        placeholder:
+                                            AssetsHelper.artworkFallback,
+                                        image: _userViewModel
+                                            .recentlyPlayedSongs
+                                            ?.elementAt(index)
+                                            ?.artworkURL,
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(top: 10.0),
+                                    child: Text(
+                                      _userViewModel.recentlyPlayedSongs
+                                              ?.elementAt(index)
+                                              ?.title ??
+                                          '',
+                                      overflow: TextOverflow.ellipsis,
+                                      style:
+                                          Theme.of(context).textTheme.subtitle1,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              },
             ),
             Padding(
               padding: EdgeInsets.all(15.0),
@@ -142,7 +163,7 @@ class HomePage extends StatelessWidget {
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   shrinkWrap: true,
-                  itemCount: songsViewModel.recommendedSongs.length,
+                  itemCount: _songsViewModel.recommendedSongs.length,
                   physics: BouncingScrollPhysics(),
                   padding: EdgeInsets.symmetric(horizontal: 10.0),
                   itemBuilder: (context, index) {
@@ -156,7 +177,7 @@ class HomePage extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(10.0),
                                 child: FadeInImage.assetNetwork(
                                   placeholder: AssetsHelper.artworkFallback,
-                                  image: songsViewModel.recommendedSongs
+                                  image: _songsViewModel.recommendedSongs
                                       .elementAt(index)
                                       ?.artworkURL,
                                 )),
@@ -164,7 +185,7 @@ class HomePage extends StatelessWidget {
                           Padding(
                             padding: EdgeInsets.only(top: 10.0),
                             child: Text(
-                              songsViewModel.recommendedSongs
+                              _songsViewModel.recommendedSongs
                                   .elementAt(index)
                                   .title,
                               overflow: TextOverflow.ellipsis,

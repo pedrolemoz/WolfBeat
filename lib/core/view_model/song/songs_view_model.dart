@@ -29,9 +29,6 @@ abstract class _SongsViewModelBase with Store {
   var songs = <Song>[];
 
   @observable
-  var recentlyPlayed = <Song>[].asObservable();
-
-  @observable
   var recommendedSongs = <Song>[].asObservable();
 
   @action
@@ -61,20 +58,6 @@ abstract class _SongsViewModelBase with Store {
       }
     }
   }
-
-  // @action
-  // void addRecentlyPlayedSong({Firestore database, Song song}) {
-  //   recentlyPlayed.add(song);
-
-  //   database
-  //       .collection(FirebaseHelper.usersCollection)
-  //       .getDocuments()
-  //       .then((snapshot) {
-  //     snapshot.documents.forEach((user) {
-  //       user.data;
-  //     });
-  //   });
-  // }
 
   @action
   Future<void> _recoverUserPlaylists(DocumentSnapshot snapshot) async {

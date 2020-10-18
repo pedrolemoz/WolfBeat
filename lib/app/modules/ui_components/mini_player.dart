@@ -10,14 +10,13 @@ import '../player/pages/player_page.dart';
 class MiniPlayer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final playerViewModel = GetIt.I.get<PlayerViewModel>();
+    final _playerViewModel = GetIt.I.get<PlayerViewModel>();
 
     return Observer(
       builder: (_) {
         return GestureDetector(
           onTap: () {
-            if (playerViewModel.playerQueue
-                    .elementAt(playerViewModel.currentIndex) !=
+            if (_playerViewModel.playerQueue[_playerViewModel.currentIndex] !=
                 null) {
               Navigator.pushNamed(context, PlayerPage.id);
             }
@@ -27,8 +26,8 @@ class MiniPlayer extends StatelessWidget {
               print('Dragging in +Y direction');
             } else {
               print('Dragging in -Y direction');
-              if (playerViewModel.playerQueue
-                      .elementAt(playerViewModel.currentIndex) !=
+              if (_playerViewModel.playerQueue
+                      .elementAt(_playerViewModel.currentIndex) !=
                   null) {
                 Navigator.pushNamed(context, PlayerPage.id);
               }
@@ -67,8 +66,8 @@ class MiniPlayer extends StatelessWidget {
                         borderRadius: BorderRadius.circular(5.0),
                         child: FadeInImage.assetNetwork(
                           placeholder: AssetsHelper.artworkFallback,
-                          image: playerViewModel?.playerQueue
-                              ?.elementAt(playerViewModel.currentIndex)
+                          image: _playerViewModel?.playerQueue
+                              ?.elementAt(_playerViewModel.currentIndex)
                               ?.artworkURL,
                         ),
                       ),
@@ -78,8 +77,8 @@ class MiniPlayer extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            playerViewModel?.playerQueue
-                                    ?.elementAt(playerViewModel.currentIndex)
+                            _playerViewModel?.playerQueue
+                                    ?.elementAt(_playerViewModel.currentIndex)
                                     ?.title ??
                                 'Música desconhecida',
                             maxLines: 1,
@@ -87,8 +86,8 @@ class MiniPlayer extends StatelessWidget {
                             style: Theme.of(context).textTheme.subtitle1,
                           ),
                           Text(
-                            playerViewModel?.playerQueue
-                                    ?.elementAt(playerViewModel.currentIndex)
+                            _playerViewModel?.playerQueue
+                                    ?.elementAt(_playerViewModel.currentIndex)
                                     ?.artist ??
                                 'Artista desconhecido',
                             maxLines: 1,
@@ -103,10 +102,10 @@ class MiniPlayer extends StatelessWidget {
                     children: [
                       GestureDetector(
                         onTap: () async {
-                          await playerViewModel.favoriteSong();
+                          await _playerViewModel.favoriteSong();
                         },
                         child: Icon(
-                          playerViewModel.isFavorite
+                          _playerViewModel.isFavorite
                               ? FlutterIcons.favorite_mdi
                               : FlutterIcons.favorite_border_mdi,
                           size: 30.0,
@@ -116,12 +115,12 @@ class MiniPlayer extends StatelessWidget {
                       VerticalDivider(),
                       GestureDetector(
                         onTap: () {
-                          playerViewModel.isPlaying
-                              ? playerViewModel.pause()
-                              : playerViewModel.play();
+                          _playerViewModel.isPlaying
+                              ? _playerViewModel.pause()
+                              : _playerViewModel.play();
                         },
                         child: Icon(
-                          playerViewModel.isPlaying
+                          _playerViewModel.isPlaying
                               ? FlutterIcons.pause_mco
                               : FlutterIcons.play_mco,
                           size: 30.0,

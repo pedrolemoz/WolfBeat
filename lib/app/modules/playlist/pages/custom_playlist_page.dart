@@ -29,6 +29,7 @@ class CustomPlaylistPage extends StatelessWidget {
           _playerViewModel.playRandomlyFromPlaylist(
             _userViewModel.playlists.elementAt(playlistIndex),
           );
+
           Navigator.pushNamed(context, PlayerPage.id);
         },
         backgroundColor: Theme.of(context).primaryColor,
