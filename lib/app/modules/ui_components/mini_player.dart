@@ -23,26 +23,22 @@ class MiniPlayer extends StatelessWidget {
             }
           },
           onVerticalDragUpdate: (DragUpdateDetails details) {
-            //TODO Ações para movimento vertical
             if (details.delta.dy > 0) {
-              print("Dragging in +Y direction");
+              print('Dragging in +Y direction');
             } else {
-              print("Dragging in -Y direction");
+              print('Dragging in -Y direction');
               if (playerViewModel.playerQueue
                       .elementAt(playerViewModel.currentIndex) !=
                   null) {
                 Navigator.pushNamed(context, PlayerPage.id);
               }
-              // Navigator.pop(context);
-              // Navigator.pushNamed(context, PlayerPage.id);
             }
           },
-          //TODO Ações para movimento horizontal
           onHorizontalDragUpdate: (DragUpdateDetails details) {
             if (details.delta.dx > 0) {
-              print("Dragging in +X direction");
+              print('Dragging in +X direction');
             } else {
-              print("Dragging in -X direction");
+              print('Dragging in -X direction');
             }
           },
           child: Container(
@@ -72,7 +68,7 @@ class MiniPlayer extends StatelessWidget {
                         child: FadeInImage.assetNetwork(
                           placeholder: AssetsHelper.artworkFallback,
                           image: playerViewModel?.playerQueue
-                              .elementAt(playerViewModel.currentIndex)
+                              ?.elementAt(playerViewModel.currentIndex)
                               ?.artworkURL,
                         ),
                       ),
@@ -83,7 +79,7 @@ class MiniPlayer extends StatelessWidget {
                         children: [
                           Text(
                             playerViewModel?.playerQueue
-                                    .elementAt(playerViewModel.currentIndex)
+                                    ?.elementAt(playerViewModel.currentIndex)
                                     ?.title ??
                                 'Música desconhecida',
                             maxLines: 1,
@@ -92,7 +88,7 @@ class MiniPlayer extends StatelessWidget {
                           ),
                           Text(
                             playerViewModel?.playerQueue
-                                    .elementAt(playerViewModel.currentIndex)
+                                    ?.elementAt(playerViewModel.currentIndex)
                                     ?.artist ??
                                 'Artista desconhecido',
                             maxLines: 1,

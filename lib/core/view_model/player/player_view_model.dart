@@ -91,7 +91,7 @@ abstract class _PlayerViewModelBase with Store {
   }
 
   @action
-  Future<void> playSongFromPlaylist({Playlist playlist, Song song}) {
+  void playSongFromPlaylist({Playlist playlist, Song song}) {
     // if (isShuffled) {
     // playlist.songs.sort((a, b) => a.title.compareTo(b.title));
     // playerQueue.sort((a, b) => a.title.compareTo(b.title));

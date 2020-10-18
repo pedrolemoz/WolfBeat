@@ -1,9 +1,9 @@
-import '../../../../../core/view_model/auth/sign_up/sign_up_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../../../../core/models/user/user.dart';
+import '../../../../../core/view_model/auth/sign_up/sign_up_view_model.dart';
 import '../../../ui_components/rounded_button.dart';
 import '../../../ui_components/rounded_text_field.dart';
 import '../../services/email_and_password/sign_up/email_and_password_sign_up.dart';

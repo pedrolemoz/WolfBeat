@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
-import 'package:get_it/get_it.dart';
 
-import '../../../../core/view_model/player/player_view_model.dart';
-import '../../../../core/view_model/user/user_view_model.dart';
 import '../../home/pages/home_page.dart';
 import '../../library/pages/library_page.dart';
 import '../../search/pages/search_page.dart';
@@ -26,9 +23,6 @@ class _BottomNavigatorState extends State<BottomNavigator> {
 
   @override
   Widget build(BuildContext context) {
-    final _playerViewModel = GetIt.I.get<PlayerViewModel>();
-    final _userViewModel = GetIt.I.get<UserViewModel>();
-
     return Scaffold(
       body: _tabs[_currentIndex],
       // bottomSheet: Observer(

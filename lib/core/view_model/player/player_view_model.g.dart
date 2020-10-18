@@ -193,7 +193,7 @@ mixin _$PlayerViewModel on _PlayerViewModelBase, Store {
       ActionController(name: '_PlayerViewModelBase');
 
   @override
-  Future<void> playSongFromPlaylist({Playlist playlist, Song song}) {
+  void playSongFromPlaylist({Playlist playlist, Song song}) {
     final _$actionInfo = _$_PlayerViewModelBaseActionController.startAction(
         name: '_PlayerViewModelBase.playSongFromPlaylist');
     try {

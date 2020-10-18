@@ -4,7 +4,6 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../../../core/view_model/player/player_view_model.dart';
-import '../../../../core/view_model/song/songs_view_model.dart';
 import '../../../../core/view_model/user/user_view_model.dart';
 import '../../player/pages/player_page.dart';
 import '../../ui_components/add_song_to_playlist_bottom_sheet.dart';
@@ -19,7 +18,7 @@ class CustomPlaylistPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _playerViewModel = GetIt.I.get<PlayerViewModel>();
-    final _songsViewModel = GetIt.I.get<SongsViewModel>();
+
     final _userViewModel = GetIt.I.get<UserViewModel>();
     final _scaffoldGlobalKey = GlobalKey<ScaffoldState>();
 

@@ -13,12 +13,14 @@ import '../../../../core/view_model/user/user_view_model.dart';
 /// switch the profile photo.
 /// Used in [ProfileSettingsPage].
 Future<void> changeProfilePhotoFromGallery(BuildContext context) async {
+  // ignore: deprecated_member_use
   final _image = await ImagePicker.pickImage(source: ImageSource.gallery);
 
   await _uploadNewPhotoAndUpdate(context, newPhoto: _image);
 }
 
 Future<void> changeProfilePhotoFromCamera(BuildContext context) async {
+  // ignore: deprecated_member_use
   final _image = await ImagePicker.pickImage(source: ImageSource.camera);
 
   await _uploadNewPhotoAndUpdate(context, newPhoto: _image);

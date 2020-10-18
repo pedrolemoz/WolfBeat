@@ -4,7 +4,6 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hexcolor/hexcolor.dart';
 
-import '../../ui_components/mini_player.dart';
 import '../../../../core/helpers/assets_helper.dart';
 import '../../../../core/view_model/player/player_view_model.dart';
 import '../../../../utils/custom_track_shape.dart';
