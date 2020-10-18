@@ -1,5 +1,6 @@
-import 'package:WolfBeat/core/exceptions/null_attribute_exception.dart';
 import 'package:flutter/foundation.dart';
+
+import '../../exceptions/null_attribute_exception.dart';
 
 class Album {
   Album({

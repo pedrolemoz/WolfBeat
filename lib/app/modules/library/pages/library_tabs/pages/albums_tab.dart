@@ -1,13 +1,12 @@
-import 'package:WolfBeat/app/modules/playlist/pages/category_playlist_page.dart';
-import 'package:WolfBeat/app/modules/playlist/pages/custom_playlist_page.dart';
-import 'package:WolfBeat/core/helpers/media_helper.dart';
-import 'package:WolfBeat/core/models/playlist/playlist.dart';
-import 'package:WolfBeat/core/view_model/song/songs_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../../../../../core/helpers/assets_helper.dart';
+import '../../../../../../core/helpers/media_helper.dart';
+import '../../../../../../core/models/playlist/playlist.dart';
 import '../../../../../../core/view_model/player/player_view_model.dart';
+import '../../../../../../core/view_model/song/songs_view_model.dart';
+import '../../../../playlist/pages/category_playlist_page.dart';
 
 class AlbumsTab extends StatelessWidget {
   final _albums = GetIt.I.get<SongsViewModel>().albums;

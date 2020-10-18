@@ -1,7 +1,7 @@
-import 'package:WolfBeat/core/view_model/song/songs_view_model.dart';
-import 'package:WolfBeat/core/view_model/user/user_view_model.dart';
 import 'package:flutter/material.dart';
 
+import '../../../core/view_model/song/songs_view_model.dart';
+import '../../../core/view_model/user/user_view_model.dart';
 import 'music_tile.dart';
 
 class AddSongsToPlaylistBottomSheet extends StatelessWidget {

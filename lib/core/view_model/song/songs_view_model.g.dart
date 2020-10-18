@@ -54,6 +54,46 @@ mixin _$SongsViewModel on _SongsViewModelBase, Store {
     });
   }
 
+  final _$recentlyPlayedAtom = Atom(name: '_SongsViewModelBase.recentlyPlayed');
+
+  @override
+  ObservableList<Song> get recentlyPlayed {
+    _$recentlyPlayedAtom.reportRead();
+    return super.recentlyPlayed;
+  }
+
+  @override
+  set recentlyPlayed(ObservableList<Song> value) {
+    _$recentlyPlayedAtom.reportWrite(value, super.recentlyPlayed, () {
+      super.recentlyPlayed = value;
+    });
+  }
+
+  final _$recommendedSongsAtom =
+      Atom(name: '_SongsViewModelBase.recommendedSongs');
+
+  @override
+  ObservableList<Song> get recommendedSongs {
+    _$recommendedSongsAtom.reportRead();
+    return super.recommendedSongs;
+  }
+
+  @override
+  set recommendedSongs(ObservableList<Song> value) {
+    _$recommendedSongsAtom.reportWrite(value, super.recommendedSongs, () {
+      super.recommendedSongs = value;
+    });
+  }
+
+  final _$_recoverUserPlaylistsAsyncAction =
+      AsyncAction('_SongsViewModelBase._recoverUserPlaylists');
+
+  @override
+  Future<void> _recoverUserPlaylists(DocumentSnapshot snapshot) {
+    return _$_recoverUserPlaylistsAsyncAction
+        .run(() => super._recoverUserPlaylists(snapshot));
+  }
+
   final _$_SongsViewModelBaseActionController =
       ActionController(name: '_SongsViewModelBase');
 
@@ -84,7 +124,9 @@ mixin _$SongsViewModel on _SongsViewModelBase, Store {
     return '''
 albums: ${albums},
 artists: ${artists},
-songs: ${songs}
+songs: ${songs},
+recentlyPlayed: ${recentlyPlayed},
+recommendedSongs: ${recommendedSongs}
     ''';
   }
 }

@@ -1,9 +1,8 @@
-import 'package:WolfBeat/core/view_model/song/songs_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:get_it/get_it.dart';
 
-import '../../../core/view_model/player/player_view_model.dart';
+import '../../../core/view_model/song/songs_view_model.dart';
 import '../favorite_songs/pages/favorite_songs_page.dart';
 
 /// [FavoriteSonsTile] redirects the user to [FavoriteSongsPage].

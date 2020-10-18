@@ -1,4 +1,5 @@
 import 'package:mobx/mobx.dart';
+
 part 'sign_up_view_model.g.dart';
 
 /// [SignUpViewModel] is a widget which validates the creation of a new user.

@@ -6,17 +6,13 @@ import 'package:get_it/get_it.dart';
 import '../../../../core/view_model/song/songs_view_model.dart';
 import '../../ui_components/music_tile.dart';
 
-class FavoriteSongsPage extends StatefulWidget {
+class FavoriteSongsPage extends StatelessWidget {
   static const String id = 'favorite_songs_page';
-  @override
-  _FavoriteSongsPageState createState() => _FavoriteSongsPageState();
-}
-
-class _FavoriteSongsPageState extends State<FavoriteSongsPage> {
-  final songsViewModel = GetIt.I.get<SongsViewModel>();
 
   @override
   Widget build(BuildContext context) {
+    final _songsViewModel = GetIt.I.get<SongsViewModel>();
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -38,13 +34,13 @@ class _FavoriteSongsPageState extends State<FavoriteSongsPage> {
       ),
       body: Observer(builder: (_) {
         return ListView.builder(
-          itemCount: songsViewModel.songs.length,
+          itemCount: _songsViewModel.songs.length,
           padding: EdgeInsets.symmetric(vertical: 13.0),
           physics: BouncingScrollPhysics(),
           itemBuilder: (context, index) {
             return MusicTile(
               playlistName: 'músicas favoritas',
-              song: songsViewModel.songs[index],
+              song: _songsViewModel.songs[index],
             );
           },
         );

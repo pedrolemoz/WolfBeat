@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/helpers/assets_helper.dart';
+import '../../../core/models/playlist/playlist.dart';
 
 /// [PlaylistCard] redirects the user to ***.
 /// It's a Container with a music cover inside.
 /// Used in [HomePage].
 class PlaylistCard extends StatelessWidget {
-  PlaylistCard({this.index});
+  PlaylistCard({this.playlist});
 
-  final int index;
+  final Playlist playlist;
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +40,7 @@ class PlaylistCard extends StatelessWidget {
                 ),
               ),
               Text(
-                'Playlist $index',
+                playlist.playlistName,
                 overflow: TextOverflow.ellipsis,
                 style: Theme.of(context).textTheme.subtitle1,
               ),

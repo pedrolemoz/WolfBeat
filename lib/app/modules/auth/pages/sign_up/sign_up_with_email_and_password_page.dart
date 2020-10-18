@@ -10,13 +10,15 @@ import '../../view_model/sign_up/sign_up_view_model.dart';
 
 class SignUpWithEmailAndPasswordPage extends StatelessWidget {
   static String id = 'sign_up_with_email_and_password_page';
-  final signUpViewModel = GetIt.I.get<SignUpViewModel>();
-  final _nameTextField = TextEditingController();
-  final _emailTextField = TextEditingController();
-  final _passwordTextField = TextEditingController();
-  final _passwordConfirmationTextField = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
+    final _signUpViewModel = GetIt.I.get<SignUpViewModel>();
+    final _nameTextField = TextEditingController();
+    final _emailTextField = TextEditingController();
+    final _passwordTextField = TextEditingController();
+    final _passwordConfirmationTextField = TextEditingController();
+
     return Observer(
       builder: (_) {
         return Scaffold(
@@ -50,8 +52,8 @@ class SignUpWithEmailAndPasswordPage extends StatelessWidget {
                         keyboardType: TextInputType.emailAddress,
                         textInputAction: TextInputAction.done,
                         onChanged: () {
-                          signUpViewModel.isNameValid(_nameTextField.text);
-                          signUpViewModel.canProceed();
+                          _signUpViewModel.isNameValid(_nameTextField.text);
+                          _signUpViewModel.canProceed();
                         },
                       ),
                       Padding(
@@ -63,8 +65,8 @@ class SignUpWithEmailAndPasswordPage extends StatelessWidget {
                           keyboardType: TextInputType.emailAddress,
                           textInputAction: TextInputAction.done,
                           onChanged: () {
-                            signUpViewModel.isEmailValid(_emailTextField.text);
-                            signUpViewModel.canProceed();
+                            _signUpViewModel.isEmailValid(_emailTextField.text);
+                            _signUpViewModel.canProceed();
                           },
                         ),
                       ),
@@ -73,9 +75,9 @@ class SignUpWithEmailAndPasswordPage extends StatelessWidget {
                         hintText: 'Escolha uma senha forte',
                         padding: EdgeInsets.symmetric(vertical: 18.0),
                         onChanged: () {
-                          signUpViewModel
+                          _signUpViewModel
                               .isPasswordValid(_passwordTextField.text);
-                          signUpViewModel.canProceed();
+                          _signUpViewModel.canProceed();
                         },
                         keyboardType: TextInputType.visiblePassword,
                         textInputAction: TextInputAction.done,
@@ -89,11 +91,11 @@ class SignUpWithEmailAndPasswordPage extends StatelessWidget {
                           padding: EdgeInsets.symmetric(vertical: 18.0),
                           textInputAction: TextInputAction.done,
                           onChanged: () {
-                            signUpViewModel.passwordsMatch(
+                            _signUpViewModel.passwordsMatch(
                               _passwordTextField.text,
                               _passwordConfirmationTextField.text,
                             );
-                            signUpViewModel.canProceed();
+                            _signUpViewModel.canProceed();
                           },
                           keyboardType: TextInputType.visiblePassword,
                           obscureText: true,
@@ -101,7 +103,7 @@ class SignUpWithEmailAndPasswordPage extends StatelessWidget {
                       ),
                       RoundedButton(
                         label: 'Cadastrar-se no WolfBeat',
-                        isEnabled: signUpViewModel.isEnabled,
+                        isEnabled: _signUpViewModel.isEnabled,
                         onTap: () {
                           signUpUserWithEmailAndPassword(
                             context,

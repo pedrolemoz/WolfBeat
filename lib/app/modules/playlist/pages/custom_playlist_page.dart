@@ -1,14 +1,13 @@
-import 'package:WolfBeat/app/modules/player/pages/player_page.dart';
-import 'package:WolfBeat/app/modules/ui_components/add_song_to_playlist_bottom_sheet.dart';
-import 'package:WolfBeat/app/modules/ui_components/mini_player.dart';
-import 'package:WolfBeat/core/view_model/player/player_view_model.dart';
-import 'package:WolfBeat/core/view_model/user/user_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 
+import '../../../../core/view_model/player/player_view_model.dart';
 import '../../../../core/view_model/song/songs_view_model.dart';
+import '../../../../core/view_model/user/user_view_model.dart';
+import '../../player/pages/player_page.dart';
+import '../../ui_components/add_song_to_playlist_bottom_sheet.dart';
 import '../../ui_components/music_tile.dart';
 
 class CustomPlaylistPage extends StatelessWidget {

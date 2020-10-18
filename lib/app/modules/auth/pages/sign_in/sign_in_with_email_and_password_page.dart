@@ -1,4 +1,3 @@
-import 'package:WolfBeat/app/modules/auth/pages/recover_email_and_password/recover_email_and_password.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
@@ -8,15 +7,17 @@ import '../../../ui_components/rounded_button.dart';
 import '../../../ui_components/rounded_text_field.dart';
 import '../../services/email_and_password/sign_in/email_and_password_sign_in.dart';
 import '../../view_model/sign_in/sign_in_view_model.dart';
+import '../recover_email_and_password/recover_email_and_password.dart';
 
 class SignInWithEmailAndPasswordPage extends StatelessWidget {
   static String id = 'sign_in_with_email_and_password_page';
-  final signInViewModel = GetIt.I.get<SignInViewModel>();
-  final _emailTextField = TextEditingController();
-  final _passwordTextField = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    final _signInViewModel = GetIt.I.get<SignInViewModel>();
+    final _emailTextField = TextEditingController();
+    final _passwordTextField = TextEditingController();
+
     return Observer(
       builder: (_) {
         return Scaffold(
@@ -51,8 +52,8 @@ class SignInWithEmailAndPasswordPage extends StatelessWidget {
                         textInputAction: TextInputAction.done,
                         onChanged: () {
                           print(_emailTextField.text);
-                          signInViewModel.isEmailValid(_emailTextField.text);
-                          signInViewModel.canProceed();
+                          _signInViewModel.isEmailValid(_emailTextField.text);
+                          _signInViewModel.canProceed();
                         },
                       ),
                       Padding(
@@ -63,9 +64,9 @@ class SignInWithEmailAndPasswordPage extends StatelessWidget {
                           padding: EdgeInsets.symmetric(vertical: 18.0),
                           textInputAction: TextInputAction.done,
                           onChanged: () {
-                            signInViewModel
+                            _signInViewModel
                                 .isPasswordValid(_passwordTextField.text);
-                            signInViewModel.canProceed();
+                            _signInViewModel.canProceed();
                           },
                           keyboardType: TextInputType.visiblePassword,
                           obscureText: true,
@@ -73,7 +74,7 @@ class SignInWithEmailAndPasswordPage extends StatelessWidget {
                       ),
                       RoundedButton(
                         label: 'Entrar no WolfBeat',
-                        isEnabled: signInViewModel.isEnabled,
+                        isEnabled: _signInViewModel.isEnabled,
                         onTap: () {
                           loginUserWithEmailAndPassword(
                             context,

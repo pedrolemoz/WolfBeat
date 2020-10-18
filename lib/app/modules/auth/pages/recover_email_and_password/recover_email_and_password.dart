@@ -8,11 +8,12 @@ import '../../../ui_components/rounded_text_field.dart';
 import '../../services/email_and_password/recover_email_and_password/recover_with_email.dart';
 
 class RecoverEmailAndPassword extends StatelessWidget {
-  static String id = 'recover_email_and_password';
-  final _emailTextField = TextEditingController();
+  static const String id = 'recover_email_and_password';
 
   @override
   Widget build(BuildContext context) {
+    final _emailTextField = TextEditingController();
+
     return Scaffold(
       appBar: AppBar(
         title: Text(

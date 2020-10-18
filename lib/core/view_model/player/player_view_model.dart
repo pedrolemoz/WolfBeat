@@ -1,5 +1,3 @@
-import 'package:WolfBeat/core/models/playlist/playlist.dart';
-import 'package:audioplayers/audio_cache.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -8,6 +6,7 @@ import 'package:flutter_media_notification/flutter_media_notification.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../helpers/firebase_helper.dart';
+import '../../models/playlist/playlist.dart';
 import '../../models/song/song.dart';
 
 part 'player_view_model.g.dart';

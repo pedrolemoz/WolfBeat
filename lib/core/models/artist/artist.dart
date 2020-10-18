@@ -1,4 +1,4 @@
-import 'package:WolfBeat/core/exceptions/null_attribute_exception.dart';
+import '../../exceptions/null_attribute_exception.dart';
 import 'package:flutter/foundation.dart';
 
 class Artist {

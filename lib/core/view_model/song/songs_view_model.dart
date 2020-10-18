@@ -1,9 +1,11 @@
-import 'package:WolfBeat/core/models/album/album.dart';
-import 'package:WolfBeat/core/models/artist/artist.dart';
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../helpers/firebase_helper.dart';
+import '../../models/album/album.dart';
+import '../../models/artist/artist.dart';
 import '../../models/song/song.dart';
 
 part 'songs_view_model.g.dart';
@@ -18,13 +20,19 @@ abstract class _SongsViewModelBase with Store {
     fetchSongs();
   }
   @observable
-  List<Album> albums = [];
+  var albums = <Album>[];
 
   @observable
-  List<Artist> artists = [];
+  var artists = <Artist>[];
 
   @observable
-  List<Song> songs = [];
+  var songs = <Song>[];
+
+  @observable
+  var recentlyPlayed = <Song>[].asObservable();
+
+  @observable
+  var recommendedSongs = <Song>[].asObservable();
 
   @action
   void addSong(Song song) {
@@ -44,6 +52,57 @@ abstract class _SongsViewModelBase with Store {
         artworkURL: song.artworkURL,
       ));
     }
+
+    if (recommendedSongs.length < 10) {
+      var shouldRecommend = Random().nextBool();
+
+      if (shouldRecommend) {
+        recommendedSongs.add(song);
+      }
+    }
+  }
+
+  // @action
+  // void addRecentlyPlayedSong({Firestore database, Song song}) {
+  //   recentlyPlayed.add(song);
+
+  //   database
+  //       .collection(FirebaseHelper.usersCollection)
+  //       .getDocuments()
+  //       .then((snapshot) {
+  //     snapshot.documents.forEach((user) {
+  //       user.data;
+  //     });
+  //   });
+  // }
+
+  @action
+  Future<void> _recoverUserPlaylists(DocumentSnapshot snapshot) async {
+    var data = snapshot.data;
+
+    var _playlists = data[FirebaseHelper.playlistsAttribute];
+
+    for (var playlist in _playlists) {
+      var songs = <Song>[];
+      for (DocumentReference songReference
+          in playlist[FirebaseHelper.playlistSongsAttribute] as List) {
+        final song = await songReference.get();
+
+        songs.add(
+          Song(
+            title: song.data[FirebaseHelper.titleAttribute],
+            songURL: song.data[FirebaseHelper.songURLAttribute],
+            album: song.data[FirebaseHelper.albumAttribute],
+            artist: song.data[FirebaseHelper.artistAttribute],
+            artworkURL: song.data[FirebaseHelper.artworkURLAttribute],
+            duration: song.data[FirebaseHelper.durationAttribute],
+            genre: song.data[FirebaseHelper.genreAttribute],
+            backgroundColor: song.data[FirebaseHelper.backgroundColorAttribute],
+            reference: song.reference,
+          ),
+        );
+      }
+    }
   }
 
   @action
@@ -52,7 +111,6 @@ abstract class _SongsViewModelBase with Store {
 
     database.collection(FirebaseHelper.songsCollection).getDocuments().then(
       (snapshot) {
-        // ignore: avoid_function_literals_in_foreach_calls
         snapshot.documents.forEach(
           (songFromFirestore) {
             final song = Song(
@@ -69,9 +127,9 @@ abstract class _SongsViewModelBase with Store {
                   .data[FirebaseHelper.backgroundColorAttribute],
               reference: songFromFirestore.reference,
             );
-            addSong(song);
 
-            print(song.reference);
+            addSong(song);
+            // addRecentlyPlayedSong(song: song, database: database);
           },
         );
       },

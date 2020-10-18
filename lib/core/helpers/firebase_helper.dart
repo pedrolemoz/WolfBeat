@@ -10,6 +10,7 @@ class FirebaseHelper {
   static String get imageURIAttribute => 'imageURI';
   static String get uuidAttribute => 'uuid';
   static String get favoriteSongsAttribute => 'favoriteSongs';
+  static String get recentlyPlayed => 'recentlyPlayed';
 
   // Playlist related
   static String get playlistsAttribute => 'playlists';

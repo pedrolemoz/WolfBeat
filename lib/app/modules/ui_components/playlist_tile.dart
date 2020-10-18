@@ -1,15 +1,10 @@
-import 'package:WolfBeat/app/modules/playlist/pages/custom_playlist_page.dart';
-import 'package:WolfBeat/app/modules/ui_components/music_tile.dart';
-import 'package:WolfBeat/core/helpers/firebase_helper.dart';
-import 'package:WolfBeat/core/models/playlist/playlist.dart';
-import 'package:WolfBeat/core/models/song/song.dart';
-import 'package:WolfBeat/core/view_model/user/user_view_model.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../../core/helpers/assets_helper.dart';
+import '../../../core/models/playlist/playlist.dart';
+import '../../../core/view_model/user/user_view_model.dart';
+import '../playlist/pages/custom_playlist_page.dart';
 
 /// [PlaylistTile] is a widget that redirects the user to ***.
 /// It's a Container with the first 4 music cover of the playlist inside.

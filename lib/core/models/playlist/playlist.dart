@@ -1,7 +1,7 @@
-import 'package:WolfBeat/core/exceptions/null_attribute_exception.dart';
-import 'package:WolfBeat/core/models/song/song.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
+
+import '../../exceptions/null_attribute_exception.dart';
+import '../song/song.dart';
 
 class Playlist {
   Playlist({
