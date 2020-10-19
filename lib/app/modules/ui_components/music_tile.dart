@@ -36,7 +36,7 @@ class MusicTile extends StatelessWidget {
                   backgroundColor: Theme.of(context).backgroundColor,
                   builder: (context) {
                     return Container(
-                      height: MediaQuery.of(context).size.height * 0.3,
+                      height: MediaQuery.of(context).size.height * 0.16,
                       child: Column(
                         children: [
                           GestureDetector(
@@ -48,21 +48,6 @@ class MusicTile extends StatelessWidget {
                               ),
                               title: Text(
                                 'Remover de "$playlistName"',
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: Theme.of(context).textTheme.subtitle1,
-                              ),
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: () {},
-                            child: ListTile(
-                              leading: Icon(
-                                FlutterIcons.share_2_fea,
-                                color: Colors.white,
-                              ),
-                              title: Text(
-                                'Compartilhar',
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: Theme.of(context).textTheme.subtitle1,

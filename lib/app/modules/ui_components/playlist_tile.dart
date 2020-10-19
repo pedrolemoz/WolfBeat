@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../../core/helpers/assets_helper.dart';
@@ -11,10 +12,10 @@ import '../playlist/pages/custom_playlist_page.dart';
 /// Used in [PlaylistsTab].
 
 class PlaylistTile extends StatelessWidget {
-  PlaylistTile({this.playlist});
+  PlaylistTile({this.playlist, this.onDelete});
 
   final Playlist playlist;
-
+  final Function onDelete;
   @override
   Widget build(BuildContext context) {
     final _userViewModel = GetIt.I.get<UserViewModel>();
@@ -28,6 +29,56 @@ class PlaylistTile extends StatelessWidget {
               playlistIndex: _userViewModel.playlists.indexOf(playlist),
             ),
           ),
+        );
+      },
+      onLongPress: () {
+        showBottomSheet(
+          context: context,
+          backgroundColor: Theme.of(context).backgroundColor,
+          builder: (context) {
+            return Container(
+              height: MediaQuery.of(context).size.height * 0.16,
+              child: Column(
+                children: [
+                  GestureDetector(
+                    onTap: onDelete,
+                    child: ListTile(
+                      leading: Icon(
+                        FlutterIcons.trash_can_outline_mco,
+                        color: Colors.white,
+                      ),
+                      title: Text(
+                        'Excluir ${playlist.playlistName}',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context).textTheme.subtitle1,
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.maybePop(context);
+                    },
+                    child: ListTile(
+                      leading: Icon(
+                        FlutterIcons.cancel_mco,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                      title: Text(
+                        'Fechar',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context)
+                            .textTheme
+                            .subtitle1
+                            .copyWith(color: Theme.of(context).primaryColor),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
         );
       },
       child: Padding(

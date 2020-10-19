@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../../../core/view_model/player/player_view_model.dart';
@@ -30,7 +31,9 @@ class _BottomNavigatorState extends State<BottomNavigator> {
 
     return Scaffold(
       body: _tabs[_currentIndex],
-      bottomSheet: _playerViewModel.isPlaying ? MiniPlayer() : null,
+      bottomSheet: Observer(
+          builder: (context) =>
+              _playerViewModel.isPlaying ? MiniPlayer() : SizedBox()),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Color(0xFF2c2f33),
         elevation: 0.0,

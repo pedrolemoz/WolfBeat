@@ -29,6 +29,11 @@ class PlaylistsTab extends StatelessWidget {
                 default:
                   return PlaylistTile(
                     playlist: _userViewModel.playlists[index - 1],
+                    onDelete: () {
+                      _userViewModel.removeUserPlaylist(
+                          playlist: _userViewModel.playlists[index - 1]);
+                      print('deletada');
+                    },
                   );
               }
             },

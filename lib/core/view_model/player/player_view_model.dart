@@ -91,8 +91,8 @@ abstract class _PlayerViewModelBase with Store {
             await checkFavorited();
             _checkPlayerStatus();
             currentIndex++;
-            await _audioPlayer
-                .play(playerQueue.elementAt(currentIndex).songURL);
+
+            await play();
           }
         });
 
@@ -101,6 +101,18 @@ abstract class _PlayerViewModelBase with Store {
           author: playerQueue.elementAt(currentIndex).artist,
           isPlaying: true,
         );
+        await MediaNotification.setListener('play', play);
+        await MediaNotification.setListener('pause', pause);
+        await MediaNotification.setListener('next', () {
+          if (canSkipFoward) {
+            skipToNextSong();
+          }
+        });
+        await MediaNotification.setListener('prev', () {
+          if (canSkipPrevious) {
+            skipToPreviousSong();
+          }
+        });
       }
     } on RangeError {
       rethrow;

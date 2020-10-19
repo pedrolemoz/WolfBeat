@@ -249,6 +249,35 @@ abstract class _UserViewModelBase with Store {
   }
 
   @action
+  Future<void> removeUserPlaylist({@required Playlist playlist}) async {
+    var _auth = FirebaseAuth.instance;
+    var _database = Firestore.instance;
+    var _user = await _auth.currentUser();
+
+    var snapshot = await _database
+        .collection(FirebaseHelper.usersCollection)
+        .document(_user.uid)
+        .get();
+
+    var _data = snapshot.data;
+
+    List<Map<String,dynamic>> _userPlaylists = _data[FirebaseHelper.playlistsAttribute];
+    // Map<String, dynamic> _currentPlaylist = _userPlaylists.singleWhere(
+    //     (userPlaylist) =>
+    //         userPlaylist[FirebaseHelper.playlistNameAttribute] ==
+    //         playlist.playlistName);
+
+    
+    print(_userPlaylists == _data[FirebaseHelper.playlistsAttribute]);
+    // await _database
+    //     .collection(FirebaseHelper.usersCollection)
+    //     .document(_user.uid)
+    //     .updateData({FirebaseHelper.playlistsAttribute: _userPlaylists});
+
+    //playlists.remove(playlist);
+  }
+
+  @action
   Future<void> _changeSongInPlaylist({
     @required Playlist playlist,
   }) async {

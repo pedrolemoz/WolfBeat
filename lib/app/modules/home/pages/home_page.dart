@@ -232,6 +232,11 @@ class HomePage extends StatelessWidget {
                 ),
               ),
             ),
+            Observer(builder: (_) {
+              return _playerViewModel.isPlaying
+                  ? SizedBox(height: 70)
+                  : SizedBox();
+            })
           ],
         ),
       ),

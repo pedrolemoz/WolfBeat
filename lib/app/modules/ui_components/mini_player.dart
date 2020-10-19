@@ -36,8 +36,14 @@ class MiniPlayer extends StatelessWidget {
           onHorizontalDragUpdate: (DragUpdateDetails details) {
             if (details.delta.dx > 0) {
               print('Dragging in +X direction');
+              if (_playerViewModel.canSkipFoward) {
+                _playerViewModel.skipToNextSong();
+              }
             } else {
               print('Dragging in -X direction');
+              if (_playerViewModel.canSkipPrevious) {
+                _playerViewModel.skipToPreviousSong();
+              }
             }
           },
           child: Container(
