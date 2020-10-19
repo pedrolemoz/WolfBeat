@@ -71,17 +71,9 @@ abstract class _PlayerViewModelBase with Store {
         debugPrint('Playing status: Playing');
         isPlaying = true;
 
-        if (_userViewModel.recentlyPlayedSongs.length <= 10) {
-          await _userViewModel.addSongToRecentlyPlayed(
-              song: playerQueue.elementAt(currentIndex));
-        } else {
-          await _userViewModel.removeSongFromRecentlyPlayed(
-            song: playerQueue.elementAt(
-              _userViewModel.recentlyPlayedSongs
-                  .indexOf(_userViewModel.recentlyPlayedSongs.last),
-            ),
-          );
-
+        if (_userViewModel.recentlyPlayedSongs.length <= 10 &&
+            !(_userViewModel.recentlyPlayedSongs
+                .contains(playerQueue.elementAt(currentIndex)))) {
           await _userViewModel.addSongToRecentlyPlayed(
               song: playerQueue.elementAt(currentIndex));
         }
