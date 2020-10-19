@@ -1,3 +1,4 @@
+import 'package:WolfBeat/app/modules/auth/pages/splash_screen/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
@@ -52,7 +53,7 @@ class WolfBeat extends StatelessWidget {
       title: 'WolfBeat',
       debugShowCheckedModeBanner: false,
       theme: appTheme,
-      initialRoute: WelcomePage.id,
+      initialRoute: SplashScreen.id,
       routes: {
         WelcomePage.id: (context) => WelcomePage(),
         BottomNavigator.id: (context) => BottomNavigator(),
@@ -72,6 +73,8 @@ class WolfBeat extends StatelessWidget {
             SignUpWithEmailAndPasswordPage(),
         RecoverEmailAndPassword.id: (context) => RecoverEmailAndPassword(),
         RecoverEmailPage.id: (context) => RecoverEmailPage(),
+        SplashScreen.id: (context) => SplashScreen(),
+
       },
     );
   }
