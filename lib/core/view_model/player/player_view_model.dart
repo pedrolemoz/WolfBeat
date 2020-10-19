@@ -86,6 +86,16 @@ abstract class _PlayerViewModelBase with Store {
           currentPosition = newPosition;
         });
 
+        await _audioPlayer.onPlayerCompletion.listen((_) async {
+          if (canSkipFoward) {
+            await checkFavorited();
+            _checkPlayerStatus();
+            currentIndex++;
+            await _audioPlayer
+                .play(playerQueue.elementAt(currentIndex).songURL);
+          }
+        });
+
         await MediaNotification.showNotification(
           title: playerQueue.elementAt(currentIndex).title,
           author: playerQueue.elementAt(currentIndex).artist,

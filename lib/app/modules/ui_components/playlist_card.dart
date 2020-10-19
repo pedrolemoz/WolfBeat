@@ -1,4 +1,7 @@
+import 'package:WolfBeat/app/modules/playlist/pages/custom_playlist_page.dart';
+import 'package:WolfBeat/core/view_model/user/user_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
 import '../../../core/helpers/assets_helper.dart';
 import '../../../core/models/playlist/playlist.dart';
@@ -13,12 +16,21 @@ class PlaylistCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final _userViewModel = GetIt.I.get<UserViewModel>();
+
     return Material(
       color: Theme.of(context).backgroundColor,
       borderRadius: BorderRadius.circular(10.0),
       child: InkWell(
         onTap: () {
-          print('pressed');
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => CustomPlaylistPage(
+                playlistIndex: _userViewModel.playlists.indexOf(playlist),
+              ),
+            ),
+          );
         },
         borderRadius: BorderRadius.circular(10.0),
         splashColor: Theme.of(context).scaffoldBackgroundColor,

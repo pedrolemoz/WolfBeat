@@ -1,3 +1,6 @@
+import 'package:WolfBeat/app/modules/player/pages/player_page.dart';
+import 'package:WolfBeat/core/models/playlist/playlist.dart';
+import 'package:WolfBeat/core/view_model/player/player_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -17,6 +20,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final _userViewModel = GetIt.I.get<UserViewModel>();
     final _songsViewModel = GetIt.I.get<SongsViewModel>();
+    final _playerViewModel = GetIt.I.get<PlayerViewModel>();
 
     return Observer(
       builder: (context) => Scaffold(
@@ -105,38 +109,54 @@ class HomePage extends StatelessWidget {
                           physics: BouncingScrollPhysics(),
                           padding: EdgeInsets.symmetric(horizontal: 10.0),
                           itemBuilder: (context, index) {
-                            return Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 5.0),
-                              child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Flexible(
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(10.0),
-                                      child: FadeInImage.assetNetwork(
-                                        placeholder:
-                                            AssetsHelper.artworkFallback,
-                                        image: _userViewModel
-                                            .recentlyPlayedSongs
-                                            ?.elementAt(index)
-                                            ?.artworkURL,
+                            return GestureDetector(
+                              onTap: () {
+                                _playerViewModel.playSongFromPlaylist(
+                                  song: _userViewModel.recentlyPlayedSongs
+                                      .elementAt(index),
+                                  playlist: Playlist(
+                                      playlistName: 'Tocadas recentemente',
+                                      songs:
+                                          _userViewModel.recentlyPlayedSongs),
+                                );
+
+                                Navigator.pushNamed(context, PlayerPage.id);
+                              },
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 5.0),
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Flexible(
+                                      child: ClipRRect(
+                                        borderRadius:
+                                            BorderRadius.circular(10.0),
+                                        child: FadeInImage.assetNetwork(
+                                          placeholder:
+                                              AssetsHelper.artworkFallback,
+                                          image: _userViewModel
+                                              .recentlyPlayedSongs
+                                              ?.elementAt(index)
+                                              ?.artworkURL,
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.only(top: 10.0),
-                                    child: Text(
-                                      _userViewModel.recentlyPlayedSongs
-                                              ?.elementAt(index)
-                                              ?.title ??
-                                          '',
-                                      overflow: TextOverflow.ellipsis,
-                                      style:
-                                          Theme.of(context).textTheme.subtitle1,
+                                    Padding(
+                                      padding: EdgeInsets.only(top: 10.0),
+                                      child: Text(
+                                        _userViewModel.recentlyPlayedSongs
+                                                ?.elementAt(index)
+                                                ?.title ??
+                                            '',
+                                        overflow: TextOverflow.ellipsis,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .subtitle1,
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             );
                           },
@@ -167,32 +187,45 @@ class HomePage extends StatelessWidget {
                   physics: BouncingScrollPhysics(),
                   padding: EdgeInsets.symmetric(horizontal: 10.0),
                   itemBuilder: (context, index) {
-                    return Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 5.0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Flexible(
-                            child: ClipRRect(
-                                borderRadius: BorderRadius.circular(10.0),
-                                child: FadeInImage.assetNetwork(
-                                  placeholder: AssetsHelper.artworkFallback,
-                                  image: _songsViewModel.recommendedSongs
-                                      .elementAt(index)
-                                      ?.artworkURL,
-                                )),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(top: 10.0),
-                            child: Text(
-                              _songsViewModel.recommendedSongs
-                                  .elementAt(index)
-                                  .title,
-                              overflow: TextOverflow.ellipsis,
-                              style: Theme.of(context).textTheme.subtitle1,
+                    return GestureDetector(
+                      onTap: () {
+                        _playerViewModel.playSongFromPlaylist(
+                          song:
+                              _songsViewModel.recommendedSongs.elementAt(index),
+                          playlist: Playlist(
+                              playlistName: 'Músicas recomendadas',
+                              songs: _songsViewModel.recommendedSongs),
+                        );
+
+                        Navigator.pushNamed(context, PlayerPage.id);
+                      },
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 5.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Flexible(
+                              child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  child: FadeInImage.assetNetwork(
+                                    placeholder: AssetsHelper.artworkFallback,
+                                    image: _songsViewModel.recommendedSongs
+                                        .elementAt(index)
+                                        ?.artworkURL,
+                                  )),
                             ),
-                          ),
-                        ],
+                            Padding(
+                              padding: EdgeInsets.only(top: 10.0),
+                              child: Text(
+                                _songsViewModel.recommendedSongs
+                                    .elementAt(index)
+                                    .title,
+                                overflow: TextOverflow.ellipsis,
+                                style: Theme.of(context).textTheme.subtitle1,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     );
                   },
