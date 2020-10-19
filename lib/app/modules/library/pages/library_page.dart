@@ -24,52 +24,48 @@ class _LibraryPageState extends State<LibraryPage>
 
   @override
   Widget build(BuildContext context) {
-    return Observer(
-      builder: (_) {
-        return Scaffold(
-          appBar: AppBar(
-            title: Text(
-              'Biblioteca de músicas',
-              style: Theme.of(context).textTheme.headline6,
-            ),
-            bottom: PreferredSize(
-              preferredSize: Size.fromHeight(40.0),
-              child: Align(
-                alignment: Alignment.bottomLeft,
-                child: Theme(
-                  data: ThemeData(
-                    splashColor: Colors.transparent,
-                    highlightColor: Colors.transparent,
-                  ),
-                  child: TabBar(
-                    controller: _libraryTabController,
-                    indicatorColor: Theme.of(context).primaryColor,
-                    labelPadding: EdgeInsets.all(15.0),
-                    labelColor: Color(0xFFF0F0F5),
-                    unselectedLabelColor: Color(0xFFe0e0e0),
-                    unselectedLabelStyle: Theme.of(context).textTheme.subtitle1,
-                    labelStyle: Theme.of(context).textTheme.subtitle1,
-                    isScrollable: true,
-                    tabs: [
-                      Text('Playlists'),
-                      Text('Artistas'),
-                      Text('Álbuns'),
-                    ],
-                  ),
-                ),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'Biblioteca de músicas',
+          style: Theme.of(context).textTheme.headline6,
+        ),
+        bottom: PreferredSize(
+          preferredSize: Size.fromHeight(40.0),
+          child: Align(
+            alignment: Alignment.bottomLeft,
+            child: Theme(
+              data: ThemeData(
+                splashColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+              ),
+              child: TabBar(
+                controller: _libraryTabController,
+                indicatorColor: Theme.of(context).primaryColor,
+                labelPadding: EdgeInsets.all(15.0),
+                labelColor: Color(0xFFF0F0F5),
+                unselectedLabelColor: Color(0xFFe0e0e0),
+                unselectedLabelStyle: Theme.of(context).textTheme.subtitle1,
+                labelStyle: Theme.of(context).textTheme.subtitle1,
+                isScrollable: true,
+                tabs: [
+                  Text('Playlists'),
+                  Text('Artistas'),
+                  Text('Álbuns'),
+                ],
               ),
             ),
           ),
-          body: TabBarView(
-            controller: _libraryTabController,
-            children: [
-              PlaylistsTab(),
-              ArtistsTab(),
-              AlbumsTab(),
-            ],
-          ),
-        );
-      },
+        ),
+      ),
+      body: TabBarView(
+        controller: _libraryTabController,
+        children: [
+          PlaylistsTab(),
+          ArtistsTab(),
+          AlbumsTab(),
+        ],
+      ),
     );
   }
 }
