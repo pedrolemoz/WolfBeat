@@ -12,8 +12,9 @@ class SearchPage extends StatefulWidget {
   _SearchPageState createState() => _SearchPageState();
 }
 
+final _searchTextController = TextEditingController();
+
 class _SearchPageState extends State<SearchPage> {
-  final _searchTextController = TextEditingController();
   final _searchViewModel = GetIt.I.get<SearchViewModel>();
 
   @override

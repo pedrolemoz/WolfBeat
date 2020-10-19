@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import '../../../../../core/helpers/assets_helper.dart';
 import '../../../ui_components/rounded_button.dart';
 import '../auth_with_google/auth_with_google_page.dart';
 import 'sign_in_with_email_and_password_page.dart';
@@ -21,8 +22,8 @@ class SignInPage extends StatelessWidget {
             children: [
               Column(
                 children: [
-                  Image.network(
-                    'https://images-na.ssl-images-amazon.com/images/I/815aiIN6wmL.jpg',
+                  Image.asset(
+                    AssetsHelper.wolfBeatLogo,
                     height: 180.0,
                   ),
                 ],

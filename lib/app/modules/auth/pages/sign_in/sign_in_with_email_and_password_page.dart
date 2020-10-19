@@ -11,13 +11,13 @@ import '../recover_email_and_password/recover_email_and_password.dart';
 
 class SignInWithEmailAndPasswordPage extends StatelessWidget {
   static String id = 'sign_in_with_email_and_password_page';
+  
+  final _emailTextField = TextEditingController();
+  final _passwordTextField = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     final _signInViewModel = GetIt.I.get<SignInViewModel>();
-    final _emailTextField = TextEditingController();
-    final _passwordTextField = TextEditingController();
-
     return Observer(
       builder: (_) {
         return Scaffold(
@@ -31,8 +31,8 @@ class SignInWithEmailAndPasswordPage extends StatelessWidget {
                 children: [
                   Column(
                     children: [
-                      Image.network(
-                        'https://images-na.ssl-images-amazon.com/images/I/815aiIN6wmL.jpg',
+                      Image.asset(
+                        'assets/icon_app/icon_app_png.png',
                         height: 180.0,
                       ),
                     ],

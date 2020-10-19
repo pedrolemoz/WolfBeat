@@ -71,3 +71,4 @@ flutter:
 
   assets:
     - assets/fallback/
+    - assets/icon/

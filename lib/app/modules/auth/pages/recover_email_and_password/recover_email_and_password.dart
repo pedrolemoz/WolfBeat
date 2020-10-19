@@ -9,11 +9,9 @@ import '../../services/email_and_password/recover_email_and_password/recover_wit
 
 class RecoverEmailAndPassword extends StatelessWidget {
   static const String id = 'recover_email_and_password';
-
+  final _emailTextField = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    final _emailTextField = TextEditingController();
-
     return Scaffold(
       appBar: AppBar(
         title: Text(

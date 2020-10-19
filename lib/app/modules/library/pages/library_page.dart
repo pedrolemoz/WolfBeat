@@ -1,8 +1,6 @@
-import 'package:WolfBeat/app/modules/ui_components/mini_player.dart';
-import 'package:WolfBeat/core/view_model/player/player_view_model.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:get_it/get_it.dart';
 
 import 'library_tabs/pages/albums_tab.dart';
 import 'library_tabs/pages/artists_tab.dart';

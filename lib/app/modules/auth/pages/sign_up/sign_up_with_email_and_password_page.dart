@@ -10,15 +10,15 @@ import '../../services/email_and_password/sign_up/email_and_password_sign_up.dar
 
 class SignUpWithEmailAndPasswordPage extends StatelessWidget {
   static String id = 'sign_up_with_email_and_password_page';
+  
+  final _nameTextField = TextEditingController();
+  final _emailTextField = TextEditingController();
+  final _passwordTextField = TextEditingController();
+  final _passwordConfirmationTextField = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     final _signUpViewModel = GetIt.I.get<SignUpViewModel>();
-    final _nameTextField = TextEditingController();
-    final _emailTextField = TextEditingController();
-    final _passwordTextField = TextEditingController();
-    final _passwordConfirmationTextField = TextEditingController();
-
     return Observer(
       builder: (_) {
         return Scaffold(
