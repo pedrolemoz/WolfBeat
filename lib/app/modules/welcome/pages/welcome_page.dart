@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../core/helpers/assets_helper.dart';
 import '../../auth/pages/sign_in/sign_in_page.dart';
 import '../../auth/pages/sign_up/sign_up_page.dart';
 import '../../bottom_navigation/pages/bottom_navigation_bar.dart';
@@ -46,8 +47,8 @@ class _WelcomePageState extends State<WelcomePage> {
             children: [
               Column(
                 children: [
-                  Image.network(
-                    'https://images-na.ssl-images-amazon.com/images/I/815aiIN6wmL.jpg',
+                  Image.asset(
+                    AssetsHelper.wolfBeatLogo,
                     height: 180.0,
                   ),
                   Padding(

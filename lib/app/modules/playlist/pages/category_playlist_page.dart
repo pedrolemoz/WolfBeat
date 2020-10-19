@@ -1,4 +1,4 @@
-import 'package:WolfBeat/core/view_model/user/user_view_model.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -19,7 +19,7 @@ class CategoryPlaylistPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var _playerViewModel = GetIt.I.get<PlayerViewModel>();
-    var _userViewModel = GetIt.I.get<UserViewModel>();
+    
 
     return Scaffold(
       appBar: AppBar(
