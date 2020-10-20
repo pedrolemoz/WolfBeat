@@ -1,11 +1,11 @@
 import 'dart:ui';
 
+import '../../../../../core/services/auth/email_and_password/recover_email_and_password/recover_with_email.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 
 import '../../../ui_components/rounded_button.dart';
 import '../../../ui_components/rounded_text_field.dart';
-import '../../services/email_and_password/recover_email_and_password/recover_with_email.dart';
 
 class RecoverEmailAndPassword extends StatelessWidget {
   static const String id = 'recover_email_and_password';

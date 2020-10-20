@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../services/auth_with_google/auth_with_google.dart';
+import '../../../../../core/services/auth/auth_with_google/auth_with_google.dart';
 
 class AuthWithGooglePage extends StatefulWidget {
   static const String id = 'auth_with_google_page';

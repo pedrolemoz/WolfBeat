@@ -1,7 +1,7 @@
-import 'package:WolfBeat/core/helpers/assets_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import '../../../../../core/helpers/assets_helper.dart';
 import '../../../ui_components/rounded_button.dart';
 import '../auth_with_google/auth_with_google_page.dart';
 import 'sign_up_with_email_and_password_page.dart';

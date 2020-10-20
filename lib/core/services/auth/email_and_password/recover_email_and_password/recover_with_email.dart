@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../../../core/exceptions/null_attribute_exception.dart';
-import '../../../pages/recover_email_and_password/recover_email_page.dart';
+import '../../../../../app/modules/auth/pages/recover_email_and_password/recover_email_page.dart';
+import '../../../../exceptions/null_attribute_exception.dart';
 
 Future<void> recover_with_email(BuildContext context, String email) async {
   assert(context != null, throw NullAttributeException('context'));

@@ -1,9 +1,10 @@
 import 'dart:async';
 
-import 'package:WolfBeat/app/modules/welcome/pages/welcome_page.dart';
-import 'package:WolfBeat/core/helpers/assets_helper.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
+
+import '../../../../core/helpers/assets_helper.dart';
+import '../../welcome/pages/welcome_page.dart';
 
 class SplashScreen extends StatefulWidget {
   static final String id = 'splash_screen_page';

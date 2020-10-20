@@ -46,8 +46,9 @@ class PlayerPageState extends State<PlayerPage> {
               stops: [0.0, 1.0],
               colors: [
                 Hexcolor(_playerViewModel?.playerQueue
-                        ?.elementAt(_playerViewModel.currentIndex)
-                        ?.backgroundColor) ??
+                            ?.elementAt(_playerViewModel.currentIndex)
+                            ?.backgroundColor ??
+                        '#00000') ??
                     Theme.of(context).scaffoldBackgroundColor,
                 Colors.black38,
               ],
@@ -186,20 +187,27 @@ class PlayerPageState extends State<PlayerPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Icon(
-                        FlutterIcons.repeat_mco,
-                        color: Color(0xFFF0F0F5),
-                        size: 30.0,
+                      GestureDetector(
+                        onTap: () {
+                          _playerViewModel.toggleRepetead();
+                        },
+                        child: Icon(
+                          FlutterIcons.repeat_mco,
+                          color: _playerViewModel?.isRepeated ?? false
+                              ? Color(0xFFF0F0F5)
+                              : Colors.grey[900],
+                          size: 30.0,
+                        ),
                       ),
                       GestureDetector(
                         onTap: () {
-                          if (_playerViewModel.canSkipPrevious) {
+                          if (_playerViewModel?.canSkipPrevious ?? false) {
                             _playerViewModel.skipToPreviousSong();
                           }
                         },
                         child: Icon(
                           FlutterIcons.skip_previous_mco,
-                          color: _playerViewModel.canSkipPrevious
+                          color: _playerViewModel?.canSkipPrevious ?? false
                               ? Color(0xFFF0F0F5)
                               : Colors.grey[900],
                           size: 40.0,
@@ -207,7 +215,7 @@ class PlayerPageState extends State<PlayerPage> {
                       ),
                       RawMaterialButton(
                         onPressed: () {
-                          _playerViewModel.isPlaying
+                          _playerViewModel?.isPlaying ?? false
                               ? _playerViewModel.pause()
                               : _playerViewModel.play();
                         },
@@ -217,7 +225,7 @@ class PlayerPageState extends State<PlayerPage> {
                         child: Padding(
                           padding: EdgeInsets.all(12.0),
                           child: Icon(
-                            _playerViewModel.isPlaying
+                            _playerViewModel?.isPlaying ?? false
                                 ? FlutterIcons.pause_mco
                                 : FlutterIcons.play_mco,
                             size: 40.0,
@@ -227,7 +235,7 @@ class PlayerPageState extends State<PlayerPage> {
                       ),
                       GestureDetector(
                         onTap: () {
-                          if (_playerViewModel.canSkipFoward) {
+                          if (_playerViewModel?.canSkipFoward ?? false) {
                             _playerViewModel.skipToNextSong();
                           }
                         },
@@ -245,7 +253,7 @@ class PlayerPageState extends State<PlayerPage> {
                         },
                         child: Icon(
                           FlutterIcons.shuffle_mco,
-                          color: _playerViewModel.isShuffled
+                          color: _playerViewModel?.isShuffled ?? false
                               ? Color(0xFFF0F0F5)
                               : Colors.grey[900],
                           size: 30.0,

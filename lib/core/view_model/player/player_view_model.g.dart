@@ -208,6 +208,17 @@ mixin _$PlayerViewModel on _PlayerViewModelBase, Store {
       ActionController(name: '_PlayerViewModelBase');
 
   @override
+  void toggleRepetead() {
+    final _$actionInfo = _$_PlayerViewModelBaseActionController.startAction(
+        name: '_PlayerViewModelBase.toggleRepetead');
+    try {
+      return super.toggleRepetead();
+    } finally {
+      _$_PlayerViewModelBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void playSongFromPlaylist({Playlist playlist, Song song}) {
     final _$actionInfo = _$_PlayerViewModelBaseActionController.startAction(
         name: '_PlayerViewModelBase.playSongFromPlaylist');

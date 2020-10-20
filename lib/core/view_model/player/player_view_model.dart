@@ -62,6 +62,9 @@ abstract class _PlayerViewModelBase with Store {
 
   final _audioPlayer = AudioPlayer();
 
+  @action
+  void toggleRepetead() => isRepeated = !isRepeated;
+
   // ignore: use_setters_to_change_properties
 
   @action
@@ -90,12 +93,17 @@ abstract class _PlayerViewModelBase with Store {
         });
 
         await _audioPlayer.onPlayerCompletion.listen((_) async {
-          if (canSkipFoward) {
-            await checkFavorited();
+          if (isRepeated) {
             _checkPlayerStatus();
-            currentIndex++;
-
             await play();
+          } else {
+            if (canSkipFoward) {
+              await checkFavorited();
+              _checkPlayerStatus();
+              currentIndex++;
+
+              await play();
+            }
           }
         });
 
@@ -106,14 +114,23 @@ abstract class _PlayerViewModelBase with Store {
         );
         await MediaNotification.setListener('play', play);
         await MediaNotification.setListener('pause', pause);
-        await MediaNotification.setListener('next', () {
+        await MediaNotification.setListener('next', () async {
+          if (isRepeated) {
+            _checkPlayerStatus();
+            await play();
+          } else {}
           if (canSkipFoward) {
             skipToNextSong();
           }
         });
-        await MediaNotification.setListener('prev', () {
-          if (canSkipPrevious) {
-            skipToPreviousSong();
+        await MediaNotification.setListener('prev', () async {
+          if (isRepeated) {
+            _checkPlayerStatus();
+            await play();
+          } else {
+            if (canSkipPrevious) {
+              skipToPreviousSong();
+            }
           }
         });
       }

@@ -2,9 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
-import '../../../../../../core/models/user/user.dart';
-import '../../../../../../core/view_model/user/user_view_model.dart';
-import '../../../../bottom_navigation/pages/bottom_navigation_bar.dart';
+import '../../../../../app/modules/bottom_navigation/pages/bottom_navigation_bar.dart';
+import '../../../../models/user/user.dart';
+import '../../../../view_model/user/user_view_model.dart';
 
 /// [loginUserWithEmailAndPassword] is a Method that connects with the Firebase
 /// server, login the user, and redirects the user to [BottomNavigation].

@@ -1,10 +1,10 @@
-import 'package:WolfBeat/app/modules/playlist/pages/custom_playlist_page.dart';
-import 'package:WolfBeat/core/view_model/user/user_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../../core/helpers/assets_helper.dart';
 import '../../../core/models/playlist/playlist.dart';
+import '../../../core/view_model/user/user_view_model.dart';
+import '../playlist/pages/custom_playlist_page.dart';
 
 /// [PlaylistCard] redirects the user to ***.
 /// It's a Container with a music cover inside.

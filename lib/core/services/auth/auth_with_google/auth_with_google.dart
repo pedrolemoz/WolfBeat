@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-import '../../../../../core/helpers/firebase_helper.dart';
-import '../../../../../core/models/user/user.dart';
-import '../../../../../core/view_model/user/user_view_model.dart';
-import '../../../bottom_navigation/pages/bottom_navigation_bar.dart';
+import '../../../../app/modules/bottom_navigation/pages/bottom_navigation_bar.dart';
+import '../../../helpers/firebase_helper.dart';
+import '../../../models/user/user.dart';
+import '../../../view_model/user/user_view_model.dart';
 
 /// [authWithGoogle] is a function that connects with the Firebase server,
 /// register a google email, and redirects the user to [BottomNavigator].

@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../../../../core/helpers/firebase_helper.dart';
-import '../../../../core/view_model/user/user_view_model.dart';
+import '../../helpers/firebase_helper.dart';
+import '../../view_model/user/user_view_model.dart';
 
 /// [changeProfilePhotoFromGallery] is a method which have the methods for
 /// switch the profile photo.

@@ -1,4 +1,3 @@
-import 'package:WolfBeat/app/modules/auth/pages/splash_screen/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
@@ -17,6 +16,7 @@ import 'app/modules/player/pages/player_page.dart';
 import 'app/modules/playlist/pages/create_new_playlist_page.dart';
 import 'app/modules/settings/pages/profile_settings_page.dart';
 import 'app/modules/settings/pages/settings_page.dart';
+import 'app/modules/splash_screen/pages/splash_screen.dart';
 import 'app/modules/welcome/pages/welcome_page.dart';
 import 'core/view_model/auth/sign_in/sign_in_view_model.dart';
 import 'core/view_model/auth/sign_up/sign_up_view_model.dart';
@@ -74,7 +74,6 @@ class WolfBeat extends StatelessWidget {
         RecoverEmailAndPassword.id: (context) => RecoverEmailAndPassword(),
         RecoverEmailPage.id: (context) => RecoverEmailPage(),
         SplashScreen.id: (context) => SplashScreen(),
-
       },
     );
   }

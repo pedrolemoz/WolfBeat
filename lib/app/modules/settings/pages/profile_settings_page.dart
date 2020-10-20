@@ -3,9 +3,9 @@ import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 
+import '../../../../core/services/settings/change_profile_photo.dart';
 import '../../../../core/view_model/user/user_view_model.dart';
 import '../../ui_components/rounded_button.dart';
-import '../services/change_profile_photo.dart';
 
 class ProfileSettingsPage extends StatelessWidget {
   static const String id = 'profile_settings_page';
