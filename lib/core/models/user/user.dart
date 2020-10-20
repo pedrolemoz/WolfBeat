@@ -29,6 +29,7 @@ class User {
       FirebaseHelper.emailAttribute: email,
       FirebaseHelper.favoriteSongsAttribute: [],
       FirebaseHelper.playlistsAttribute: [],
+      FirebaseHelper.recentlyPlayed: [],
       FirebaseHelper.typeAttribute: 'Email',
       FirebaseHelper.imageURIAttribute: imageURI,
       FirebaseHelper.uuidAttribute: uuid,
@@ -43,6 +44,7 @@ class User {
       FirebaseHelper.emailAttribute: email,
       FirebaseHelper.favoriteSongsAttribute: [],
       FirebaseHelper.playlistsAttribute: [],
+      FirebaseHelper.recentlyPlayed: [],
       FirebaseHelper.typeAttribute: 'Google',
       FirebaseHelper.imageURIAttribute: imageURI,
       FirebaseHelper.uuidAttribute: uuid,
@@ -51,17 +53,18 @@ class User {
     return mapGoogle;
   }
 
-  Map<String, dynamic> toMapFacebook() {
-    final mapFacebook = {
-      FirebaseHelper.nameAttribute: name,
-      FirebaseHelper.emailAttribute: email,
-      FirebaseHelper.favoriteSongsAttribute: [],
-      FirebaseHelper.playlistsAttribute: [],
-      FirebaseHelper.typeAttribute: 'Facebook',
-      FirebaseHelper.imageURIAttribute: imageURI,
-      FirebaseHelper.uuidAttribute: uuid,
-    };
+  // Map<String, dynamic> toMapFacebook() {
+  //   final mapFacebook = {
+  //     FirebaseHelper.nameAttribute: name,
+  //     FirebaseHelper.emailAttribute: email,
+  //     FirebaseHelper.favoriteSongsAttribute: [],
+  //     FirebaseHelper.playlistsAttribute: [],
+  //     FirebaseHelper.recentlyPlayed: [],
+  //     FirebaseHelper.typeAttribute: 'Facebook',
+  //     FirebaseHelper.imageURIAttribute: imageURI,
+  //     FirebaseHelper.uuidAttribute: uuid,
+  //   };
 
-    return mapFacebook;
-  }
+  //   return mapFacebook;
+  // }
 }
