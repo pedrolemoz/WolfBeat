@@ -37,7 +37,7 @@ class PlaylistTile extends StatelessWidget {
           backgroundColor: Theme.of(context).backgroundColor,
           builder: (context) {
             return Container(
-              height: MediaQuery.of(context).size.height * 0.16,
+              height: MediaQuery.of(context).size.height * 0.2,
               child: Column(
                 children: [
                   GestureDetector(

@@ -28,17 +28,22 @@ class _SplashScreenState extends State<SplashScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Center(
-              child: Image.asset(
-                AssetsHelper.wolfBeatLogo,
-                height: 180.0,
+              child: Hero(
+                tag: 'Logo',
+                child: Image.asset(
+                  AssetsHelper.wolfBeatLogo,
+                  height: 180.0,
+                ),
               ),
             ),
             FadeAnimatedTextKit(
               text: ['WolfBeat'],
               textStyle: Theme.of(context).textTheme.headline4,
+              isRepeatingAnimation: false,
             ),
             TyperAnimatedTextKit(
               text: ['Músicas que inspiram sua vida'],
+              isRepeatingAnimation: false,
               textStyle: Theme.of(context)
                   .textTheme
                   .subtitle1

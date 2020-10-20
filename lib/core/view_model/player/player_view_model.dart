@@ -43,6 +43,9 @@ abstract class _PlayerViewModelBase with Store {
   var isShuffled = false;
 
   @observable
+  var isRepeated = false;
+
+  @observable
   String playingFrom;
 
   @observable
@@ -82,7 +85,7 @@ abstract class _PlayerViewModelBase with Store {
           totalDuration = newDuration;
         });
 
-        await _audioPlayer.onAudioPositionChanged.listen((newPosition) {
+        await _audioPlayer.onAudioPositionChanged.listen((newPosition) async {
           currentPosition = newPosition;
         });
 
@@ -121,10 +124,11 @@ abstract class _PlayerViewModelBase with Store {
 
   @action
   void playSongFromPlaylist({Playlist playlist, Song song}) {
-    // if (isShuffled) {
-    // playlist.songs.sort((a, b) => a.title.compareTo(b.title));
-    // playerQueue.sort((a, b) => a.title.compareTo(b.title));
-    // isShuffled = false;
+    if (isShuffled) {
+      playlist.songs.sort((a, b) => a.title.compareTo(b.title));
+      playerQueue.sort((a, b) => a.title.compareTo(b.title));
+      isShuffled = false;
+    }
 
     currentIndex = playlist.songs.indexOf(song);
     playerQueue = playlist.songs.asObservable();
@@ -224,7 +228,7 @@ abstract class _PlayerViewModelBase with Store {
 
     var _userData = await _database
         .collection(FirebaseHelper.usersCollection)
-        .document(_user.uid)
+        .document(_user?.uid)
         .get();
 
     var _favoriteSongs =
@@ -243,7 +247,7 @@ abstract class _PlayerViewModelBase with Store {
 
       await _database
           .collection(FirebaseHelper.usersCollection)
-          .document(_user.uid)
+          .document(_user?.uid)
           .updateData({FirebaseHelper.favoriteSongsAttribute: _favoriteSongs});
 
       _userViewModel.favoriteSongs.remove(playerQueue.elementAt(currentIndex));
@@ -257,7 +261,7 @@ abstract class _PlayerViewModelBase with Store {
 
       await _database
           .collection(FirebaseHelper.usersCollection)
-          .document(_user.uid)
+          .document(_user?.uid)
           .updateData({FirebaseHelper.favoriteSongsAttribute: _favoriteSongs});
 
       _userViewModel.favoriteSongs.add(playerQueue.elementAt(currentIndex));
@@ -273,7 +277,7 @@ abstract class _PlayerViewModelBase with Store {
     var _isFavorited = false;
     var _userData = await _database
         .collection(FirebaseHelper.usersCollection)
-        .document(_user.uid)
+        .document(_user?.uid)
         .get();
     var _favoriteSongs =
         _userData.data[FirebaseHelper.favoriteSongsAttribute] as List;

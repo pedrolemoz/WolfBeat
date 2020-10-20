@@ -1,3 +1,4 @@
+import 'package:WolfBeat/core/helpers/assets_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -21,9 +22,12 @@ class SignUpPage extends StatelessWidget {
             children: [
               Column(
                 children: [
-                  Image.network(
-                    'https://images-na.ssl-images-amazon.com/images/I/815aiIN6wmL.jpg',
-                    height: 180.0,
+                  Hero(
+                    tag: 'Logo',
+                    child: Image.asset(
+                      AssetsHelper.wolfBeatLogo,
+                      height: 180.0,
+                    ),
                   ),
                 ],
               ),
@@ -46,18 +50,7 @@ class SignUpPage extends StatelessWidget {
                     splashColor: Colors.grey[500],
                     isEnabled: true,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 15.0),
-                    child: RoundedButton(
-                      label: 'Cadastrar-se com o Facebook',
-                      onTap: () {},
-                      icon:
-                          Icon(FontAwesomeIcons.facebook, color: Colors.white),
-                      enabledColor: Colors.blue[600],
-                      splashColor: Colors.blue[900],
-                      isEnabled: true,
-                    ),
-                  ),
+                  SizedBox(height: 15.0),
                   RoundedButton(
                     label: 'Cadastrar-se com o email e senha',
                     onTap: () {

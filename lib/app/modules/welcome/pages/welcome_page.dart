@@ -47,23 +47,32 @@ class _WelcomePageState extends State<WelcomePage> {
             children: [
               Column(
                 children: [
-                  Image.asset(
-                    AssetsHelper.wolfBeatLogo,
-                    height: 180.0,
+                  Hero(
+                    tag: 'Logo',
+                    child: Image.asset(
+                      AssetsHelper.wolfBeatLogo,
+                      height: 180.0,
+                    ),
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 15.0),
-                    child: Text(
-                      'WolfBeat',
-                      style: Theme.of(context).textTheme.headline4,
+                    child: Hero(
+                      tag: 'WolfBeat',
+                      child: Text(
+                        'WolfBeat',
+                        style: Theme.of(context).textTheme.headline4,
+                      ),
                     ),
                   ),
-                  Text(
-                    'Músicas que inspiram sua vida',
-                    style: Theme.of(context)
-                        .textTheme
-                        .subtitle1
-                        .copyWith(fontWeight: FontWeight.w400),
+                  Hero(
+                    tag: 'Description',
+                    child: Text(
+                      'Músicas que inspiram sua vida',
+                      style: Theme.of(context)
+                          .textTheme
+                          .subtitle1
+                          .copyWith(fontWeight: FontWeight.w400),
+                    ),
                   ),
                 ],
               ),

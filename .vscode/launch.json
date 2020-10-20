@@ -5,9 +5,17 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "WolfBeat",
+            "name": "WolfBeat Debug",
             "request": "launch",
-            "type": "dart"
+            "type": "dart",
+        },
+        {
+            "name": "WolfBeat Profile",
+            "request": "launch",
+            "type": "dart",
+            "args": [
+                "--profile"
+            ]
         }
     ]
 }

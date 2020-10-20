@@ -1,3 +1,4 @@
+import 'package:WolfBeat/core/helpers/assets_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
@@ -11,7 +12,7 @@ import '../recover_email_and_password/recover_email_and_password.dart';
 
 class SignInWithEmailAndPasswordPage extends StatelessWidget {
   static String id = 'sign_in_with_email_and_password_page';
-  
+
   final _emailTextField = TextEditingController();
   final _passwordTextField = TextEditingController();
 
@@ -31,9 +32,12 @@ class SignInWithEmailAndPasswordPage extends StatelessWidget {
                 children: [
                   Column(
                     children: [
-                      Image.asset(
-                        'assets/icon_app/icon_app_png.png',
-                        height: 180.0,
+                      Hero(
+                        tag: 'Logo',
+                        child: Image.asset(
+                          AssetsHelper.wolfBeatLogo,
+                          height: 180.0,
+                        ),
                       ),
                     ],
                   ),
@@ -51,7 +55,6 @@ class SignInWithEmailAndPasswordPage extends StatelessWidget {
                         keyboardType: TextInputType.emailAddress,
                         textInputAction: TextInputAction.done,
                         onChanged: () {
-                          print(_emailTextField.text);
                           _signInViewModel.isEmailValid(_emailTextField.text);
                           _signInViewModel.canProceed();
                         },

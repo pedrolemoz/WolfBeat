@@ -54,17 +54,17 @@ abstract class _UserViewModelBase with Store {
 
     var _snapshot = await _database
         .collection(FirebaseHelper.usersCollection)
-        .document(_user.uid)
+        .document(_user?.uid)
         .get();
 
     var _data = _snapshot.data;
 
-    if (_data.isNotEmpty) {
+    if (_data?.isNotEmpty ?? false) {
       await _recoverUserPlaylists(_snapshot);
       await _recoverFavoriteSongs(_snapshot);
       await _recoverRecentlyPlayedSongs(_snapshot);
 
-      userID = _user.uid;
+      userID = _user?.uid;
       userName = _data[FirebaseHelper.nameAttribute];
       userEmail = _data[FirebaseHelper.emailAttribute];
       imageURI = _data[FirebaseHelper.imageURIAttribute];
@@ -139,7 +139,7 @@ abstract class _UserViewModelBase with Store {
 
     var _snapshot = await _database
         .collection(FirebaseHelper.usersCollection)
-        .document(_user.uid)
+        .document(_user?.uid)
         .get();
 
     var _data = _snapshot.data;
@@ -150,7 +150,7 @@ abstract class _UserViewModelBase with Store {
 
     await _database
         .collection(FirebaseHelper.usersCollection)
-        .document(_user.uid)
+        .document(_user?.uid)
         .updateData({FirebaseHelper.recentlyPlayed: _recentlyPlayed});
 
     recentlyPlayedSongs.add(song);
@@ -164,7 +164,7 @@ abstract class _UserViewModelBase with Store {
 
     var _snapshot = await _database
         .collection(FirebaseHelper.usersCollection)
-        .document(_user.uid)
+        .document(_user?.uid)
         .get();
 
     var _data = _snapshot.data;
@@ -175,7 +175,7 @@ abstract class _UserViewModelBase with Store {
 
     await _database
         .collection(FirebaseHelper.usersCollection)
-        .document(_user.uid)
+        .document(_user?.uid)
         .updateData({FirebaseHelper.recentlyPlayed: _recentlyPlayed});
 
     recentlyPlayedSongs.remove(song);
@@ -227,6 +227,8 @@ abstract class _UserViewModelBase with Store {
           reference: song.reference,
         ),
       );
+
+      favoriteSongs.sort((a, b) => a.title.compareTo(b.title));
     }
   }
 
@@ -236,6 +238,7 @@ abstract class _UserViewModelBase with Store {
     @required Song song,
   }) {
     playlist.songs.add(song);
+    playlist.songs.sort((a, b) => a.title.compareTo(b.title));
     _changeSongInPlaylist(playlist: playlist);
   }
 
@@ -245,6 +248,7 @@ abstract class _UserViewModelBase with Store {
     @required Song song,
   }) {
     playlist.songs.remove(song);
+    playlist.songs.sort((a, b) => a.title.compareTo(b.title));
     _changeSongInPlaylist(playlist: playlist);
   }
 
@@ -256,25 +260,26 @@ abstract class _UserViewModelBase with Store {
 
     var snapshot = await _database
         .collection(FirebaseHelper.usersCollection)
-        .document(_user.uid)
+        .document(_user?.uid)
         .get();
 
     var _data = snapshot.data;
 
-    List<Map<String,dynamic>> _userPlaylists = _data[FirebaseHelper.playlistsAttribute];
-    // Map<String, dynamic> _currentPlaylist = _userPlaylists.singleWhere(
-    //     (userPlaylist) =>
-    //         userPlaylist[FirebaseHelper.playlistNameAttribute] ==
-    //         playlist.playlistName);
+    List _userPlaylists = _data[FirebaseHelper.playlistsAttribute];
 
-    
-    print(_userPlaylists == _data[FirebaseHelper.playlistsAttribute]);
-    // await _database
-    //     .collection(FirebaseHelper.usersCollection)
-    //     .document(_user.uid)
-    //     .updateData({FirebaseHelper.playlistsAttribute: _userPlaylists});
+    _userPlaylists.removeWhere(
+      (_playlist) =>
+          _playlist[FirebaseHelper.playlistNameAttribute] ==
+          playlist.playlistName,
+    );
 
-    //playlists.remove(playlist);
+    await _database
+        .collection(FirebaseHelper.usersCollection)
+        .document(_user?.uid)
+        .updateData({FirebaseHelper.playlistsAttribute: _userPlaylists});
+
+    playlists.remove(playlist);
+    playlists.sort((a, b) => a.playlistName.compareTo(b.playlistName));
   }
 
   @action
@@ -287,7 +292,7 @@ abstract class _UserViewModelBase with Store {
 
     var _snapshot = await _database
         .collection(FirebaseHelper.usersCollection)
-        .document(_user.uid)
+        .document(_user?.uid)
         .get();
 
     var _data = _snapshot.data;
@@ -309,7 +314,7 @@ abstract class _UserViewModelBase with Store {
 
     await _database
         .collection(FirebaseHelper.usersCollection)
-        .document(_user.uid)
+        .document(_user?.uid)
         .updateData({FirebaseHelper.playlistsAttribute: _userPlaylists});
 
     playlists[playlists.indexOf(playlist)] =
@@ -324,7 +329,7 @@ abstract class _UserViewModelBase with Store {
 
     var snapshot = await _database
         .collection(FirebaseHelper.usersCollection)
-        .document(_user.uid)
+        .document(_user?.uid)
         .get();
 
     var _data = snapshot.data;
@@ -340,10 +345,11 @@ abstract class _UserViewModelBase with Store {
 
     await _database
         .collection(FirebaseHelper.usersCollection)
-        .document(_user.uid)
+        .document(_user?.uid)
         .updateData({FirebaseHelper.playlistsAttribute: _userPlaylists});
 
     playlists.add(newPlaylist);
+    playlists.sort((a, b) => a.playlistName.compareTo(b.playlistName));
 
     return playlists.indexOf(newPlaylist);
   }

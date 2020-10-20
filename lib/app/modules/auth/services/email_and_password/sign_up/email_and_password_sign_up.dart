@@ -24,7 +24,7 @@ Future<void> signUpUserWithEmailAndPassword(
       .then((firebaseUser) {
     _database
         .collection(FirebaseHelper.usersCollection)
-        .document(firebaseUser.user.uid)
+        .document(firebaseUser.user?.uid)
         .setData(user.toMap());
     GetIt.I.get<UserViewModel>().recoverUserData();
     Navigator.pushNamedAndRemoveUntil(

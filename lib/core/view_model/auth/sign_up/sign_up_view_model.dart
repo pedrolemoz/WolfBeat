@@ -24,7 +24,7 @@ abstract class _SignUpViewModelBase with Store {
   bool isEnabled = false;
 
   @action
-  void isNameValid(String name) => _validName = name.isNotEmpty;
+  void isNameValid(String name) => _validName = name?.isNotEmpty;
 
   @action
   void isEmailValid(String email) => _validEmail = RegExp(

@@ -1,3 +1,4 @@
+import 'package:WolfBeat/core/helpers/assets_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
@@ -10,7 +11,7 @@ import '../../services/email_and_password/sign_up/email_and_password_sign_up.dar
 
 class SignUpWithEmailAndPasswordPage extends StatelessWidget {
   static String id = 'sign_up_with_email_and_password_page';
-  
+
   final _nameTextField = TextEditingController();
   final _emailTextField = TextEditingController();
   final _passwordTextField = TextEditingController();
@@ -32,9 +33,12 @@ class SignUpWithEmailAndPasswordPage extends StatelessWidget {
                 children: [
                   Column(
                     children: [
-                      Image.network(
-                        'https://images-na.ssl-images-amazon.com/images/I/815aiIN6wmL.jpg',
-                        height: 180.0,
+                      Hero(
+                        tag: 'Logo',
+                        child: Image.asset(
+                          AssetsHelper.wolfBeatLogo,
+                          height: 180.0,
+                        ),
                       ),
                     ],
                   ),

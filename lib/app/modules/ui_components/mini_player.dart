@@ -23,9 +23,7 @@ class MiniPlayer extends StatelessWidget {
           },
           onVerticalDragUpdate: (DragUpdateDetails details) {
             if (details.delta.dy > 0) {
-              print('Dragging in +Y direction');
             } else {
-              print('Dragging in -Y direction');
               if (_playerViewModel.playerQueue
                       .elementAt(_playerViewModel.currentIndex) !=
                   null) {
@@ -35,14 +33,12 @@ class MiniPlayer extends StatelessWidget {
           },
           onHorizontalDragUpdate: (DragUpdateDetails details) {
             if (details.delta.dx > 0) {
-              print('Dragging in +X direction');
-              if (_playerViewModel.canSkipFoward) {
-                _playerViewModel.skipToNextSong();
-              }
-            } else {
-              print('Dragging in -X direction');
               if (_playerViewModel.canSkipPrevious) {
                 _playerViewModel.skipToPreviousSong();
+              }
+            } else {
+              if (_playerViewModel.canSkipFoward) {
+                _playerViewModel.skipToNextSong();
               }
             }
           },

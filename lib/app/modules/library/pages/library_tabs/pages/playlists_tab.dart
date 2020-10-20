@@ -32,7 +32,7 @@ class PlaylistsTab extends StatelessWidget {
                     onDelete: () {
                       _userViewModel.removeUserPlaylist(
                           playlist: _userViewModel.playlists[index - 1]);
-                      print('deletada');
+                      Navigator.maybePop(context);
                     },
                   );
               }

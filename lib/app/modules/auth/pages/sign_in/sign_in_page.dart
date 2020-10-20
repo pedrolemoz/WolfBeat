@@ -22,9 +22,12 @@ class SignInPage extends StatelessWidget {
             children: [
               Column(
                 children: [
-                  Image.asset(
-                    AssetsHelper.wolfBeatLogo,
-                    height: 180.0,
+                  Hero(
+                    tag: 'Logo',
+                    child: Image.asset(
+                      AssetsHelper.wolfBeatLogo,
+                      height: 180.0,
+                    ),
                   ),
                 ],
               ),
@@ -47,18 +50,7 @@ class SignInPage extends StatelessWidget {
                     splashColor: Colors.grey[500],
                     isEnabled: true,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 15.0),
-                    child: RoundedButton(
-                      label: 'Fazer login com o Facebook',
-                      onTap: () {},
-                      icon:
-                          Icon(FontAwesomeIcons.facebook, color: Colors.white),
-                      enabledColor: Colors.blue[600],
-                      splashColor: Colors.blue[900],
-                      isEnabled: true,
-                    ),
-                  ),
+                  SizedBox(height: 15.0),
                   RoundedButton(
                     label: 'Fazer login com o email e senha',
                     onTap: () {

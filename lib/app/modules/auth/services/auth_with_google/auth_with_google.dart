@@ -27,13 +27,13 @@ Future<void> authWithGoogle(BuildContext context) async {
       name: _user.displayName,
       email: _user.email,
       imageURI: _user.photoUrl,
-      uuid: _user.uid,
+      uuid: _user?.uid,
     );
 
     var _db = Firestore.instance;
     await _db
         .collection(FirebaseHelper.usersCollection)
-        .document(_user.uid)
+        .document(_user?.uid)
         .setData(_userGoogle.toMapGoogle())
         .then((_) {
       GetIt.I.get<UserViewModel>().recoverUserData();

@@ -47,7 +47,7 @@ abstract class _SearchViewModelBase with Store {
 
   @action
   void cleanResults() {
-    if (searchResult.isNotEmpty) {
+    if (searchResult?.isNotEmpty) {
       searchResult = Iterable.empty();
     }
   }

@@ -69,6 +69,21 @@ mixin _$PlayerViewModel on _PlayerViewModelBase, Store {
     });
   }
 
+  final _$isRepeatedAtom = Atom(name: '_PlayerViewModelBase.isRepeated');
+
+  @override
+  bool get isRepeated {
+    _$isRepeatedAtom.reportRead();
+    return super.isRepeated;
+  }
+
+  @override
+  set isRepeated(bool value) {
+    _$isRepeatedAtom.reportWrite(value, super.isRepeated, () {
+      super.isRepeated = value;
+    });
+  }
+
   final _$playingFromAtom = Atom(name: '_PlayerViewModelBase.playingFrom');
 
   @override
@@ -264,6 +279,7 @@ mixin _$PlayerViewModel on _PlayerViewModelBase, Store {
 playerQueue: ${playerQueue},
 currentIndex: ${currentIndex},
 isShuffled: ${isShuffled},
+isRepeated: ${isRepeated},
 playingFrom: ${playingFrom},
 isPlaying: ${isPlaying},
 currentPosition: ${currentPosition},
